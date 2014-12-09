@@ -154,10 +154,10 @@ public class Plane {
 		float angle = MathUtils.atan2(vectorToEnemy.y, vectorToEnemy.x);
 		if (angle < 0) angle += 2 * MathUtils.PI;
 		
-		debugDraw.drawSegment(enemy.getBody().getPosition(), this.body.getPosition() , Color3f.GREEN);
+		//debugDraw.drawSegment(enemy.getBody().getPosition(), this.body.getPosition() , Color3f.GREEN);
 
 		float desiredAngle = angle;
-		System.out.println("desiredAngle: " + desiredAngle * MathUtils.RAD2DEG + ":: angle:" + this.body.getAngle());
+		//System.out.println("desiredAngle: " + desiredAngle * MathUtils.RAD2DEG + ":: angle:" + this.body.getAngle());
 		
 		float nextAngle = this.body.getAngle() + this.body.getAngularVelocity() / 60.0f;
 		

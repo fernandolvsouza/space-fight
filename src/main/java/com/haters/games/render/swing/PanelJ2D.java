@@ -22,38 +22,26 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 	public static final int SCREEN_DRAG_BUTTON = 3;
 
-	public static final int INIT_WIDTH = 1200;
-	public static final int INIT_HEIGHT = 1200;
-
 	private Graphics2D dbg = null;
 	private Image dbImage = null;
 
-	private int panelWidth;
-	private int panelHeight;
 
 	public PanelJ2D() {
 		setBackground(Color.black);
-		setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
-		updateSize(INIT_WIDTH, INIT_HEIGHT);
-
+		setPreferredSize(new Dimension(getInitialWidth(), getInitialHeight()));
 	}
 
 	public Graphics2D getDBGraphics() {
 		return dbg;
 	}
 
-	private void updateSize(int width, int height) {
-		panelWidth = width;
-		panelHeight = height;
-	}
-
 	public boolean render() {
 		if (dbImage == null) {
 			log.debug("dbImage is null, creating a new one");
-			if (panelWidth <= 0 || panelHeight <= 0) {
+			if (getInitialWidth() <= 0 || getInitialHeight() <= 0) {
 				return false;
 			}
-			dbImage = createImage(panelWidth, panelHeight);
+			dbImage = createImage(getInitialWidth() , getInitialHeight());
 			if (dbImage == null) {
 				log.error("dbImage is still null, ignoring render call");
 				return false;
@@ -63,7 +51,7 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 			System.out.println("dbg:" + dbg);
 		}
 		dbg.setColor(Color.black);
-		dbg.fillRect(0, 0, panelWidth, panelHeight);
+		dbg.fillRect(0, 0, getInitialWidth(), getInitialHeight());
 
 		dbg.setColor(Color.white);
 		dbg.drawString("teste", 0, 10);
@@ -99,5 +87,15 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 	public void drawString(String string, int i, int j) {
 		dbg.drawString(string, i, j);
+	}
+
+	@Override
+	public int getInitialHeight() {
+		return 1200;
+	}
+
+	@Override
+	public int getInitialWidth() {
+		return 1200;
 	}
 }

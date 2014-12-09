@@ -20,6 +20,10 @@ public class SpaceWorld  {
 		this.world = world;
 	}
 	
+	public World getWorld(){
+		return this.world;
+	}
+	
 	public void setup() {
 		
 		this.world.setGravity(new Vec2(0.0f, 0.0f));
@@ -80,4 +84,5 @@ public class SpaceWorld  {
 	public void drawDebugData() {
 		world.drawDebugData();
 	}
+
 }

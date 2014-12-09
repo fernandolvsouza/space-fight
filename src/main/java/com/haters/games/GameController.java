@@ -1,4 +1,5 @@
-package com.haters.games.physics;
+package com.haters.games;
+
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.IViewportTransform;
@@ -6,11 +7,13 @@ import org.jbox2d.common.OBBViewportTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import com.haters.games.physics.GameLogic;
+import com.haters.games.physics.SpaceWorld;
 import com.haters.games.render.RenderEngine;
 import com.haters.games.render.swing.DebugDrawJ2D;
 
 
-public class SpaceFight implements Runnable {
+public class GameController implements Runnable {
 
 
 	private  static final int DEFAULT_FPS = 60;
@@ -18,31 +21,28 @@ public class SpaceFight implements Runnable {
 	private static final int VelocityIterations = 8;
 	
 	private final IViewportTransform transform;
-	private final Vec2 initPosition = new Vec2(0,20);
-	private float initScale = 10;
-	
-
-	
+	private final Vec2 initPosition = new Vec2(0,0);
+	private float initScale = 7;
+		
 	private RenderEngine engine;
 	private DebugDrawJ2D debugDraw;
 	
-	
-	
-	public SpaceFight(RenderEngine engine,DebugDrawJ2D debugDraw) {
+	public GameController(RenderEngine engine,DebugDrawJ2D debugDraw) {
 		super();
 		this.engine = engine;
 		this.debugDraw = debugDraw;
 	    this.transform = new OBBViewportTransform();
 	    transform.setCamera(initPosition.x, initPosition.y, initScale);
+	    transform.setExtents(engine.getInitialWidth()/2, engine.getInitialHeight()/2);
 	    this.debugDraw.setViewportTransform(transform);
 	    configureDebugDraw(this.debugDraw);
-	}
+	}		
 	
 	private void configureDebugDraw(DebugDrawJ2D debugDraw){
 	    int flags = 0;
 	    flags += DebugDraw.e_shapeBit; // disable 0
 	    flags += 0; //DebugDraw.e_jointBit 
-	    flags += DebugDraw.e_aabbBit; // disable 0
+	    flags += 0; // disable 0
 	    flags += 0;  //DebugDraw.e_centerOfMassBit
 	    flags += 0; //DebugDraw.e_dynamicTreeBit
 	    flags += 0;// DebugDraw.e_wireframeDrawingBit
@@ -54,7 +54,10 @@ public class SpaceFight implements Runnable {
 		
 		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)));
 		spaceWorld.setDebugDraw(this.debugDraw);
-		spaceWorld.setup();
+		//spaceWorld.setup();
+		
+		GameLogic logic = new GameLogic(spaceWorld,this);
+		logic.init();
 				
 		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
 		float frameRate;
@@ -78,9 +81,9 @@ public class SpaceFight implements Runnable {
 			//render
 			if(engine.render()){
 				spaceWorld.step(1f / DEFAULT_FPS, VelocityIterations, PositionIterations);
+				logic.step();
 				spaceWorld.drawDebugData();
 				engine.paintScreen();
-				System.out.println("Step!!");
 			}
 			
 			
@@ -96,8 +99,12 @@ public class SpaceFight implements Runnable {
 			}
 
 			beforeTime = System.nanoTime();
-			System.out.println("frame rate: " + frameRate);
+			//System.out.println("frame rate: " + frameRate);
 		}
+	}
+	
+	public void setCamera(Vec2 pos){
+		transform.setCamera(pos.x, pos.y, initScale);
 	}
 
 }

@@ -1,10 +1,12 @@
+package com.haters.games;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.haters.games.physics.SpaceFight;
 import com.haters.games.render.swing.DebugDrawJ2D;
 import com.haters.games.render.swing.PanelJ2D;
 
@@ -13,7 +15,7 @@ public class SpaceFightMain {
 
 	public static void main(String[] args) {
 
-		PanelJ2D panel = new PanelJ2D();    
+		PanelJ2D panel = new PanelJ2D();
 	    JFrame jframe = new JFrame();
 	    jframe.setTitle("SpaceFight Sandbox");
 	    jframe.setLayout(new BorderLayout());
@@ -24,9 +26,9 @@ public class SpaceFightMain {
 	    	    
 	    DebugDrawJ2D debugDraw = new DebugDrawJ2D(panel, true);
 	    
-	    final SpaceFight loop = new SpaceFight(panel,debugDraw);
+	    final GameController loop = new GameController(panel,debugDraw);
 	    
-	    System.out.println(System.getProperty("java.home"));
+	    //System.out.println(System.getProperty("java.home"));
 
 	    SwingUtilities.invokeLater(new Runnable() {
 	      @Override

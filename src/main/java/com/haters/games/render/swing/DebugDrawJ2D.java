@@ -267,7 +267,6 @@ public class DebugDrawJ2D extends DebugDraw {
 
   @Override
   public void drawPolygon(Vec2[] vertices, int vertexCount, Color3f color) {
-	  System.out.println("drawPolygon");
     Color s = cpool.getColor(color.x, color.y, color.z, 1f);
     Graphics2D g = getGraphics();
     saveState(g);
