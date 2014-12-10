@@ -30,12 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.haters.games.GameController;
+import com.haters.games.input.UserInputStream;
 
 /**
  * @author Fernando Valente
  */
-
-
 
 public class GameLogic {
 	private Plane plane;
@@ -44,10 +43,12 @@ public class GameLogic {
 	private SpaceWorld spaceWorld;
 	private int numberOfBots = 10;
 	private  GameController controller;
+	private UserInputStream stream;
 	
-	public GameLogic(SpaceWorld spaceWorld, GameController controller) {
+	public GameLogic(SpaceWorld spaceWorld, GameController controller, UserInputStream stream) {
 		this.spaceWorld = spaceWorld;
 		this.controller = controller;
+		this.stream = stream;
 	}
 
 	public void init() {
@@ -62,7 +63,8 @@ public class GameLogic {
 		plane = Plane.create(spaceWorld.getWorld(),numberOfBots);
 	}
 
-	public void step() {
+	public void step(float f, int velocityIterations, int positionIterations) {
+		spaceWorld.step(f, velocityIterations, positionIterations);	
 
 		for(Plane bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
@@ -84,29 +86,30 @@ public class GameLogic {
 			bot.accelerate(AccelerationState.UP);	
 		}
 		
-		/*if(plane.getCurrentEnergy() <= 0){
-			addTextLine("FIM FIM FIM FIM FIM");
+		if(plane.getCurrentEnergy() <= 0){
+			//addTextLine("FIM FIM FIM FIM FIM");
 		}
 		
-		if (getModel().getCodedKeys()[37]) {
+		if (stream.hasTurnLeftEvent()) { //37
 			plane.turn(TurnState.LEFT);	
 		}
 		
-		if (getModel().getCodedKeys()[39]) {
+		if (stream.hasTurnRightEvent()) { //39
 			plane.turn(TurnState.RIGHT);	
 		}
 		
-		if (getModel().getCodedKeys()[38]) {
+		if (stream.hasAccelerationEvent()) { //38
 			plane.accelerate(AccelerationState.UP);	
 		}
 		
-		if (getModel().getCodedKeys()[40]) {
+		if (stream.hasBreakEvent()) { //s/40
 			plane.accelerate(AccelerationState.DOWN);		
 		}
 		
-		if (getModel().getKeys()['s']){
+		if (stream.hasFireEvent()){ //'s'
 			plane.fire();
-		}*/
+		}
 		controller.setCamera(plane.getBody().getPosition());
+		spaceWorld.drawDebugData();
 	}
 }

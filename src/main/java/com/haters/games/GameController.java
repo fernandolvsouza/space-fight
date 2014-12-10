@@ -22,20 +22,23 @@ public class GameController implements Runnable {
 	
 	private final IViewportTransform transform;
 	private final Vec2 initPosition = new Vec2(0,0);
-	private float initScale = 7;
+	private final float initScale = 7;
 		
-	private RenderEngine engine;
+	private final RenderEngine engine;
 	private DebugDrawJ2D debugDraw;
+	private Thread animation;
 	
 	public GameController(RenderEngine engine,DebugDrawJ2D debugDraw) {
 		super();
 		this.engine = engine;
 		this.debugDraw = debugDraw;
 	    this.transform = new OBBViewportTransform();
+	    this.animation = new Thread(this, "thread-1");
+	    
 	    transform.setCamera(initPosition.x, initPosition.y, initScale);
 	    transform.setExtents(engine.getInitialWidth()/2, engine.getInitialHeight()/2);
 	    this.debugDraw.setViewportTransform(transform);
-	    configureDebugDraw(this.debugDraw);
+	    configureDebugDraw(this.debugDraw);	    
 	}		
 	
 	private void configureDebugDraw(DebugDrawJ2D debugDraw){
@@ -54,9 +57,8 @@ public class GameController implements Runnable {
 		
 		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)));
 		spaceWorld.setDebugDraw(this.debugDraw);
-		//spaceWorld.setup();
 		
-		GameLogic logic = new GameLogic(spaceWorld,this);
+		GameLogic logic = new GameLogic(spaceWorld,this,engine.getUserInputStream());
 		logic.init();
 				
 		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
@@ -67,8 +69,10 @@ public class GameController implements Runnable {
 
 		beforeTime = updateTime = System.nanoTime();
 	    sleepTime = 0;
-
+	    engine.grabFocus();
+	    
 		while (true) {
+			engine.grabFocus();
 			timeSpent = beforeTime - updateTime;
 			if (timeSpent > 0) {
 				timeInSecs = timeSpent * 1.0f / 1000000000.0f;
@@ -77,15 +81,12 @@ public class GameController implements Runnable {
 			} else {
 				updateTime = System.nanoTime();
 			}
-
 			//render
 			if(engine.render()){
-				spaceWorld.step(1f / DEFAULT_FPS, VelocityIterations, PositionIterations);
-				logic.step();
-				spaceWorld.drawDebugData();
+				engine.getUserInputStream().processEvents();
+				logic.step(1f / DEFAULT_FPS, VelocityIterations, PositionIterations);
 				engine.paintScreen();
 			}
-			
 			
 			afterTime = System.nanoTime();
 
@@ -100,11 +101,16 @@ public class GameController implements Runnable {
 
 			beforeTime = System.nanoTime();
 			//System.out.println("frame rate: " + frameRate);
+			
 		}
 	}
 	
 	public void setCamera(Vec2 pos){
 		transform.setCamera(pos.x, pos.y, initScale);
+	}
+
+	public void start() {
+		animation.start();
 	}
 
 }

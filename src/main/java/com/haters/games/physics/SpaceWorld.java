@@ -14,7 +14,7 @@ import com.haters.games.render.swing.DebugDrawJ2D;
 
 public class SpaceWorld  {
 	private World world;
-	private float width = 100;
+	private float width = 150;
 
 	public SpaceWorld(World world) {
 		this.world = world;

@@ -8,12 +8,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.haters.games.AWTPanelHelper;
+import com.haters.games.input.UserInputStream;
+import com.haters.games.input.swing.SwingUserInputStream;
 import com.haters.games.render.RenderEngine;
 
 @SuppressWarnings("serial")
@@ -24,12 +29,30 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 	private Graphics2D dbg = null;
 	private Image dbImage = null;
+	private UserInputStream  inputstream;
+	
 
-
-	public PanelJ2D() {
-		setBackground(Color.black);
+	public PanelJ2D(final SwingUserInputStream inputstream) {
+		setBackground(Color.gray);
 		setPreferredSize(new Dimension(getInitialWidth(), getInitialHeight()));
+		setFocusable(true);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent event) {
+				//System.out.println(event);
+				inputstream.addEventFromKeyEvent(event,true);
+			}
+			public void keyReleased(KeyEvent event) {
+				//System.out.println(event);
+				inputstream.addEventFromKeyEvent(event,false);				
+			}
+			
+			
+		});
+		
+	    this.inputstream = inputstream;
 	}
+	
 
 	public Graphics2D getDBGraphics() {
 		return dbg;
@@ -52,12 +75,6 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 		}
 		dbg.setColor(Color.black);
 		dbg.fillRect(0, 0, getInitialWidth(), getInitialHeight());
-
-		dbg.setColor(Color.white);
-		dbg.drawString("teste", 0, 10);
-		dbg.drawString("teste1", 0, 20);
-		dbg.drawString("teste2", 0, 30);
-		dbg.drawString("teste3", 0, 40);
 		return true;
 	}
 
@@ -74,28 +91,23 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 		}
 	}
 
-	@Override
-	public void render(Runnable block) {
-		System.out.println("Render begin");
-		if (render()) {
-			block.run();
-			paintScreen();
-			System.out.println("Paint");
-		}
-		System.out.println("Render end");
-	}
-
 	public void drawString(String string, int i, int j) {
 		dbg.drawString(string, i, j);
 	}
 
 	@Override
 	public int getInitialHeight() {
-		return 1200;
+		return 600;
 	}
 
 	@Override
 	public int getInitialWidth() {
-		return 1200;
+		return 600;
+	}
+
+
+	@Override
+	public UserInputStream getUserInputStream() {
+		return inputstream;
 	}
 }
