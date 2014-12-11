@@ -62,7 +62,8 @@ public class GameLogic {
 			bots.add(bot);			
 		}
 		
-		plane = Plane.create(spaceWorld.getWorld(),numberOfBots,killthen);
+		plane = Plane.create(spaceWorld.getWorld(),numberOfBots,killthen,false);
+		plane.setAttackMode();
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
@@ -74,13 +75,17 @@ public class GameLogic {
 				bots.remove(bot);
 				break;
 			}
+			
 			Plane enemy = bot.detectEnemy();
 			if(enemy != null){
-		
-				bot.rotateToEnemy(enemy,null);
+				bot.rotateToEnemy(enemy);
 				if(bot.shouldFire(enemy)){	
 					bot.fire();
 				}
+				bot.setAttackMode();
+			}else{
+				bot.avoidBodies();
+				bot.setCruiseMode();
 			}
 			bot.accelerate(AccelerationState.UP);
 			
