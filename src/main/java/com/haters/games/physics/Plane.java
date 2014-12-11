@@ -1,14 +1,13 @@
 package com.haters.games.physics;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.callbacks.QueryCallback;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Color3f;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -17,9 +16,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import sun.security.x509.DeltaCRLIndicatorExtension;
-
-public class Plane {
+public class Plane implements Destroyable{
 
 	
 	private int id;
@@ -30,31 +27,35 @@ public class Plane {
 	private float angularDamping = 5.0f;
 	private float maxAngularImpulse = 2.0f;
 	
-	private int maximumActiveBullets = 30;
+	private final static int maximumActiveBullets = 30;
 	private long lastFireTime = 0;
 	
-	private int totalEnergy = 100;
+	private int totalEnergy = 50;
 	private int currentEnergy = totalEnergy;
+	private List<Destroyable> killthen;
 	
-	private List<Bullet> bullets = new ArrayList<Bullet>(this.maximumActiveBullets);;
+	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
 
-	static public Plane create(World world,int id){
-		return new Plane(world,id);
+	static public Plane create(World world,int id, List<Destroyable> killthen){
+		return new Plane(world,id,killthen);
 	}
-	static public Plane create(World world, Vec2 pos, int id){
-		return new Plane(world,pos,id);
-	}
-	
-	private  Plane(World world,int id) {
-		this.id = id;
-		this.world = world;
-		init(new Vec2(0,10));
+	static public Plane create(World world, Vec2 pos, int id, List<Destroyable> killthen){
+		return new Plane(world,pos,id,killthen);
 	}
 	
-	private  Plane(World world,Vec2 pos, int id) {
+	private  Plane(World world,Vec2 pos, int id, List<Destroyable> killthen) {
 		this.id = id;
 		this.world = world;
+		this.killthen = killthen; 
 		init(pos);
+	}
+	
+	private  Plane(World world,int id, List<Destroyable> killthen) {
+		this.id = id;
+		this.world = world;
+		this.killthen = killthen;
+		init(new Vec2(0,10));
+		
 	}
 
 	public Body getBody() {
@@ -108,31 +109,27 @@ public class Plane {
 	}
 
 	public void fire() {
-		Bullet bullet = getFirstInactiveOrActiveForTheLongestTimeBullet();
+		
 		long now = new Date().getTime();
-		if( now - lastFireTime > bullet.getFireFrequency()) {
+		if( now - lastFireTime > Bullet.FireFrequency) {
+			Bullet bullet = Bullet.create(this);
+			this.bullets.add(bullet);
 			bullet.fire();
 			lastFireTime = now;
 		}
+		removeExcessBullets();
 	}
 	
-	private Bullet getFirstInactiveOrActiveForTheLongestTimeBullet(){
-		if(bullets.size() < this.maximumActiveBullets){
-			this.bullets.add(Bullet.create(this));
-			return this.bullets.get(this.bullets.size()-1); 
-		}
-		
-		Bullet activeForTheLongestTime = null;
-		
-		for (Bullet bullet : bullets) {
-			if(activeForTheLongestTime == null || (activeForTheLongestTime != null && bullet.getActivationTime() < activeForTheLongestTime.getActivationTime())){
-				activeForTheLongestTime = bullet;
-			}
-			if(bullet.inactive()){
-				return bullet;
+	private void removeExcessBullets(){
+		int wastebullets = bullets.size() - maximumActiveBullets;
+		//System.out.println(this + "- bulletssize : " + bullets.size());
+		if(wastebullets > 0){
+			for (int i = 0; i < wastebullets; i++) {
+				Bullet b = bullets.pop();
+				//System.out.println(b + "- b.body : " + b.getBody());
+				killthen.add(b);
 			}
 		}
-		return activeForTheLongestTime;		
 	}
 	
 	public void turn(TurnState state) {
@@ -232,13 +229,18 @@ public class Plane {
 	public String toString() {
 		return "plane : {id: "+id+"}";
 	}
-	public void damage() {
-		this.currentEnergy -= 5;
+	public void damage(Bullet b) {
+		this.currentEnergy -= b.getDamage();
 	}
 	public int getCurrentEnergy(){
 		return this.currentEnergy;
 	}
 	public void destroy() {
+		for (Bullet bullet : this.bullets) {
+			bullet.destroyCascade();
+			bullet = null;
+		}
+		bullets.clear();
 		this.getWorld().destroyBody(this.body);
 	}
 }

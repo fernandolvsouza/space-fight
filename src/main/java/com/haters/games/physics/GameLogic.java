@@ -27,6 +27,7 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.haters.games.GameController;
@@ -39,7 +40,7 @@ import com.haters.games.input.UserInputStream;
 public class GameLogic {
 	private Plane plane;
 	private List<Plane> bots = new ArrayList<Plane>();
-	private List<Bullet> bulletsToDie = new ArrayList<Bullet>();
+	private List<Destroyable> killthen = new ArrayList<Destroyable>();
 	private SpaceWorld spaceWorld;
 	private int numberOfBots = 10;
 	private  GameController controller;
@@ -54,13 +55,13 @@ public class GameLogic {
 	public void init() {
 
 		spaceWorld.setup();
-		spaceWorld.getWorld().setContactListener(new CollisionCallback(bulletsToDie));
+		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			bots.add(Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),i));
+			bots.add(Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),i,killthen));
 		}
 		
-		plane = Plane.create(spaceWorld.getWorld(),numberOfBots);
+		plane = Plane.create(spaceWorld.getWorld(),numberOfBots,killthen);
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
@@ -68,9 +69,9 @@ public class GameLogic {
 
 		for(Plane bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
-				bot.destroy(); //TODO o q fazer bullets restantes? destruir? destrui depois de um tempo? ou deixar para sempre?
+				//bot.destroy(); //TODO o q fazer bullets restantes? destruir? destrui depois de um tempo? ou deixar para sempre?
+				killthen.add(bot);
 				bots.remove(bot);
-				bot = null;
 				break;
 			}
 			DetectEnemiesCallback callback = (DetectEnemiesCallback)bot.detectEnemy();
@@ -111,5 +112,16 @@ public class GameLogic {
 		}
 		controller.setCamera(plane.getBody().getPosition());
 		spaceWorld.drawDebugData();
+	}
+	
+	public void afterStep(){
+		//System.out.println("killthen" + killthen.size());
+		for (Destroyable object : killthen) {
+			object.destroy();
+			object = null;
+		}
+		
+		killthen.clear();
+	
 	}
 }

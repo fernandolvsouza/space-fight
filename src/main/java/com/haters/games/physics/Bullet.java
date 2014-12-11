@@ -9,7 +9,14 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Bullet {
+public class Bullet implements Destroyable{
+	public static final long FireFrequency = 200;
+	private static final int damage = 10;
+
+	public Body getBody() {
+		return body;
+	}
+
 	private Body body;
 	private BodyDef bd;
 	private FixtureDef fd;
@@ -18,7 +25,6 @@ public class Bullet {
 	private long activationTime = 0;
 	private boolean active = false;
 	private float fireLinearImpulse = 10.0f;
-	private int fireFrequency = 200; // milliseconds
 	
 	private boolean readyToDestroy = false;
 	
@@ -59,10 +65,6 @@ public class Bullet {
 	}
 
 	public void fire() {
-		// create dynamic body
-		if(this.body != null){
-			this.destroy();
-		}
 		bd.setPosition(plane.getBody().getWorldPoint(new Vec2(4, 0)));
 		this.body = this.plane.getWorld().createBody(bd);
 		this.body.createFixture(fd);
@@ -82,19 +84,24 @@ public class Bullet {
 	}
 	
 	public void destroy(){
+		destroyCascade();
+		this.plane.getBullets().remove(this);
+	}
+	
+	public void destroyCascade(){
 		this.plane.getWorld().destroyBody(this.body);
 		this.active = false;
 	}
 	
-	public int getFireFrequency(){
-		return this.fireFrequency;
-	}
-
 	public void setReadyToDestroy() {
 		this.readyToDestroy = true;
 	}
 	
 	public boolean readyToDestroy() {
 		return this.readyToDestroy;
+	}
+
+	public int getDamage() {		
+		return damage;
 	}
 }

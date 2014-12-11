@@ -9,11 +9,11 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 public class CollisionCallback implements ContactListener {
 
-	private List<Bullet> bulletsToRemove;
+	private List<Destroyable> killthen;
 
-	public CollisionCallback(List<Bullet> bulletsToRemove) {
+	public CollisionCallback(List<Destroyable> killthen) {
 		super();
-		this.bulletsToRemove = bulletsToRemove;
+		this.killthen = killthen;
 	}
 
 	@Override
@@ -24,18 +24,18 @@ public class CollisionCallback implements ContactListener {
 		if(contactType(dataA,dataB,Bullet.class,Plane.class)){
 			Plane plane = (dataA instanceof Plane ? (Plane)dataA : (Plane)dataB);
 			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
-			bulletsToRemove.add(bullet);
-			plane.damage();
+			killthen.add(bullet);
+			plane.damage(bullet);
 			
 		}else if(contactType(dataA,dataB,Bullet.class,Bullet.class)){
-			bulletsToRemove.add((Bullet)dataA);
-			bulletsToRemove.add((Bullet)dataB);
+			killthen.add((Bullet)dataA);
+			killthen.add((Bullet)dataB);
 		} else {
 			if(dataA instanceof Bullet){
-				bulletsToRemove.add((Bullet)dataA);
+				killthen.add((Bullet)dataA);
 			}
 			if(dataB instanceof Bullet){
-				bulletsToRemove.add((Bullet)dataB);
+				killthen.add((Bullet)dataB);
 			}
 		}
 	}

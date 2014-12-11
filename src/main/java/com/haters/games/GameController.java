@@ -38,7 +38,7 @@ public class GameController implements Runnable {
 	    transform.setCamera(initPosition.x, initPosition.y, initScale);
 	    transform.setExtents(engine.getInitialWidth()/2, engine.getInitialHeight()/2);
 	    this.debugDraw.setViewportTransform(transform);
-	    configureDebugDraw(this.debugDraw);	    
+	    configureDebugDraw(this.debugDraw);  
 	}		
 	
 	private void configureDebugDraw(DebugDrawJ2D debugDraw){
@@ -69,7 +69,7 @@ public class GameController implements Runnable {
 
 		beforeTime = updateTime = System.nanoTime();
 	    sleepTime = 0;
-	    engine.grabFocus();
+	    //engine.grabFocus();
 	    
 		while (true) {
 			engine.grabFocus();
@@ -85,6 +85,7 @@ public class GameController implements Runnable {
 			if(engine.render()){
 				engine.getUserInputStream().processEvents();
 				logic.step(1f / DEFAULT_FPS, VelocityIterations, PositionIterations);
+				logic.afterStep();
 				engine.paintScreen();
 			}
 			

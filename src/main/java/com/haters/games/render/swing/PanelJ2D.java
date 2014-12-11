@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.haters.games.AWTPanelHelper;
 import com.haters.games.input.UserInputStream;
 import com.haters.games.input.swing.SwingUserInputStream;
 import com.haters.games.render.RenderEngine;
