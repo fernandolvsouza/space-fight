@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.callbacks.QueryCallback;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.MathUtils;
@@ -35,6 +34,7 @@ public class Plane implements Destroyable{
 	private List<Destroyable> killthen;
 	
 	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
+	private DetectEnemiesCallback callback;
 
 	static public Plane create(World world,int id, List<Destroyable> killthen){
 		return new Plane(world,id,killthen);
@@ -106,6 +106,8 @@ public class Plane implements Destroyable{
 
 		this.body.setTransform(this.body.getPosition(),90 * MathUtils.DEG2RAD);
 		this.body.setUserData(this);
+		
+		this.callback = new DetectEnemiesCallback(this);
 	}
 
 	public void fire() {
@@ -205,16 +207,7 @@ public class Plane implements Destroyable{
 	public List<Bullet> getBullets() {
 		return this.bullets;
 	}
-	public QueryCallback detectEnemy() {
-		float detectRange = 40;
-		AABB aabb = new AABB();
-		aabb.lowerBound.set(new Vec2(this.body.getPosition().x - detectRange,this.body.getPosition().y - detectRange));
-		aabb.upperBound.set(new Vec2(this.body.getPosition().x + detectRange,this.body.getPosition().y + detectRange));
-		QueryCallback callback = new DetectEnemiesCallback(this,aabb);
-		this.world.queryAABB(callback, aabb);
-		return callback;
-	}
-	
+		
 	@Override
 	public int hashCode() {
 		return id;
@@ -242,5 +235,17 @@ public class Plane implements Destroyable{
 		}
 		bullets.clear();
 		this.getWorld().destroyBody(this.body);
+	}
+
+	public Plane detectEnemy() {
+		this.callback.enemies.clear();
+		float detectRange = 40;
+		AABB aabb = new AABB();
+		aabb.lowerBound.set(new Vec2(this.body.getPosition().x - detectRange,this.body.getPosition().y - detectRange));
+		aabb.upperBound.set(new Vec2(this.body.getPosition().x + detectRange,this.body.getPosition().y + detectRange));
+		this.world.queryAABB(callback, aabb);
+		
+		return this.callback.enemies.size() > 0 ? 
+				this.callback.enemies.toArray(new Plane[this.callback.enemies.size()])[0] : null;
 	}
 }

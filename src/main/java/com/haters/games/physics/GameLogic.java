@@ -58,7 +58,8 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			bots.add(Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),i,killthen));
+			Plane bot = Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),i,killthen);
+			bots.add(bot);			
 		}
 		
 		plane = Plane.create(spaceWorld.getWorld(),numberOfBots,killthen);
@@ -69,26 +70,24 @@ public class GameLogic {
 
 		for(Plane bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
-				//bot.destroy(); //TODO o q fazer bullets restantes? destruir? destrui depois de um tempo? ou deixar para sempre?
 				killthen.add(bot);
 				bots.remove(bot);
 				break;
 			}
-			DetectEnemiesCallback callback = (DetectEnemiesCallback)bot.detectEnemy();
-			//callback.debug(this.debugDraw);
-			for(Plane enemy :  callback.enemies){
+			Plane enemy = bot.detectEnemy();
+			if(enemy != null){
+		
 				bot.rotateToEnemy(enemy,null);
-
 				if(bot.shouldFire(enemy)){	
 					bot.fire();
 				}
-				break;
 			}
-			bot.accelerate(AccelerationState.UP);	
+			bot.accelerate(AccelerationState.UP);
+			
 		}
 		
 		if(plane.getCurrentEnergy() <= 0){
-			//addTextLine("FIM FIM FIM FIM FIM");
+			killthen.add(plane);
 		}
 		
 		if (stream.hasTurnLeftEvent()) { //37

@@ -25,6 +25,8 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 	private static final Logger log = LoggerFactory.getLogger(PanelJ2D.class);
 
 	public static final int SCREEN_DRAG_BUTTON = 3;
+	public static final int SCREEN_WIDTH = 1000;
+	public static final int SCREEN_HEIGHT = 1000;
 
 	private Graphics2D dbg = null;
 	private Image dbImage = null;
@@ -96,12 +98,12 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 	@Override
 	public int getInitialHeight() {
-		return 600;
+		return SCREEN_HEIGHT;
 	}
 
 	@Override
 	public int getInitialWidth() {
-		return 600;
+		return SCREEN_WIDTH;
 	}
 
 
