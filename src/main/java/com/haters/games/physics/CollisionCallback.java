@@ -10,7 +10,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 public class CollisionCallback implements ContactListener {
 
 	private List<Destroyable> killthen;
-
+	
 	public CollisionCallback(List<Destroyable> killthen) {
 		super();
 		this.killthen = killthen;

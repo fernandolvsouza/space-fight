@@ -27,8 +27,8 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.haters.games.GameController;
 import com.haters.games.input.UserInputStream;
@@ -38,13 +38,18 @@ import com.haters.games.input.UserInputStream;
  */
 
 public class GameLogic {
-	private Plane plane;
-	private List<Plane> bots = new ArrayList<Plane>();
-	private List<Destroyable> killthen = new ArrayList<Destroyable>();
+	
+	private static final int numberOfBots = 10;
+	
+	private final List<Plane> bots = new ArrayList<Plane>();
+	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
+	
 	private SpaceWorld spaceWorld;
-	private int numberOfBots = 10;
+	private Plane plane;
 	private  GameController controller;
 	private UserInputStream stream;
+	
+	private int planeSequence = 0;
 	
 	public GameLogic(SpaceWorld spaceWorld, GameController controller, UserInputStream stream) {
 		this.spaceWorld = spaceWorld;
@@ -58,11 +63,11 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			Plane bot = Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),i,killthen);
+			Plane bot = Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),planeSequence++,killthen);
 			bots.add(bot);			
 		}
 		
-		plane = Plane.create(spaceWorld.getWorld(),numberOfBots,killthen,false);
+		plane = Plane.create(spaceWorld.getWorld(),planeSequence++,killthen,false);
 		plane.setAttackMode();
 	}
 
@@ -75,22 +80,26 @@ public class GameLogic {
 				bots.remove(bot);
 				break;
 			}
+			bot.detectGameEntities();
+			//bot.setAttackMode();
 			
-			Plane enemy = bot.detectEnemy();
-			if(enemy != null){
-				bot.rotateToEnemy(enemy);
-				if(bot.shouldFire(enemy)){	
-					bot.fire();
+			Set<Plane> enemies = bot.getEnemiesInRange();
+			//Boundaries bounds =  bot.getBoundsInRange();
+			if(bot.avoidColision(spaceWorld.getDebugDraw())){
+				if(enemies.size() !=0){
+					bot.rotateTo(enemies.iterator().next().getBody().getPosition());
 				}
-				bot.setAttackMode();
-			}else{
-				bot.avoidBodies();
-				bot.setCruiseMode();
 			}
+			
+			if(bot.shouldFire(enemies)){	
+				bot.fire();
+			}
+
 			bot.accelerate(AccelerationState.UP);
 			
 		}
-		
+		//plane.detectGameEntities();
+		//plane.avoidBoundaries(spaceWorld.getDebugDraw());
 		if(plane.getCurrentEnergy() <= 0){
 			killthen.add(plane);
 		}
@@ -119,7 +128,6 @@ public class GameLogic {
 	}
 	
 	public void afterStep(){
-		//System.out.println("killthen" + killthen.size());
 		for (Destroyable object : killthen) {
 			object.destroy();
 			object = null;

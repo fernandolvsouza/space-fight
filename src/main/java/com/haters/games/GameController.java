@@ -55,8 +55,7 @@ public class GameController implements Runnable {
 	@Override
 	public void run() {
 		
-		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)));
-		spaceWorld.setDebugDraw(this.debugDraw);
+		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)),this.debugDraw);
 		
 		GameLogic logic = new GameLogic(spaceWorld,this,engine.getUserInputStream());
 		logic.init();

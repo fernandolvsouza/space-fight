@@ -3,38 +3,48 @@ package com.haters.games.physics;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.AABB;
+import org.jbox2d.collision.RayCastInput;
+import org.jbox2d.collision.RayCastOutput;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Color3f;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-public class Plane implements Destroyable{
+
+public class Plane implements Destroyable, GameEntity{
 
 	private final static float maxAngularVelocity = 10.0f;
 	private final static float angularDamping = 5.0f;
+	private final static float botAngularDamping = 2.0f;
 	private final static float maxAngularImpulse = 2.0f;
 	private final static int maximumActiveBullets = 30;
-	private final static int totalEnergy = 50;
+	private final static int totalEnergy = 1000;
 	private final static float attackModeLinearDamping = 1.0f;
 	private final static float cruiseModeLinearDamping = 3.0f;
+	private final static int enemyDetectRange = 40;
 	
+	private final long timeCreated = new Date().getTime();
 	private int id;
-	private Body body;
-	private World world;
-	
+	private int bulletsSequence = 0;
 	private int currentEnergy = totalEnergy;
 	private long lastFireTime = 0;
 	private boolean isbot = true;
 	
+	private Body body;
+	private World world;	
 	private List<Destroyable> killthen;
 	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-	private DetectEnemiesCallback callback;
+	private DetectEntitiesCallback detectionCallback;
 
 	static public Plane create(World world,int id, List<Destroyable> killthen, boolean isbot){
 		return new Plane(world,id,killthen,isbot);
@@ -67,7 +77,7 @@ public class Plane implements Destroyable{
 		// body definition
 		BodyDef bd = new BodyDef();
 		bd.setType(BodyType.DYNAMIC);
-		bd.angularDamping = angularDamping;
+		bd.angularDamping = isbot ? botAngularDamping : angularDamping;
 		bd.linearDamping = cruiseModeLinearDamping;
 
 		// shape definition
@@ -108,14 +118,14 @@ public class Plane implements Destroyable{
 		this.body.setTransform(this.body.getPosition(),90 * MathUtils.DEG2RAD);
 		this.body.setUserData(this);
 		
-		this.callback = new DetectEnemiesCallback(this);
+		this.detectionCallback = new DetectEntitiesCallback(this);
 	}
 
 	public void fire() {
 		
 		long now = new Date().getTime();
 		if( now - lastFireTime > Bullet.FireFrequency) {
-			Bullet bullet = Bullet.create(this);
+			Bullet bullet = Bullet.create(this,bulletsSequence++);
 			this.bullets.add(bullet);
 			bullet.fire();
 			lastFireTime = now;
@@ -125,11 +135,9 @@ public class Plane implements Destroyable{
 	
 	private void removeExcessBullets(){
 		int wastebullets = bullets.size() - maximumActiveBullets;
-		//System.out.println(this + "- bulletssize : " + bullets.size());
 		if(wastebullets > 0){
 			for (int i = 0; i < wastebullets; i++) {
 				Bullet b = bullets.pop();
-				//System.out.println(b + "- b.body : " + b.getBody());
 				killthen.add(b);
 			}
 		}
@@ -147,11 +155,15 @@ public class Plane implements Destroyable{
 		this.body.applyAngularImpulse(impulse);
 	}
 	
-	public void rotateToEnemy(Plane enemy) {
+	public void rotateTo(Vec2 point) {
 		
-		Vec2 vectorToEnemy = new  Vec2(enemy.getBody().getPosition().x-this.body.getPosition().x,enemy.getBody().getPosition().y- this.body.getPosition().y);
+		Vec2 vectorToPoint = new  Vec2(point.x-this.body.getPosition().x,point.y- this.body.getPosition().y);
 			
-		float angle = MathUtils.atan2(vectorToEnemy.y, vectorToEnemy.x);
+		float angle = MathUtils.atan2(vectorToPoint.y, vectorToPoint.x);
+		rotate(angle);
+	}
+	
+	private void rotate(float angle) {
 		if (angle < 0) angle += 2 * MathUtils.PI;
 		
 		//debugDraw.drawSegment(enemy.getBody().getPosition(), this.body.getPosition() , Color3f.GREEN);
@@ -171,10 +183,49 @@ public class Plane implements Destroyable{
 		float impulse = this.body.getInertia() * desiredAngularVelocity;// disregard time factor
 		this.body.applyAngularImpulse(impulse);
 	}
+	public void rotateSin(){
+		rotate(body.getPosition().x);
+	}
 	
-	public void avoidBodies() {
-		// TODO Auto-generated method stub
-		
+	public boolean avoidColision(DebugDraw debugDraw) {
+		float rayLength = 10;
+		int[] angles = new int[10];
+		for (int i=0;i<angles.length; i++) {
+			angles[i] = i*360/angles.length;
+		}	
+		Vec2 sum = null;
+		for(Fixture fix  : detectionCallback.othersFixtures){
+			for(int i=0; i<angles.length;i++){
+			
+				float angle =  angles[i] * MathUtils.DEG2RAD;
+				RayCastOutput output = new RayCastOutput();
+				RayCastInput input = new RayCastInput();
+				input.p1.x = this.getBody().getPosition().x;
+				input.p1.y = this.getBody().getPosition().y;
+				input.maxFraction = 1;
+				
+				Vec2 p2 = this.body.getWorldPoint( new Vec2(MathUtils.sin(angle),MathUtils.cos(angle)).mul(rayLength));
+				input.p2.x = p2.x;
+				input.p2.y = p2.y;
+				//debugDraw.drawSegment(input.p1, input.p2, Color3f.BLUE);
+				if(fix.raycast(output, input, 1)){
+					Vec2  normal = output.normal.mul(rayLength);
+					if(sum == null){
+						sum = new Vec2();
+					}
+					sum = sum.add(normal);
+				}
+			}
+		}
+		if(sum != null){
+			sum.normalize();
+			
+			Vec2 pointToGo = this.getBody().getPosition().add(sum.mul(rayLength));
+			rotateTo(pointToGo);
+			debugDraw.drawSegment(this.getBody().getPosition(), pointToGo, Color3f.RED);
+			return false;
+		}
+		return true;
 	}
 
 	
@@ -185,11 +236,14 @@ public class Plane implements Destroyable{
 		
 	}
 	
-	public boolean shouldFire(Plane enemy){
-		Vec2 vectorToEnemy = new  Vec2(enemy.getBody().getPosition().x-this.body.getPosition().x,enemy.getBody().getPosition().y- this.body.getPosition().y);
-		Vec2 direction = this.body.getWorldVector(new Vec2(1, 0));
-		float angle = angleBetweenToVector(vectorToEnemy,direction);
-		return MathUtils.abs(angle) < 30 *MathUtils.DEG2RAD;
+	public boolean shouldFire(Set<Plane> enemies){
+		for (Plane enemy : enemies) {
+			Vec2 vectorToEnemy = new  Vec2(enemy.getBody().getPosition().x-this.body.getPosition().x,enemy.getBody().getPosition().y- this.body.getPosition().y);
+			Vec2 direction = this.body.getWorldVector(new Vec2(1, 0));
+			float angle = angleBetweenToVector(vectorToEnemy,direction);
+			return MathUtils.abs(angle) < 30 *MathUtils.DEG2RAD;
+		}
+		return false;
 	}
 
 	public void accelerate(AccelerationState state) {
@@ -214,17 +268,7 @@ public class Plane implements Destroyable{
 	public List<Bullet> getBullets() {
 		return this.bullets;
 	}
-		
-	@Override
-	public int hashCode() {
-		return id;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return this.id == ((Plane)obj).id;
-	}
-	
+			
 	@Override
 	public String toString() {
 		return "plane : {id: "+id+"}";
@@ -244,19 +288,20 @@ public class Plane implements Destroyable{
 		this.getWorld().destroyBody(this.body);
 	}
 
-	public Plane detectEnemy() {
-		this.callback.enemies.clear();
-		float detectRange = 40;
+	public Set<Plane> getEnemiesInRange() {
+		return this.detectionCallback.planes;
+	}
+	
+	public Boundaries getBoundsInRange() {
+		return this.detectionCallback.boundaries;
+	}
+		
+	public void detectGameEntities() {
+		detectionCallback.reset();
 		AABB aabb = new AABB();
-		aabb.lowerBound.set(new Vec2(this.body.getPosition().x - detectRange,this.body.getPosition().y - detectRange));
-		aabb.upperBound.set(new Vec2(this.body.getPosition().x + detectRange,this.body.getPosition().y + detectRange));
-		this.world.queryAABB(callback, aabb);
-		for (Plane enemy : this.callback.enemies) {
-			if(!enemy.isbot()){
-				return enemy;
-			}
-		}
-		return null;
+		aabb.lowerBound.set(new Vec2(this.body.getPosition().x - enemyDetectRange,this.body.getPosition().y - enemyDetectRange));
+		aabb.upperBound.set(new Vec2(this.body.getPosition().x + enemyDetectRange,this.body.getPosition().y + enemyDetectRange));
+		this.world.queryAABB(detectionCallback, aabb);
 	}
 	
 	public boolean isbot(){
@@ -269,4 +314,32 @@ public class Plane implements Destroyable{
 	public void setCruiseMode() {
 		this.body.m_linearDamping = cruiseModeLinearDamping;		
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + (isbot ? 1231 : 1237);
+		result = prime * result + (int) (timeCreated ^ (timeCreated >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plane other = (Plane) obj;
+		if (id != other.id)
+			return false;
+		if (isbot != other.isbot)
+			return false;
+		if (timeCreated != other.timeCreated)
+			return false;
+		return true;
+	}
+	
 }

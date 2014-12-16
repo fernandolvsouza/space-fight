@@ -9,27 +9,23 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Bullet implements Destroyable{
+public class Bullet implements Destroyable, GameEntity{
+
 	public static final long FireFrequency = 200;
 	private static final int damage = 10;
-
-	public Body getBody() {
-		return body;
-	}
-
+	private static final float fireLinearImpulse = 10.0f;
+	
 	private Body body;
 	private BodyDef bd;
 	private FixtureDef fd;
 	private Plane plane;
+	private int sequence;	
 	
-	private long activationTime = 0;
-	private boolean active = false;
-	private float fireLinearImpulse = 10.0f;
+	private final long timeCreated = new Date().getTime();
 	
-	private boolean readyToDestroy = false;
-	
-	private Bullet(Plane plane) {
+	private Bullet(Plane plane,int sequence) {
 		this.plane = plane;
+		this.sequence = sequence;
 		init();
 	}
 
@@ -40,28 +36,16 @@ public class Bullet implements Destroyable{
 
 		// shape definition
 		CircleShape shape = new CircleShape();
-		shape.setRadius(0.3f);
+		shape.setRadius(0.5f);
 
 		// fixture definition
 		fd = new FixtureDef();
 		fd.shape = shape;
-		fd.density = 1;
+		fd.density = 0.2f;
 	}
 
-	public static Bullet create(Plane plane) {
-		return new Bullet(plane);
-	}
-
-	public long getActivationTime() {
-		return this.activationTime;
-	}
-	
-	public long setActivationTime(long activationTime) {
-		return this.activationTime = activationTime;
-	}
-
-	public boolean inactive() {
-		return !active;
+	public static Bullet create(Plane plane,int sequence) {
+		return new Bullet(plane,sequence);
 	}
 
 	public void fire() {
@@ -78,9 +62,6 @@ public class Bullet implements Destroyable{
 		
 		this.body.applyLinearImpulse(new Vec2(direction.x * (fireLinearImpulse + planeSpeed), direction.y * (fireLinearImpulse + planeSpeed)), this.body.getPosition(), true);
 		
-		this.active = true;
-		this.activationTime = new Date().getTime();
-		
 	}
 	
 	public void destroy(){
@@ -90,18 +71,43 @@ public class Bullet implements Destroyable{
 	
 	public void destroyCascade(){
 		this.plane.getWorld().destroyBody(this.body);
-		this.active = false;
 	}
 	
-	public void setReadyToDestroy() {
-		this.readyToDestroy = true;
-	}
-	
-	public boolean readyToDestroy() {
-		return this.readyToDestroy;
-	}
-
 	public int getDamage() {		
 		return damage;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ (int) (timeCreated ^ (timeCreated >>> 32));
+		result = prime * result + ((plane == null) ? 0 : plane.hashCode());
+		result = prime * result + sequence;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bullet other = (Bullet) obj;
+		if (timeCreated != other.timeCreated)
+			return false;
+		if (plane == null) {
+			if (other.plane != null)
+				return false;
+		} else if (!plane.equals(other.plane))
+			return false;
+		if (sequence != other.sequence)
+			return false;
+		return true;
+	}
+	
+	
 }
