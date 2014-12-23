@@ -10,7 +10,7 @@ import com.haters.games.render.swing.DebugDrawJ2D;
 
 public class SpaceWorld  {
 	private World world;
-	private int width = 60;
+	private int radius = 80;
 	private Boundaries boundaries;
 	private DebugDrawJ2D debugDraw;
 
@@ -37,7 +37,7 @@ public class SpaceWorld  {
 	}
 
 	public Vec2 getRandomPosition() {
-		return new Vec2(randomBetween(-getWidth()/4, getWidth()/4), randomBetween(0, getWidth()/2));
+		return new Vec2(randomBetween(-getRadius()/4, getRadius()/4), randomBetween(0, getRadius()/2));
 	}
 	
 	private float randomBetween(float x,float y){
@@ -57,8 +57,8 @@ public class SpaceWorld  {
 		world.drawDebugData();
 	}
 
-	public int getWidth() {
-		return width;
+	public int getRadius() {
+		return radius;
 	}
 
 	public Boundaries getBoundaries() {

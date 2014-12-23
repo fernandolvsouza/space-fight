@@ -12,17 +12,17 @@ import org.jbox2d.dynamics.Fixture;
 public class DetectEntitiesCallback implements QueryCallback {
 
 	public Set<GameEntity> entities;
-	public Set<Plane> planes;
+	public Set<SpaceShip> planes;
 	public Set<Bullet> bullets;
 	public Boundaries boundaries;
 	public List<Fixture> boundFixtures;
 	public List<Fixture> othersFixtures;
 	
-	public Plane plane;
+	public SpaceShip plane;
 
-	public DetectEntitiesCallback(Plane plane) {
+	public DetectEntitiesCallback(SpaceShip plane) {
 		entities = new HashSet<GameEntity>();
-		planes = new HashSet<Plane>();
+		planes = new HashSet<SpaceShip>();
 		bullets = new HashSet<Bullet>();
 		boundFixtures = new ArrayList<Fixture>();
 		othersFixtures = new ArrayList<Fixture>();
@@ -35,8 +35,8 @@ public class DetectEntitiesCallback implements QueryCallback {
 			return true;
 		}
 		
-		if (userdata instanceof Plane ) {
-			planes.add((Plane) userdata);
+		if (userdata instanceof SpaceShip ) {
+			planes.add((SpaceShip) userdata);
 			othersFixtures.add(fix);
 		}
 		

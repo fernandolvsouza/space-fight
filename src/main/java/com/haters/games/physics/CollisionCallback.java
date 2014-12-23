@@ -21,8 +21,8 @@ public class CollisionCallback implements ContactListener {
 		Object dataA = contact.getFixtureA().getBody().getUserData();
 		Object dataB = contact.getFixtureB().getBody().getUserData();
 	
-		if(contactType(dataA,dataB,Bullet.class,Plane.class)){
-			Plane plane = (dataA instanceof Plane ? (Plane)dataA : (Plane)dataB);
+		if(contactType(dataA,dataB,Bullet.class,SpaceShip.class)){
+			SpaceShip plane = (dataA instanceof SpaceShip ? (SpaceShip)dataA : (SpaceShip)dataB);
 			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
 			killthen.add(bullet);
 			plane.damage(bullet);

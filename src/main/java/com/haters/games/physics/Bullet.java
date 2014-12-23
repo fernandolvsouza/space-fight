@@ -18,12 +18,12 @@ public class Bullet implements Destroyable, GameEntity{
 	private Body body;
 	private BodyDef bd;
 	private FixtureDef fd;
-	private Plane plane;
+	private SpaceShip plane;
 	private int sequence;	
 	
 	private final long timeCreated = new Date().getTime();
 	
-	private Bullet(Plane plane,int sequence) {
+	private Bullet(SpaceShip plane,int sequence) {
 		this.plane = plane;
 		this.sequence = sequence;
 		init();
@@ -44,7 +44,7 @@ public class Bullet implements Destroyable, GameEntity{
 		fd.density = 0.2f;
 	}
 
-	public static Bullet create(Plane plane,int sequence) {
+	public static Bullet create(SpaceShip plane,int sequence) {
 		return new Bullet(plane,sequence);
 	}
 
@@ -108,6 +108,9 @@ public class Bullet implements Destroyable, GameEntity{
 			return false;
 		return true;
 	}
-	
+
+	public Body getBody() {
+		return body;
+	}
 	
 }

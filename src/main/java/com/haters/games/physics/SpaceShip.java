@@ -21,14 +21,14 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 
-public class Plane implements Destroyable, GameEntity{
+public class SpaceShip implements Destroyable, GameEntity{
 
 	private final static float maxAngularVelocity = 10.0f;
 	private final static float angularDamping = 5.0f;
 	private final static float botAngularDamping = 2.0f;
 	private final static float maxAngularImpulse = 2.0f;
 	private final static int maximumActiveBullets = 30;
-	private final static int totalEnergy = 1000;
+	private final static int totalEnergy = 200;
 	private final static float attackModeLinearDamping = 1.0f;
 	private final static float cruiseModeLinearDamping = 3.0f;
 	private final static int enemyDetectRange = 40;
@@ -46,21 +46,21 @@ public class Plane implements Destroyable, GameEntity{
 	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
 	private DetectEntitiesCallback detectionCallback;
 
-	static public Plane create(World world,int id, List<Destroyable> killthen, boolean isbot){
-		return new Plane(world,id,killthen,isbot);
+	static public SpaceShip create(World world,int id, List<Destroyable> killthen, boolean isbot){
+		return new SpaceShip(world,id,killthen,isbot);
 	}
-	static public Plane create(World world, Vec2 pos, int id, List<Destroyable> killthen){
-		return new Plane(world,pos,id,killthen);
+	static public SpaceShip create(World world, Vec2 pos, int id, List<Destroyable> killthen){
+		return new SpaceShip(world,pos,id,killthen);
 	}
 	
-	private  Plane(World world,Vec2 pos, int id, List<Destroyable> killthen) {
+	private  SpaceShip(World world,Vec2 pos, int id, List<Destroyable> killthen) {
 		this.id = id;
 		this.world = world;
 		this.killthen = killthen; 
 		init(pos);
 	}
 	
-	private  Plane(World world,int id, List<Destroyable> killthen, boolean isbot) {
+	private  SpaceShip(World world,int id, List<Destroyable> killthen, boolean isbot) {
 		this.id = id;
 		this.world = world;
 		this.killthen = killthen;
@@ -236,8 +236,8 @@ public class Plane implements Destroyable, GameEntity{
 		
 	}
 	
-	public boolean shouldFire(Set<Plane> enemies){
-		for (Plane enemy : enemies) {
+	public boolean shouldFire(Set<SpaceShip> enemies){
+		for (SpaceShip enemy : enemies) {
 			Vec2 vectorToEnemy = new  Vec2(enemy.getBody().getPosition().x-this.body.getPosition().x,enemy.getBody().getPosition().y- this.body.getPosition().y);
 			Vec2 direction = this.body.getWorldVector(new Vec2(1, 0));
 			float angle = angleBetweenToVector(vectorToEnemy,direction);
@@ -288,7 +288,7 @@ public class Plane implements Destroyable, GameEntity{
 		this.getWorld().destroyBody(this.body);
 	}
 
-	public Set<Plane> getEnemiesInRange() {
+	public Set<SpaceShip> getEnemiesInRange() {
 		return this.detectionCallback.planes;
 	}
 	
@@ -332,7 +332,7 @@ public class Plane implements Destroyable, GameEntity{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Plane other = (Plane) obj;
+		SpaceShip other = (SpaceShip) obj;
 		if (id != other.id)
 			return false;
 		if (isbot != other.isbot)
@@ -340,6 +340,9 @@ public class Plane implements Destroyable, GameEntity{
 		if (timeCreated != other.timeCreated)
 			return false;
 		return true;
+	}
+	public int getId() {		
+		return id;
 	}
 	
 }

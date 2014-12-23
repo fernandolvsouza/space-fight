@@ -1,37 +1,14 @@
-/*******************************************************************************
- * Copyright (c) 2013, Daniel Murphy
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 	* Redistributions of source code must retain the above copyright notice,
- * 	  this list of conditions and the following disclaimer.
- * 	* Redistributions in binary form must reproduce the above copyright notice,
- * 	  this list of conditions and the following disclaimer in the documentation
- * 	  and/or other materials provided with the distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
-/**
- * Created at 7:50:04 AM Jan 20, 2011
- */
 package com.haters.games.physics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.haters.games.GameController;
 import com.haters.games.input.UserInputStream;
+import com.haters.games.output.GameSerializer;
+import com.haters.games.output.OutputStream;
 
 /**
  * @author Fernando Valente
@@ -41,20 +18,22 @@ public class GameLogic {
 	
 	private static final int numberOfBots = 10;
 	
-	private final List<Plane> bots = new ArrayList<Plane>();
+	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
 	
 	private SpaceWorld spaceWorld;
-	private Plane plane;
+	private SpaceShip player;
 	private  GameController controller;
 	private UserInputStream stream;
+	private OutputStream ostream;
 	
 	private int planeSequence = 0;
 	
-	public GameLogic(SpaceWorld spaceWorld, GameController controller, UserInputStream stream) {
+	public GameLogic(SpaceWorld spaceWorld, GameController controller, UserInputStream stream, OutputStream outputStream) {
 		this.spaceWorld = spaceWorld;
 		this.controller = controller;
 		this.stream = stream;
+		this.ostream = outputStream;
 	}
 
 	public void init() {
@@ -63,18 +42,18 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			Plane bot = Plane.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),planeSequence++,killthen);
+			SpaceShip bot = SpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),planeSequence++,killthen);
 			bots.add(bot);			
 		}
 		
-		plane = Plane.create(spaceWorld.getWorld(),planeSequence++,killthen,false);
-		plane.setAttackMode();
+		player = SpaceShip.create(spaceWorld.getWorld(),planeSequence++,killthen,false);
+		player.setAttackMode();
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
 		spaceWorld.step(f, velocityIterations, positionIterations);	
 
-		for(Plane bot : bots){
+		for(SpaceShip bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
 				killthen.add(bot);
 				bots.remove(bot);
@@ -83,7 +62,7 @@ public class GameLogic {
 			bot.detectGameEntities();
 			//bot.setAttackMode();
 			
-			Set<Plane> enemies = bot.getEnemiesInRange();
+			Set<SpaceShip> enemies = bot.getEnemiesInRange();
 			//Boundaries bounds =  bot.getBoundsInRange();
 			if(bot.avoidColision(spaceWorld.getDebugDraw())){
 				if(enemies.size() !=0){
@@ -100,31 +79,31 @@ public class GameLogic {
 		}
 		//plane.detectGameEntities();
 		//plane.avoidBoundaries(spaceWorld.getDebugDraw());
-		if(plane.getCurrentEnergy() <= 0){
-			killthen.add(plane);
+		if(player.getCurrentEnergy() <= 0){
+			killthen.add(player);
 		}
 		
 		if (stream.hasTurnLeftEvent()) { //37
-			plane.turn(TurnState.LEFT);	
+			player.turn(TurnState.LEFT);	
 		}
 		
 		if (stream.hasTurnRightEvent()) { //39
-			plane.turn(TurnState.RIGHT);	
+			player.turn(TurnState.RIGHT);	
 		}
 		
 		if (stream.hasAccelerationEvent()) { //38
-			plane.accelerate(AccelerationState.UP);	
+			player.accelerate(AccelerationState.UP);	
 		}
 		
-		if (stream.hasBreakEvent()) { //s/40
-			plane.accelerate(AccelerationState.DOWN);		
+		if (stream.hasBreakEvent()) { //40
+			player.accelerate(AccelerationState.DOWN);		
 		}
 		
 		if (stream.hasFireEvent()){ //'s'
-			plane.fire();
+			player.fire();
 		}
-		controller.setCamera(plane.getBody().getPosition());
-		spaceWorld.drawDebugData();
+		controller.setCamera(player.getBody().getPosition());
+		spaceWorld.drawDebugData();		
 	}
 	
 	public void afterStep(){
@@ -134,6 +113,14 @@ public class GameLogic {
 		}
 		
 		killthen.clear();
+		
+		try {
+			new GameSerializer().serialize(spaceWorld,bots,player,ostream.getWriter());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 	}
+	 
 }

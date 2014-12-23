@@ -68,6 +68,11 @@
 		<artifactId>guava</artifactId>
 		<version>14.0.1</version>
 	</dependency>
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.2.4</version>
+	</dependency>
 </dependencies>
 <build>
 	<plugins>
@@ -79,7 +84,7 @@
 				</descriptorRefs>
 				<archive>
 					<manifest>
-						<mainClass>org.jbox2d.testbed.framework.j2d.TestbedMain</mainClass>
+						<mainClass>com.haters.games.SpaceFightMain</mainClass>
 					</manifest>
 				</archive>
 			</configuration>

@@ -7,6 +7,7 @@ import org.jbox2d.common.OBBViewportTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import com.haters.games.output.OutputStream;
 import com.haters.games.physics.GameLogic;
 import com.haters.games.physics.SpaceWorld;
 import com.haters.games.render.RenderEngine;
@@ -57,7 +58,7 @@ public class GameController implements Runnable {
 		
 		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)),this.debugDraw);
 		
-		GameLogic logic = new GameLogic(spaceWorld,this,engine.getUserInputStream());
+		GameLogic logic = new GameLogic(spaceWorld,this,engine.getUserInputStream(), new OutputStream());
 		logic.init();
 				
 		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
@@ -83,7 +84,7 @@ public class GameController implements Runnable {
 			//render
 			if(engine.render()){
 				engine.getUserInputStream().processEvents();
-				logic.step(1f / DEFAULT_FPS, VelocityIterations, PositionIterations);
+				logic.step(1f / frameRate, VelocityIterations, PositionIterations);
 				logic.afterStep();
 				engine.paintScreen();
 			}
@@ -100,7 +101,7 @@ public class GameController implements Runnable {
 			}
 
 			beforeTime = System.nanoTime();
-			//System.out.println("frame rate: " + frameRate);
+			System.out.println("frame rate: " + frameRate);
 			
 		}
 	}
