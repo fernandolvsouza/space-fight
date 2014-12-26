@@ -3,9 +3,9 @@ package com.haters.games.input.swing;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
-import com.haters.games.input.UserInputStream;
+import com.haters.games.input.GameInputStream;
 
-public class SwingUserInputStream implements UserInputStream {
+public class SwingUserInputStream implements GameInputStream {
 	
 	private LinkedList<InputEventType> events =	new LinkedList<InputEventType>();
 	private boolean[] eventsBitMap = new boolean[84];

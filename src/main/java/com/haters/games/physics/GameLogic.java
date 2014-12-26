@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.haters.games.GameController;
-import com.haters.games.input.UserInputStream;
+import com.haters.games.input.GameInputStream;
+import com.haters.games.output.NetworkOutputStream;
 import com.haters.games.output.GameSerializer;
-import com.haters.games.output.OutputStream;
 
 /**
  * @author Fernando Valente
@@ -23,17 +23,20 @@ public class GameLogic {
 	
 	private SpaceWorld spaceWorld;
 	private SpaceShip player;
-	private  GameController controller;
-	private UserInputStream stream;
-	private OutputStream ostream;
+	private GameController controller;
+	private GameInputStream istream;
+	private NetworkOutputStream ostream;
+	private GameSerializer  serializer;
+	//private NetworkInputStream  istream;
 	
 	private int planeSequence = 0;
 	
-	public GameLogic(SpaceWorld spaceWorld, GameController controller, UserInputStream stream, OutputStream outputStream) {
+	public GameLogic(SpaceWorld spaceWorld, GameController controller, GameInputStream stream, NetworkOutputStream outputStream, GameSerializer serializer) {
 		this.spaceWorld = spaceWorld;
 		this.controller = controller;
-		this.stream = stream;
+		this.istream = stream;
 		this.ostream = outputStream;
+		this.serializer = serializer;
 	}
 
 	public void init() {
@@ -83,23 +86,23 @@ public class GameLogic {
 			killthen.add(player);
 		}
 		
-		if (stream.hasTurnLeftEvent()) { //37
+		if (istream.hasTurnLeftEvent()) { //37
 			player.turn(TurnState.LEFT);	
 		}
 		
-		if (stream.hasTurnRightEvent()) { //39
+		if (istream.hasTurnRightEvent()) { //39
 			player.turn(TurnState.RIGHT);	
 		}
 		
-		if (stream.hasAccelerationEvent()) { //38
+		if (istream.hasAccelerationEvent()) { //38
 			player.accelerate(AccelerationState.UP);	
 		}
 		
-		if (stream.hasBreakEvent()) { //40
+		if (istream.hasBreakEvent()) { //40
 			player.accelerate(AccelerationState.DOWN);		
 		}
 		
-		if (stream.hasFireEvent()){ //'s'
+		if (istream.hasFireEvent()){ //'s'
 			player.fire();
 		}
 		controller.setCamera(player.getBody().getPosition());
@@ -115,7 +118,10 @@ public class GameLogic {
 		killthen.clear();
 		
 		try {
-			new GameSerializer().serialize(spaceWorld,bots,player,ostream.getWriter());
+			
+			serializer.serialize(spaceWorld,bots,player,ostream.getWriter());
+			//istream.checkInput();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -5,15 +5,11 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.Socket;
 
-public class OutputStream {
+public class NetworkOutputStream {
 	PrintWriter out;
 	
-	public void pushGameState(Object obj) {
-		
-	}
 
 	public Writer getWriter() {
-		
 		
 		try {
 			if(out == null){

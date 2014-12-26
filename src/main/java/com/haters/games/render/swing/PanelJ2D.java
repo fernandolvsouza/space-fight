@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.haters.games.input.UserInputStream;
+import com.haters.games.input.GameInputStream;
 import com.haters.games.input.swing.SwingUserInputStream;
 import com.haters.games.render.RenderEngine;
 
@@ -30,7 +30,7 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 	private Graphics2D dbg = null;
 	private Image dbImage = null;
-	private UserInputStream  inputstream;
+	private GameInputStream  inputstream;
 	
 
 	public PanelJ2D(final SwingUserInputStream inputstream) {
@@ -108,7 +108,7 @@ public class PanelJ2D extends JPanel implements RenderEngine {
 
 
 	@Override
-	public UserInputStream getUserInputStream() {
+	public GameInputStream getUserInputStream() {
 		return inputstream;
 	}
 }

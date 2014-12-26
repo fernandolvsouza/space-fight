@@ -1,6 +1,6 @@
 package com.haters.games.render;
 
-import com.haters.games.input.UserInputStream;
+import com.haters.games.input.GameInputStream;
 
 
 public interface RenderEngine {
@@ -8,7 +8,7 @@ public interface RenderEngine {
 	public int getInitialWidth();	
 	public boolean render();
 	public void paintScreen();
-	public UserInputStream getUserInputStream();
+	public GameInputStream getUserInputStream();
 	public void grabFocus();
 	
 }

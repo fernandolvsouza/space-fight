@@ -1,7 +1,7 @@
 package com.haters.games.input;
 
 
-public interface UserInputStream {
+public interface GameInputStream {
 
 	boolean hasTurnLeftEvent();
 	boolean hasTurnRightEvent();
