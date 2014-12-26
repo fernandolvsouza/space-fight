@@ -1,6 +1,5 @@
 package com.haters.games.input;
 
-import com.haters.games.input.swing.SwingUserInputStream.InputEventType;
 
 public interface UserInputStream {
 
@@ -9,6 +8,5 @@ public interface UserInputStream {
 	boolean hasAccelerationEvent();
 	boolean hasBreakEvent();
 	boolean hasFireEvent();
-	void pushEvent(InputEventType type);
 	void processEvents();
 }

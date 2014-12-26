@@ -13,6 +13,8 @@ public class OutputStream {
 	}
 
 	public Writer getWriter() {
+		
+		
 		try {
 			if(out == null){
 				out = new PrintWriter(new Socket("127.0.0.1", 1337).getOutputStream(), false);

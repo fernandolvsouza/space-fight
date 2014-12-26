@@ -43,7 +43,6 @@ public class SwingUserInputStream implements UserInputStream {
 		return eventsBitMap[InputEventType.FIRE_ON.keycode];
 	}
 	
-	@Override
 	public void pushEvent(InputEventType e){
 		synchronized (events) {
 			events.add(e);	
