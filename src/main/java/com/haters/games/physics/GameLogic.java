@@ -16,7 +16,7 @@ import com.haters.games.output.GameSerializer;
 
 public class GameLogic {
 	
-	private static final int numberOfBots = 10;
+	private static final int numberOfBots = 0;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();

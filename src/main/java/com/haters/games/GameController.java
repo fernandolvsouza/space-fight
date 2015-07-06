@@ -105,7 +105,7 @@ public class GameController implements Runnable {
 			}
 
 			beforeTime = System.nanoTime();
-			System.out.println("frame rate: " + frameRate);
+			//System.out.println("frame rate: " + frameRate);
 			
 		}
 	}
