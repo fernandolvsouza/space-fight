@@ -8,5 +8,6 @@ public interface GameInputStream {
 	boolean hasAccelerationEvent();
 	boolean hasBreakEvent();
 	boolean hasFireEvent();
+	boolean hasNewPlayerEvent();
 	void processEvents();
 }

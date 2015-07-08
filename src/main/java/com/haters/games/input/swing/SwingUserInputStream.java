@@ -42,7 +42,12 @@ public class SwingUserInputStream implements GameInputStream {
 	public boolean hasFireEvent() {
 		return eventsBitMap[InputEventType.FIRE_ON.keycode];
 	}
-	
+
+	@Override
+	public boolean hasNewPlayerEvent() {
+		return false;
+	}
+
 	public void pushEvent(InputEventType e){
 		synchronized (events) {
 			events.add(e);	
