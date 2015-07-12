@@ -308,8 +308,9 @@ public class SpaceShip implements Destroyable, GameEntity{
 		return isbot;
 	}
 	
-	public void setAttackMode() {
+	public SpaceShip setAttackMode() {
 		this.body.m_linearDamping = attackModeLinearDamping;
+		return this;
 	}
 	public void setCruiseMode() {
 		this.body.m_linearDamping = cruiseModeLinearDamping;		
@@ -341,7 +342,7 @@ public class SpaceShip implements Destroyable, GameEntity{
 			return false;
 		return true;
 	}
-	public int getId() {		
+	public int getId() {
 		return id;
 	}
 	

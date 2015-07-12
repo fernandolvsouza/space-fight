@@ -1,9 +1,12 @@
 package com.haters.games.input.swing;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.haters.games.input.GameInputStream;
+import com.haters.games.physics.SpaceShip;
 
 public class SwingUserInputStream implements GameInputStream {
 	
@@ -19,33 +22,43 @@ public class SwingUserInputStream implements GameInputStream {
 	
 
 	@Override
-	public boolean hasTurnLeftEvent() {
+	public boolean hasTurnLeftEvent(SpaceShip player) {
 		return eventsBitMap[InputEventType.TURNLEFT_ON.keycode] ;
 	}
 
 	@Override
-	public boolean hasTurnRightEvent() {
+	public boolean hasTurnRightEvent(SpaceShip player) {
 		return eventsBitMap[InputEventType.TURNRIGHT_ON.keycode];
 	}
 
 	@Override
-	public boolean hasAccelerationEvent() {
+	public boolean hasAccelerationEvent(SpaceShip player) {
 		return eventsBitMap[InputEventType.ACCELERATE_ON.keycode];
 	}
 
 	@Override
-	public boolean hasBreakEvent() {
+	public boolean hasBreakEvent(SpaceShip player) {
 		return eventsBitMap[InputEventType.BREAK_ON.keycode];
 	}
 
 	@Override
-	public boolean hasFireEvent() {
+	public boolean hasFireEvent(SpaceShip player) {
 		return eventsBitMap[InputEventType.FIRE_ON.keycode];
 	}
 
 	@Override
 	public boolean hasNewPlayerEvent() {
 		return false;
+	}
+
+	@Override
+	public void eraseNewPlayersEvents() {
+
+	}
+
+	@Override
+	public List<Integer> getNewPlayers() {
+		return new ArrayList<Integer>();
 	}
 
 	public void pushEvent(InputEventType e){

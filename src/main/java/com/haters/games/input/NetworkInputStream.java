@@ -2,6 +2,7 @@ package com.haters.games.input;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.haters.games.physics.SpaceShip;
 
 
 import java.io.IOException;
@@ -9,7 +10,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 enum EventType {
 	LEFT, RIGHT, UP, DOWN, FIRE, NEW_PLAYER
@@ -17,62 +20,75 @@ enum EventType {
 
 public class NetworkInputStream implements GameInputStream {
 
-
-
-	private boolean[] eventsBitMap = new boolean[6];
+	private Map<Integer,boolean[]> eventsByPlayers = new HashMap<Integer, boolean[]>();
+	private List<Integer> newPlayers = new ArrayList<Integer>();
 	private SocketChannel channel;
 	private StringBuilder eventbuffer = new StringBuilder();
 
 
 	public NetworkInputStream() {
-		for (int i = 0; i < eventsBitMap.length; i++) {
-			eventsBitMap[i] = false;			
-		}
+
 	}
 	
 	@Override
-	public boolean hasTurnLeftEvent() {
-		return eventsBitMap[EventType.LEFT.ordinal()];
+	public boolean hasTurnLeftEvent(SpaceShip player) {
+		return eventsByPlayers.get(player.getId())[EventType.LEFT.ordinal()];
 	}
 
 	@Override
-	public boolean hasTurnRightEvent() {
-		return eventsBitMap[EventType.RIGHT.ordinal()];
+	public boolean hasTurnRightEvent(SpaceShip player) {
+		return eventsByPlayers.get(player.getId())[EventType.RIGHT.ordinal()];
 	}
 
 	@Override
-	public boolean hasAccelerationEvent() {
-		return eventsBitMap[EventType.UP.ordinal()];
+	public boolean hasAccelerationEvent(SpaceShip player) {
+		return eventsByPlayers.get(player.getId())[EventType.UP.ordinal()];
 	}
 
 	@Override
-	public boolean hasBreakEvent() {
-		return eventsBitMap[EventType.DOWN.ordinal()];
+	public boolean hasBreakEvent(SpaceShip player) {
+		return eventsByPlayers.get(player.getId())[EventType.DOWN.ordinal()];
 	}
 
 	@Override
-	public boolean hasFireEvent() {
-		return eventsBitMap[EventType.FIRE.ordinal()];
+	public boolean hasFireEvent(SpaceShip player) {
+		return eventsByPlayers.get(player.getId())[EventType.FIRE.ordinal()];
 	}
 
 	@Override
 	public boolean hasNewPlayerEvent() {
-		return eventsBitMap[EventType.NEW_PLAYER.ordinal()];
+		return !newPlayers.isEmpty();
+	}
+
+	@Override
+	public List<Integer> getNewPlayers() {
+		return newPlayers;
+	}
+
+	@Override
+	public void eraseNewPlayersEvents() {
+		newPlayers.clear();
 	}
 
 	@Override
 	public void processEvents() {
-		eventsBitMap[EventType.NEW_PLAYER.ordinal()] = false;
 		try {
 			String[] inputs = checkInput();
 			for (String input : inputs) {
 				JsonElement json =  new JsonParser().parse(input);
 
 				String event = json.getAsJsonObject().get("event").getAsString();
+				JsonElement payload = json.getAsJsonObject().get("payload");
+				Integer userId = payload.getAsJsonObject().get("user").getAsJsonObject().get("id").getAsInt();
+				if(EventType.valueOf(event) != EventType.NEW_PLAYER){
+					Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
+					eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
+				}else{
+					newPlayers.add(userId);
+					boolean[] bitmap = {false,false,false,false,false};
+					eventsByPlayers.put(userId,bitmap);
+				}
 
-				Boolean pressed = json.getAsJsonObject().get("pressed") != null? json.getAsJsonObject().get("pressed").getAsBoolean() : true;
-
-				eventsBitMap[EventType.valueOf(event).ordinal()] = pressed;
 			}			
 			
 		} catch (IOException e) {

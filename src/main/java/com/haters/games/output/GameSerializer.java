@@ -36,22 +36,20 @@ public class GameSerializer {
 	
 	static Gson g = new GsonBuilder().create() ;
 	public void serialize(SpaceWorld spaceWorld, List<SpaceShip> bots,
-			SpaceShip player, Writer out) throws IOException {
+			List<SpaceShip> players, Writer out) throws IOException {
 		JsonWriter jw = new JsonWriter(out) ;
-		jw.beginObject() ;
-		jw.name("bots");
-		jw.beginArray();
-		
+		jw.beginObject()
+				.name("bots").beginArray();
 
 		for (SpaceShip bot : bots) {
 			shipToJson(bot,jw);
 		}
-				
-		jw.endArray().
-		name("player");
-			shipToJson(player,jw).
-			endObject().
-		flush();
+		jw.endArray()
+				.name("player").beginArray();
+		for (SpaceShip p : players) {
+			shipToJson(p,jw);
+		}
+		jw.endArray().endObject().flush();
 		out.append("\n");
 	}
 	

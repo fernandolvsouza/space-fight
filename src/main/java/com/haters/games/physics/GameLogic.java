@@ -22,7 +22,7 @@ public class GameLogic {
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
 	
 	private SpaceWorld spaceWorld;
-	private SpaceShip player;
+	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
 	private GameController controller;
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
@@ -48,9 +48,7 @@ public class GameLogic {
 			SpaceShip bot = SpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),planeSequence++,killthen);
 			bots.add(bot);			
 		}
-		
-		player = SpaceShip.create(spaceWorld.getWorld(),planeSequence++,killthen,false);
-		player.setAttackMode();
+
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
@@ -82,30 +80,42 @@ public class GameLogic {
 		}
 		//plane.detectGameEntities();
 		//plane.avoidBoundaries(spaceWorld.getDebugDraw());
-		if(player.getCurrentEnergy() <= 0){
-			killthen.add(player);
+
+
+		if (istream.hasNewPlayerEvent()) {
+			for(Integer id : istream.getNewPlayers()) {
+				players.add(SpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
+			}
+			istream.eraseNewPlayersEvents();
 		}
-		
-		if (istream.hasTurnLeftEvent()) { //37
-			player.turn(TurnState.LEFT);	
+
+		for(SpaceShip player : players) {
+			if (player.getCurrentEnergy() <= 0) {
+				killthen.add(player);
+			}
+			if (istream.hasTurnLeftEvent(player)) { //37
+				player.turn(TurnState.LEFT);
+			}
+
+			if (istream.hasTurnRightEvent(player)) { //39
+				player.turn(TurnState.RIGHT);
+			}
+
+			if (istream.hasAccelerationEvent(player)) { //38
+				player.accelerate(AccelerationState.UP);
+			}
+
+			if (istream.hasBreakEvent(player)) { //40
+				player.accelerate(AccelerationState.DOWN);
+			}
+
+			if (istream.hasFireEvent(player)) { //'s'
+				player.fire();
+			}
 		}
-		
-		if (istream.hasTurnRightEvent()) { //39
-			player.turn(TurnState.RIGHT);	
+		if(!players.isEmpty()) {
+			controller.setCamera(players.get(0).getBody().getPosition());
 		}
-		
-		if (istream.hasAccelerationEvent()) { //38
-			player.accelerate(AccelerationState.UP);	
-		}
-		
-		if (istream.hasBreakEvent()) { //40
-			player.accelerate(AccelerationState.DOWN);		
-		}
-		
-		if (istream.hasFireEvent()){ //'s'
-			player.fire();
-		}
-		controller.setCamera(player.getBody().getPosition());
 		spaceWorld.drawDebugData();		
 	}
 	
@@ -119,7 +129,7 @@ public class GameLogic {
 		
 		try {
 			
-			serializer.serialize(spaceWorld,bots,player,ostream.getWriter());
+			serializer.serialize(spaceWorld,bots,players,ostream.getWriter());
 			//istream.checkInput();
 			
 		} catch (IOException e) {
