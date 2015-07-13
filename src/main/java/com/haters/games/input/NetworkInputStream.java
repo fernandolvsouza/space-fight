@@ -15,13 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 enum EventType {
-	LEFT, RIGHT, UP, DOWN, FIRE, NEW_PLAYER
+	LEFT, RIGHT, UP, DOWN, FIRE, NEW_PLAYER, REMOVE_PLAYER
 }
 
 public class NetworkInputStream implements GameInputStream {
 
 	private Map<Integer,boolean[]> eventsByPlayers = new HashMap<Integer, boolean[]>();
 	private List<Integer> newPlayers = new ArrayList<Integer>();
+	private List<Integer> removePlayers = new ArrayList<Integer>();
 	private SocketChannel channel;
 	private StringBuilder eventbuffer = new StringBuilder();
 
@@ -61,13 +62,28 @@ public class NetworkInputStream implements GameInputStream {
 	}
 
 	@Override
+	public boolean hasRemovePlayerEvent() {
+		return !removePlayers.isEmpty();
+	}
+
+	@Override
 	public List<Integer> getNewPlayers() {
 		return newPlayers;
 	}
 
 	@Override
+	public List<Integer> getRemovePlayers() {
+		return removePlayers;
+	}
+
+	@Override
 	public void eraseNewPlayersEvents() {
 		newPlayers.clear();
+	}
+
+	@Override
+	public void eraseRemovePlayersEvents() {
+		removePlayers.clear();
 	}
 
 	@Override
@@ -80,15 +96,17 @@ public class NetworkInputStream implements GameInputStream {
 				String event = json.getAsJsonObject().get("event").getAsString();
 				JsonElement payload = json.getAsJsonObject().get("payload");
 				Integer userId = payload.getAsJsonObject().get("user").getAsJsonObject().get("id").getAsInt();
-				if(EventType.valueOf(event) != EventType.NEW_PLAYER){
-					Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
-					eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
-				}else{
+				if (EventType.valueOf(event) == EventType.NEW_PLAYER) {
 					newPlayers.add(userId);
 					boolean[] bitmap = {false,false,false,false,false};
-					eventsByPlayers.put(userId,bitmap);
+					eventsByPlayers.put(userId, bitmap);
+				}else if (EventType.valueOf(event) == EventType.REMOVE_PLAYER) {
+					removePlayers.add(userId);
+					eventsByPlayers.remove(userId);
+				}else {
+					Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
+					eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
 				}
-
 			}			
 			
 		} catch (IOException e) {

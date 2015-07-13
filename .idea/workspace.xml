@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" line="123" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" line="141" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfafa94d-9046-4d9c-ba51-279689890612" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="space-fight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,8 +49,8 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1259" max-vertical-offset="2380">
-              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state vertical-scroll-proportion="-21.148148" vertical-offset="1044" max-vertical-offset="2635">
+              <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -62,36 +59,9 @@
       <file leaf-file-name="SpaceShip.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4395" max-vertical-offset="5321">
-              <caret line="55" column="48" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1549#1557#0" expanded="false" />
-                <element signature="e#2297#2298#0" expanded="false" />
-                <element signature="e#2315#2316#0" expanded="false" />
-                <element signature="e#5694#5695#0" expanded="false" />
-                <element signature="e#5729#5730#0" expanded="false" />
-                <element signature="e#8059#8060#0" expanded="false" />
-                <element signature="e#8083#8084#0" expanded="false" />
-                <element signature="e#8120#8121#0" expanded="false" />
-                <element signature="e#8146#8147#0" expanded="false" />
-                <element signature="e#8189#8190#0" expanded="false" />
-                <element signature="e#8225#8226#0" expanded="false" />
-                <element signature="e#8257#8258#0" expanded="false" />
-                <element signature="e#8299#8300#0" expanded="false" />
-                <element signature="e#8331#8332#0" expanded="false" />
-                <element signature="e#8363#8364#0" expanded="false" />
-                <element signature="e#8587#8588#0" expanded="false" />
-                <element signature="e#8630#8631#0" expanded="false" />
-                <element signature="e#8672#8673#0" expanded="false" />
-                <element signature="e#8719#8720#0" expanded="false" />
-                <element signature="e#9140#9141#0" expanded="false" />
-                <element signature="e#9159#9160#0" expanded="false" />
-                <element signature="e#9301#9302#0" expanded="false" />
-                <element signature="e#9361#9362#0" expanded="false" />
-                <element signature="e#10006#10007#0" expanded="false" />
-                <element signature="e#10022#10023#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="40.296295" vertical-offset="1768" max-vertical-offset="5321">
+              <caret line="58" column="21" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -99,8 +69,8 @@
       <file leaf-file-name="GameInputStream.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-              <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -118,26 +88,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NetworkInputStream.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NetworkInputStream.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1225" max-vertical-offset="2397">
-              <caret line="82" column="28" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="28" />
+            <state vertical-scroll-proportion="1.0448549" vertical-offset="568" max-vertical-offset="2601">
+              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#637#646#0" expanded="true" />
-                <element signature="e#3084#3092#0" expanded="true" />
+                <element signature="e#652#661#0" expanded="true" />
+                <element signature="e#717#726#0" expanded="true" />
+                <element signature="e#3560#3568#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwingUserInputStream.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NetworkOutputStream.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SwingUserInputStream.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4713376" vertical-offset="480" max-vertical-offset="1649">
-              <caret line="70" column="32" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1904">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding>
+                <element signature="e#1314#1315#0" expanded="true" />
+                <element signature="e#1333#1334#0" expanded="true" />
+                <element signature="e#1591#1592#0" expanded="true" />
+                <element signature="e#1609#1610#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -185,9 +171,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
       </list>
     </option>
   </component>
@@ -637,14 +623,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17378049" sideWeight="0.45420662" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282887" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32825205" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496318" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18051118" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17378049" sideWeight="0.5457934" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17378049" sideWeight="0.5457934" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16763678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -677,25 +663,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/nio/Buffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3791" max-vertical-offset="9163">
-          <caret line="250" column="34" selection-start-line="250" selection-start-column="29" selection-end-line="250" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/SpaceFightMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14" max-vertical-offset="646">
-          <caret line="16" column="41" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1050#1154#0" expanded="false" />
-            <element signature="e#1153#1154#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="885">
@@ -737,8 +704,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#637#646#0" expanded="true" />
-            <element signature="e#3084#3092#0" expanded="true" />
+            <element signature="e#652#661#0" expanded="true" />
+            <element signature="e#717#726#0" expanded="true" />
+            <element signature="e#3560#3568#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -796,8 +764,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#637#646#0" expanded="true" />
-            <element signature="e#3084#3092#0" expanded="true" />
+            <element signature="e#652#661#0" expanded="true" />
+            <element signature="e#717#726#0" expanded="true" />
+            <element signature="e#3560#3568#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1055,37 +1024,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4395" max-vertical-offset="5321">
-          <caret line="55" column="48" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1206">
+          <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1549#1557#0" expanded="false" />
-            <element signature="e#2297#2298#0" expanded="false" />
-            <element signature="e#2315#2316#0" expanded="false" />
-            <element signature="e#5694#5695#0" expanded="false" />
-            <element signature="e#5729#5730#0" expanded="false" />
-            <element signature="e#8059#8060#0" expanded="false" />
-            <element signature="e#8083#8084#0" expanded="false" />
-            <element signature="e#8120#8121#0" expanded="false" />
-            <element signature="e#8146#8147#0" expanded="false" />
-            <element signature="e#8189#8190#0" expanded="false" />
-            <element signature="e#8225#8226#0" expanded="false" />
-            <element signature="e#8257#8258#0" expanded="false" />
-            <element signature="e#8299#8300#0" expanded="false" />
-            <element signature="e#8331#8332#0" expanded="false" />
-            <element signature="e#8363#8364#0" expanded="false" />
-            <element signature="e#8587#8588#0" expanded="false" />
-            <element signature="e#8630#8631#0" expanded="false" />
-            <element signature="e#8672#8673#0" expanded="false" />
-            <element signature="e#8719#8720#0" expanded="false" />
-            <element signature="e#9140#9141#0" expanded="false" />
-            <element signature="e#9159#9160#0" expanded="false" />
-            <element signature="e#9301#9302#0" expanded="false" />
-            <element signature="e#9361#9362#0" expanded="false" />
-            <element signature="e#10006#10007#0" expanded="false" />
-            <element signature="e#10022#10023#0" expanded="false" />
+            <element signature="e#1336#1337#0" expanded="true" />
+            <element signature="e#1364#1365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1098,32 +1043,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1206">
-          <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.33248407" vertical-offset="793" max-vertical-offset="1836">
+          <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
           <folding>
-            <element signature="e#1336#1337#0" expanded="true" />
-            <element signature="e#1364#1365#0" expanded="true" />
+            <element signature="e#1823#1824#0" expanded="false" />
+            <element signature="e#1874#1875#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1259" max-vertical-offset="2380">
-          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state vertical-scroll-proportion="40.296295" vertical-offset="1768" max-vertical-offset="5321">
+          <caret line="58" column="21" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="21" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1135,23 +1070,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1225" max-vertical-offset="2397">
-          <caret line="82" column="28" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1904">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#637#646#0" expanded="true" />
-            <element signature="e#3084#3092#0" expanded="true" />
+            <element signature="e#1314#1315#0" expanded="true" />
+            <element signature="e#1333#1334#0" expanded="true" />
+            <element signature="e#1591#1592#0" expanded="true" />
+            <element signature="e#1609#1610#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4713376" vertical-offset="480" max-vertical-offset="1649">
-          <caret line="70" column="32" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.148148" vertical-offset="1044" max-vertical-offset="2635">
+          <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0448549" vertical-offset="568" max-vertical-offset="2601">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#652#661#0" expanded="true" />
+            <element signature="e#717#726#0" expanded="true" />
+            <element signature="e#3560#3568#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

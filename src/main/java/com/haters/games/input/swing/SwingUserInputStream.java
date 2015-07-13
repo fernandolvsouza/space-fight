@@ -52,13 +52,28 @@ public class SwingUserInputStream implements GameInputStream {
 	}
 
 	@Override
+	public boolean hasRemovePlayerEvent() {
+		return false;
+	}
+
+	@Override
 	public void eraseNewPlayersEvents() {
+
+	}
+
+	@Override
+	public void eraseRemovePlayersEvents() {
 
 	}
 
 	@Override
 	public List<Integer> getNewPlayers() {
 		return new ArrayList<Integer>();
+	}
+
+	@Override
+	public List<Integer> getRemovePlayers() {
+		return null;
 	}
 
 	public void pushEvent(InputEventType e){

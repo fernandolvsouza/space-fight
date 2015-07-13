@@ -89,6 +89,20 @@ public class GameLogic {
 			istream.eraseNewPlayersEvents();
 		}
 
+		if (istream.hasRemovePlayerEvent()) {
+			for(Integer id : istream.getRemovePlayers()) {
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i).getId() == id) {
+						killthen.add(players.get(i));
+						players.remove(i);
+						i--;
+					}
+				}
+			}
+			System.out.println("players size : " +  players.size());
+			istream.eraseRemovePlayersEvents();
+		}
+
 		for(SpaceShip player : players) {
 			if (player.getCurrentEnergy() <= 0) {
 				killthen.add(player);
@@ -113,6 +127,7 @@ public class GameLogic {
 				player.fire();
 			}
 		}
+
 		if(!players.isEmpty()) {
 			controller.setCamera(players.get(0).getBody().getPosition());
 		}
