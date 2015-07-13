@@ -146,7 +146,7 @@ public class NetworkInputStream implements GameInputStream {
 				char b = (char) buffer.get();
 				if(b == '\n') {
 					events.add(eventbuffer.toString());
-					System.out.println(events.get(events.size() - 1));
+					//System.out.println(events.get(events.size() - 1));
 					eventbuffer.setLength(0);
 				}else {
 					eventbuffer.append(b);
