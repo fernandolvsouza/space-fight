@@ -52,7 +52,7 @@ public class GameLogic {
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
-		spaceWorld.step(f, velocityIterations, positionIterations);	
+		spaceWorld.step(f, velocityIterations, positionIterations);
 
 		for(SpaceShip bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
@@ -106,6 +106,7 @@ public class GameLogic {
 		for(SpaceShip player : players) {
 			if (player.getCurrentEnergy() <= 0) {
 				killthen.add(player);
+				players.remove(player);
 			}
 			if (istream.hasTurnLeftEvent(player)) { //37
 				player.turn(TurnState.LEFT);

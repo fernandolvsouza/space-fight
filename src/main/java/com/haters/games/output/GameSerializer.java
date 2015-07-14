@@ -45,7 +45,7 @@ public class GameSerializer {
 			shipToJson(bot,jw);
 		}
 		jw.endArray()
-				.name("player").beginArray();
+				.name("players").beginArray();
 		for (SpaceShip p : players) {
 			shipToJson(p,jw);
 		}
@@ -55,7 +55,7 @@ public class GameSerializer {
 	
 	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{
 		jw.beginObject().
-			//name("id").value(ship.hashCode()).
+			name("id").value(ship.getId()).
 			name("angle").value(String.format("%.2f", ship.getBody().getAngle())).
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
 			name("y").value(String.format("%.2f", ship.getBody().getPosition().y));
