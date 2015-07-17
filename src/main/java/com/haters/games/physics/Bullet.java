@@ -11,7 +11,7 @@ import org.jbox2d.dynamics.FixtureDef;
 
 public class Bullet implements Destroyable, GameEntity{
 
-	public static final long FireFrequency = 200;
+	public static final long FireFrequency = 500;
 	private static final int damage = 10;
 	private static final float fireLinearImpulse = 10.0f;
 	
