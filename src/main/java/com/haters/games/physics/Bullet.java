@@ -13,7 +13,7 @@ public class Bullet implements Destroyable, GameEntity{
 
 	public static final long FireFrequency = 500;
 	private static final int damage = 10;
-	private static final float fireLinearImpulse = 10.0f;
+	private static final float fireLinearImpulse = 13.0f;
 	
 	private Body body;
 	private BodyDef bd;
@@ -58,9 +58,9 @@ public class Bullet implements Destroyable, GameEntity{
 		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
 		direction.normalize();
 		
-		float planeSpeed = plane.getBody().getLinearVelocity().length(); 
+		//float planeSpeed = plane.getBody().getLinearVelocity().length();
 		
-		this.body.applyLinearImpulse(new Vec2(direction.x * (fireLinearImpulse + planeSpeed), direction.y * (fireLinearImpulse + planeSpeed)), this.body.getPosition(), true);
+		this.body.applyLinearImpulse(new Vec2(direction.x * fireLinearImpulse, direction.y * fireLinearImpulse), this.body.getPosition(), true);
 		
 	}
 	
