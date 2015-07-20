@@ -16,7 +16,7 @@ import com.haters.games.output.GameSerializer;
 
 public class GameLogic {
 	
-	private static final int numberOfBots = 0;
+	private static final int numberOfBots = 100;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
@@ -103,10 +103,13 @@ public class GameLogic {
 			istream.eraseRemovePlayersEvents();
 		}
 
-		for(SpaceShip player : players) {
+		for (int i = 0; i < players.size(); i++) {
+			SpaceShip player = this.players.get(i);
 			if (player.getCurrentEnergy() <= 0) {
 				killthen.add(player);
 				players.remove(player);
+				i--;
+				continue;
 			}
 			if (istream.hasTurnLeftEvent(player)) { //37
 				player.turn(TurnState.LEFT);
