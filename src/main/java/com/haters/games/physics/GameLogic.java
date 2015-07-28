@@ -135,7 +135,7 @@ public class GameLogic {
 		if(!players.isEmpty()) {
 			controller.setCamera(players.get(0).getBody().getPosition());
 		}
-		//spaceWorld.drawDebugData();		
+		//spaceWorld.drawDebugData();
 	}
 	
 	public void afterStep(){

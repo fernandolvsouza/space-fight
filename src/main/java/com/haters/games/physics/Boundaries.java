@@ -21,6 +21,7 @@ public class Boundaries implements Destroyable,GameEntity{
 	}
 
 	public void setup() {
+		int width = spaceWorld.getRadius();
 		
 		// body definition
 		BodyDef bd = new BodyDef();
@@ -51,10 +52,10 @@ public class Boundaries implements Destroyable,GameEntity{
 			body.createFixture(fd);
 		}
 
-		/*// add four walls to the static body
+		// add four walls to the static body
 		 
-		shape.set(p1,p2);//(width / 2, 1, new Vec2(0, 0), 0);
-		body.createFixture(f);
+		/*shape.set(p1,p2);//(width / 2, 1, new Vec2(0, 0), 0);
+		body.createFixture(f);*/
 		 
 		shape.set(new Vec2(-width/2,0),new Vec2(width/2, 0));//(width / 2, 1, new Vec2(0, 0), 0);
 		body.createFixture(fd);
@@ -69,7 +70,7 @@ public class Boundaries implements Destroyable,GameEntity{
 
 		//shape.setAsBox(1, width / 2, new Vec2(width / 2, width / 2), 0);
 		shape.set(new Vec2(-width/2,width),new Vec2(-width/2, 0));
-		body.createFixture(fd);*/
+		body.createFixture(fd);
 		
 		body.setUserData(this);
 	}

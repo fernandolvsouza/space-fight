@@ -28,7 +28,7 @@ public class SpaceShip implements Destroyable, GameEntity{
 	private final static float botAngularDamping = 2.0f;
 	private final static float maxAngularImpulse = 2.0f;
 	private final static int maximumActiveBullets = 30;
-	private final static int totalEnergy = 100;
+	private final static int totalEnergy = 1000;
 	private final static float attackModeLinearDamping = 1.0f;
 	private final static float cruiseModeLinearDamping = 3.0f;
 	private final static int enemyDetectRange = 40;
@@ -222,7 +222,8 @@ public class SpaceShip implements Destroyable, GameEntity{
 			
 			Vec2 pointToGo = this.getBody().getPosition().add(sum.mul(rayLength));
 			rotateTo(pointToGo);
-			debugDraw.drawSegment(this.getBody().getPosition(), pointToGo, Color3f.RED);
+			if(debugDraw != null)
+				debugDraw.drawSegment(this.getBody().getPosition(), pointToGo, Color3f.RED);
 			return false;
 		}
 		return true;

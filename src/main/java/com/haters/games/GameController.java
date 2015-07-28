@@ -23,12 +23,12 @@ public class GameController implements Runnable {
 	private  static final int DEFAULT_FPS = 60;
 	private static final int PositionIterations = 3;
 	private static final int VelocityIterations = 8;
-	
-	private final IViewportTransform transform;
+
+	private IViewportTransform transform = null;
 	private final Vec2 initPosition = new Vec2(0,0);
 	private final float initScale = 7;
-		
-	private final RenderEngine engine;
+
+	private  RenderEngine engine = null;
 	private DebugDrawJ2D debugDraw;
 	private Thread animation;
 	
@@ -38,12 +38,17 @@ public class GameController implements Runnable {
 		this.debugDraw = debugDraw;
 	    this.transform = new OBBViewportTransform();
 	    this.animation = new Thread(this, "thread-1");
-	    
+
 	    transform.setCamera(initPosition.x, initPosition.y, initScale);
 	    transform.setExtents(engine.getInitialWidth()/2, engine.getInitialHeight()/2);
 	    this.debugDraw.setViewportTransform(transform);
 	    configureDebugDraw(this.debugDraw);  
-	}		
+	}
+
+	public GameController() {
+		super();
+		this.animation = new Thread(this, "thread-1");
+	}
 	
 	private void configureDebugDraw(DebugDrawJ2D debugDraw){
 	    int flags = 0;
@@ -76,7 +81,7 @@ public class GameController implements Runnable {
 	    //engine.grabFocus();
 	    
 		while (true) {
-			engine.grabFocus();
+			//engine.grabFocus();
 			timeSpent = beforeTime - updateTime;
 			if (timeSpent > 0) {
 				timeInSecs = timeSpent * 1.0f / 1000000000.0f;
@@ -86,11 +91,15 @@ public class GameController implements Runnable {
 				updateTime = System.nanoTime();
 			}
 			//render
-			if(engine.render()){
+			if(engine != null && engine.render()){
 				istream.processEvents();
 				logic.step(1f / frameRate, VelocityIterations, PositionIterations);
 				logic.afterStep();
 				engine.paintScreen();
+			}else{
+				istream.processEvents();
+				logic.step(1f / frameRate, VelocityIterations, PositionIterations);
+				logic.afterStep();
 			}
 			
 			afterTime = System.nanoTime();
@@ -111,6 +120,7 @@ public class GameController implements Runnable {
 	}
 	
 	public void setCamera(Vec2 pos){
+		if(transform != null)
 		transform.setCamera(pos.x, pos.y, initScale);
 	}
 

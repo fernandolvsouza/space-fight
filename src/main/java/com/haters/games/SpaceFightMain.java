@@ -14,7 +14,7 @@ public class SpaceFightMain {
 
 	public static void main(String[] args) {
 
-		final SwingUserInputStream stream = new SwingUserInputStream();
+		/*final SwingUserInputStream stream = new SwingUserInputStream();
 		PanelJ2D panel = new PanelJ2D(stream);
 		
 	    JFrame jframe = new JFrame();
@@ -28,8 +28,8 @@ public class SpaceFightMain {
 	    
 	    	    
 	    DebugDrawJ2D debugDraw = new DebugDrawJ2D(panel, true);
-	    
-	    final GameController controller = new GameController(panel,debugDraw);
+	    */
+	    final GameController controller = new GameController();
 	    
 	    //System.out.println(System.getProperty("java.home"));
 
