@@ -104,8 +104,10 @@ public class NetworkInputStream implements GameInputStream {
 					removePlayers.add(userId);
 					eventsByPlayers.remove(userId);
 				}else {
-					Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
-					eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
+					if(eventsByPlayers.containsKey(userId)) {
+						Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
+						eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
+					}
 				}
 			}			
 			

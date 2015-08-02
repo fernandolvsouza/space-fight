@@ -147,7 +147,6 @@ public class GameLogic {
 		killthen.clear();
 		
 		try {
-			
 			serializer.serialize(spaceWorld,bots,players,ostream.getWriter());
 			//istream.checkInput();
 			

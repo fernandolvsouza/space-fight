@@ -10,7 +10,7 @@ import com.haters.games.render.swing.DebugDrawJ2D;
 
 public class SpaceWorld  {
 	private World world;
-	private int radius = 200;
+	private int radius = 500;
 	private Boundaries boundaries;
 	private DebugDrawJ2D debugDraw;
 
