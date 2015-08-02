@@ -67,7 +67,7 @@ public class GameController implements Runnable {
 		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)),this.debugDraw);
 		final GameInputStream istream = new NetworkInputStream();
 		
-		GameLogic logic = new GameLogic(spaceWorld,this, istream, new NetworkOutputStream(), new GameSerializer());
+		GameLogic logic = new GameLogic(spaceWorld,this, istream, new NetworkOutputStream());
 		logic.init();
 				
 		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;

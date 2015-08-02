@@ -1,15 +1,21 @@
 package com.haters.games.output;
 
+import com.haters.games.physics.SpaceShip;
+import com.haters.games.physics.SpaceWorld;
+import sun.jvm.hotspot.memory.Space;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.util.List;
 
 public class NetworkOutputStream {
-	PrintWriter out;
-	
+	private PrintWriter out;
+	private GameSerializer serializer = new GameSerializer();
 
-	public Writer getWriter() {
+
+	private Writer getWriter() {
 		
 		try {
 			if(out == null){
@@ -21,5 +27,12 @@ public class NetworkOutputStream {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+
+	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players) {
+		for (SpaceShip player : players){
+            serializer.serializeForPlayer(player, getWriter());
+        }
 	}
 }

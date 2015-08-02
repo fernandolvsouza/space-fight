@@ -1,6 +1,5 @@
 package com.haters.games.physics;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -26,17 +25,14 @@ public class GameLogic {
 	private GameController controller;
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
-	private GameSerializer  serializer;
-	//private NetworkInputStream  istream;
 	
 	private int planeSequence = 0;
 	
-	public GameLogic(SpaceWorld spaceWorld, GameController controller, GameInputStream stream, NetworkOutputStream outputStream, GameSerializer serializer) {
+	public GameLogic(SpaceWorld spaceWorld, GameController controller, GameInputStream stream, NetworkOutputStream outputStream) {
 		this.spaceWorld = spaceWorld;
 		this.controller = controller;
 		this.istream = stream;
 		this.ostream = outputStream;
-		this.serializer = serializer;
 	}
 
 	public void init() {
@@ -63,7 +59,7 @@ public class GameLogic {
 			bot.detectGameEntities();
 			//bot.setAttackMode();
 			
-			Set<SpaceShip> enemies = bot.getEnemiesInRange();
+			Set<SpaceShip> enemies = bot.getShipsInRange();
 			//Boundaries bounds =  bot.getBoundsInRange();
 			if(bot.avoidColision(spaceWorld.getDebugDraw())){
 				if(enemies.size() !=0){
@@ -78,8 +74,7 @@ public class GameLogic {
 			bot.accelerate(AccelerationState.UP);
 			
 		}
-		//plane.detectGameEntities();
-		//plane.avoidBoundaries(spaceWorld.getDebugDraw());
+
 
 
 		if (istream.hasNewPlayerEvent()) {
@@ -130,6 +125,8 @@ public class GameLogic {
 			if (istream.hasFireEvent(player)) { //'s'
 				player.fire();
 			}
+
+			player.detectGameEntities();
 		}
 
 		if(!players.isEmpty()) {
@@ -145,15 +142,7 @@ public class GameLogic {
 		}
 		
 		killthen.clear();
-		
-		try {
-			serializer.serialize(spaceWorld,bots,players,ostream.getWriter());
-			//istream.checkInput();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ostream.streamGame(spaceWorld,bots,players);
 	
 	}
 	 

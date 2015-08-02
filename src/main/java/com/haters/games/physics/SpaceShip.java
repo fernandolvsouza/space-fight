@@ -28,10 +28,10 @@ public class SpaceShip implements Destroyable, GameEntity{
 	private final static float botAngularDamping = 2.0f;
 	private final static float maxAngularImpulse = 2.0f;
 	private final static int maximumActiveBullets = 30;
-	private final static int totalEnergy = 5000	;
+	private final static int totalEnergy = 100;
 	private final static float attackModeLinearDamping = 1.0f;
 	private final static float cruiseModeLinearDamping = 3.0f;
-	private final static int enemyDetectRange = 40;
+	private final static int enemyDetectRange = 70;
 	
 	private final long timeCreated = new Date().getTime();
 	private int id;
@@ -289,7 +289,7 @@ public class SpaceShip implements Destroyable, GameEntity{
 		this.getWorld().destroyBody(this.body);
 	}
 
-	public Set<SpaceShip> getEnemiesInRange() {
+	public Set<SpaceShip> getShipsInRange() {
 		return this.detectionCallback.planes;
 	}
 	
@@ -346,5 +346,5 @@ public class SpaceShip implements Destroyable, GameEntity{
 	public int getId() {
 		return id;
 	}
-	
+
 }

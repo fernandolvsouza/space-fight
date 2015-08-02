@@ -59,7 +59,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	
 	public void reset(){
 		if(!plane.isbot()){
-			System.out.println("Entities =  " + entities.size() + " , Planes = " + planes.size() + " , Bullets = " + bullets.size() + " , limits  = " + boundaries );
+			//System.out.println("Entities =  " + entities.size() + " , Planes = " + planes.size() + " , Bullets = " + bullets.size() + " , limits  = " + boundaries );
 		}
 		entities.clear();
 		planes.clear();
