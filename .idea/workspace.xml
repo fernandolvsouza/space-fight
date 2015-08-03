@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfafa94d-9046-4d9c-ba51-279689890612" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/DetectEntitiesCallback.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/DetectEntitiesCallback.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java" />
     </list>
     <ignored path="space-fight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SpaceWorld.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SpaceWorld.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13709678" vertical-offset="0" max-vertical-offset="1003">
-              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1003">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -89,8 +83,8 @@
       <file leaf-file-name="SpaceShip.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.2592592" vertical-offset="289" max-vertical-offset="5372">
-              <caret line="37" column="36" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
+            <state vertical-scroll-proportion="-173.77777" vertical-offset="0" max-vertical-offset="5372">
+              <caret line="312" column="59" selection-start-line="312" selection-start-column="36" selection-end-line="312" selection-end-column="59" />
               <folding>
                 <element signature="e#8610#8611#0" expanded="true" />
                 <element signature="e#8653#8654#0" expanded="true" />
@@ -109,11 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bullet.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Bullet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1802">
-              <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.30822873" vertical-offset="0" max-vertical-offset="1904">
+              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -145,7 +139,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/SpaceFightMain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Boundaries.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" />
@@ -154,8 +147,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/DetectEntitiesCallback.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java" />
       </list>
     </option>
   </component>
@@ -598,7 +592,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -619,7 +613,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18051118" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21544716" sideWeight="0.5457934" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21544716" sideWeight="0.5457934" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -969,14 +963,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1836">
-          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
@@ -1009,17 +995,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2592592" vertical-offset="289" max-vertical-offset="5372">
-          <caret line="37" column="36" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
-          <folding>
-            <element signature="e#8610#8611#0" expanded="true" />
-            <element signature="e#8653#8654#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Boundaries.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="1343">
@@ -1038,8 +1013,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13709678" vertical-offset="0" max-vertical-offset="1003">
-          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1003">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-173.77777" vertical-offset="0" max-vertical-offset="5372">
+          <caret line="312" column="59" selection-start-line="312" selection-start-column="36" selection-end-line="312" selection-end-column="59" />
+          <folding>
+            <element signature="e#8610#8611#0" expanded="true" />
+            <element signature="e#8653#8654#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Bullet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30822873" vertical-offset="0" max-vertical-offset="1904">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           <folding />
         </state>
       </provider>

@@ -11,9 +11,9 @@ import org.jbox2d.dynamics.FixtureDef;
 
 public class Bullet implements Destroyable, GameEntity{
 
-	public static final long FireFrequency = 500;
-	private static final int damage = 10;
-	private static final float fireLinearImpulse = 13.0f;
+	public static final long FireFrequency = 300;
+	private static final int damage = 1;
+	private static final float fireLinearImpulse = 1.0f;
 	
 	private Body body;
 	private BodyDef bd;
@@ -36,7 +36,7 @@ public class Bullet implements Destroyable, GameEntity{
 
 		// shape definition
 		CircleShape shape = new CircleShape();
-		shape.setRadius(0.5f);
+		shape.setRadius(0.2f);
 
 		// fixture definition
 		fd = new FixtureDef();
@@ -54,13 +54,19 @@ public class Bullet implements Destroyable, GameEntity{
 		this.body.createFixture(fd);
 		
 		this.body.setUserData(this);
+		//this.body.m_linearDamping = 1.0f;
 		
 		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
 		direction.normalize();
 		
-		//float planeSpeed = plane.getBody().getLinearVelocity().length();
+		float planeSpeed = plane.getBody().getLinearVelocity().length();
+
+		float bulletspeed = 100.0f;
+		float velChange = bulletspeed - planeSpeed;
+		float impulse = body.getMass() * velChange;
+
 		
-		this.body.applyLinearImpulse(new Vec2(direction.x * fireLinearImpulse, direction.y * fireLinearImpulse), this.body.getPosition(), true);
+		this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
 		
 	}
 	
