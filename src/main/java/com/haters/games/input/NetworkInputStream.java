@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 enum EventType {
-	LEFT, RIGHT, UP, DOWN, FIRE, NEW_PLAYER, REMOVE_PLAYER
+	LEFT, RIGHT, UP, DOWN, FIRE, MOUSE_MOVE, NEW_PLAYER, REMOVE_PLAYER
 }
 
 public class NetworkInputStream implements GameInputStream {
 
-	private Map<Integer,boolean[]> eventsByPlayers = new HashMap<Integer, boolean[]>();
+	private Map<Integer,Object[]> inputStateByPlayers = new HashMap<Integer, Object[]>();
 	private List<Integer> newPlayers = new ArrayList<Integer>();
 	private List<Integer> removePlayers = new ArrayList<Integer>();
 	private SocketChannel channel;
@@ -30,30 +30,35 @@ public class NetworkInputStream implements GameInputStream {
 	public NetworkInputStream() {
 
 	}
-	
+
+	@Override
+	public float[] getMouseMoveEvent(SpaceShip player) {
+		return (float[])inputStateByPlayers.get(player.getId())[EventType.MOUSE_MOVE.ordinal()];
+	}
+
 	@Override
 	public boolean hasTurnLeftEvent(SpaceShip player) {
-		return eventsByPlayers.get(player.getId())[EventType.LEFT.ordinal()];
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.LEFT.ordinal()];
 	}
 
 	@Override
 	public boolean hasTurnRightEvent(SpaceShip player) {
-		return eventsByPlayers.get(player.getId())[EventType.RIGHT.ordinal()];
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.RIGHT.ordinal()];
 	}
 
 	@Override
 	public boolean hasAccelerationEvent(SpaceShip player) {
-		return eventsByPlayers.get(player.getId())[EventType.UP.ordinal()];
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.UP.ordinal()];
 	}
 
 	@Override
 	public boolean hasBreakEvent(SpaceShip player) {
-		return eventsByPlayers.get(player.getId())[EventType.DOWN.ordinal()];
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.DOWN.ordinal()];
 	}
 
 	@Override
 	public boolean hasFireEvent(SpaceShip player) {
-		return eventsByPlayers.get(player.getId())[EventType.FIRE.ordinal()];
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.FIRE.ordinal()];
 	}
 
 	@Override
@@ -98,15 +103,21 @@ public class NetworkInputStream implements GameInputStream {
 				Integer userId = payload.getAsJsonObject().get("user").getAsJsonObject().get("id").getAsInt();
 				if (EventType.valueOf(event) == EventType.NEW_PLAYER) {
 					newPlayers.add(userId);
-					boolean[] bitmap = {false,false,false,false,false};
-					eventsByPlayers.put(userId, bitmap);
+					Object[] bitmap = {false,false,false,false,false,null};
+					inputStateByPlayers.put(userId, bitmap);
 				}else if (EventType.valueOf(event) == EventType.REMOVE_PLAYER) {
 					removePlayers.add(userId);
-					eventsByPlayers.remove(userId);
+					inputStateByPlayers.remove(userId);
+				}else if (EventType.valueOf(event) == EventType.MOUSE_MOVE){
+					if(inputStateByPlayers.containsKey(userId)) {
+						float x = payload.getAsJsonObject().get("x").getAsFloat();
+						float y = payload.getAsJsonObject().get("y").getAsFloat();
+						inputStateByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = new float[]{x,y};
+					}
 				}else {
-					if(eventsByPlayers.containsKey(userId)) {
+					if(inputStateByPlayers.containsKey(userId)) {
 						Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
-						eventsByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
+						inputStateByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
 					}
 				}
 			}			

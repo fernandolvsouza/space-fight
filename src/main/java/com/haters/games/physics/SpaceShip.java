@@ -121,13 +121,17 @@ public class SpaceShip implements Destroyable, GameEntity{
 		this.detectionCallback = new DetectEntitiesCallback(this);
 	}
 
-	public void fire() {
+
+	public void fireToPosition(Vec2 to) {
 		
 		long now = new Date().getTime();
 		if( now - lastFireTime > Bullet.FireFrequency) {
 			Bullet bullet = Bullet.create(this,bulletsSequence++);
 			this.bullets.add(bullet);
-			bullet.fire();
+			if(to == null)
+				bullet.fire();
+			else
+				bullet.fireToPosition(to);
 			lastFireTime = now;
 		}
 		removeExcessBullets();
@@ -346,5 +350,6 @@ public class SpaceShip implements Destroyable, GameEntity{
 	public int getId() {
 		return id;
 	}
+
 
 }

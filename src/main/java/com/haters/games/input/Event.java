@@ -7,5 +7,4 @@ public class Event {
 
     private EventType type;
 
-
 }

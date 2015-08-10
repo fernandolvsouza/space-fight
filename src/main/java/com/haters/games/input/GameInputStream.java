@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface GameInputStream {
 
+	float[] getMouseMoveEvent(SpaceShip player);
+
 	boolean hasTurnLeftEvent(SpaceShip player);
 	boolean hasTurnRightEvent(SpaceShip player);
 	boolean hasAccelerationEvent(SpaceShip player);

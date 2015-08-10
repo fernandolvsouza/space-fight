@@ -49,27 +49,38 @@ public class Bullet implements Destroyable, GameEntity{
 	}
 
 	public void fire() {
-		bd.setPosition(plane.getBody().getWorldPoint(new Vec2(4, 0)));
+		Vec2 from = plane.getBody().getWorldPoint(new Vec2(5, 0));
+		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
+		fireToDirection(from,direction);
+	}
+
+	public void fireToPosition(Vec2 to) {
+		Vec2 from = plane.getBody().getWorldPoint(new Vec2(5, 0));
+		Vec2 direction = to.sub(from);
+		fireToDirection(from,direction);
+	}
+
+	private void fireToDirection(Vec2 from, Vec2 direction) {
+		direction.normalize();
+
+
+		bd.setPosition(from);
 		this.body = this.plane.getWorld().createBody(bd);
 		this.body.createFixture(fd);
-		
+
 		this.body.setUserData(this);
 		//this.body.m_linearDamping = 1.0f;
-		
-		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
-		direction.normalize();
-		
+
 		float planeSpeed = plane.getBody().getLinearVelocity().length();
 
 		float bulletspeed = 100.0f;
 		float velChange = bulletspeed - planeSpeed;
 		float impulse = body.getMass() * velChange;
 
-		
 		this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
-		
 	}
-	
+
+
 	public void destroy(){
 		destroyCascade();
 		this.plane.getBullets().remove(this);

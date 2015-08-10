@@ -39,18 +39,18 @@ public class Boundaries implements Destroyable,GameEntity{
 		// body
 		body = spaceWorld.getWorld().createBody(bd);
 		
-		int[] angles = new int[20];
+		/*int[] angles = new int[20];
 		for (int i=0;i<angles.length; i++) {
 			angles[i] = i*360/angles.length;
-		}		
+		}*/
 		
-		for (int i=0;i<angles.length; i++) {
+		/*for (int i=0;i<angles.length; i++) {
 			Vec2 p1 = new Vec2(MathUtils.sin(angles[i]*MathUtils.DEG2RAD),MathUtils.cos(angles[i]*MathUtils.DEG2RAD)).mul(spaceWorld.getRadius());
 			Vec2 p2 = new Vec2(MathUtils.sin(angles[(i+1 == angles.length ? 0 : i+1)]*MathUtils.DEG2RAD),
 					MathUtils.cos(angles[(i+1 == angles.length ? 0 : i+1)]*MathUtils.DEG2RAD)).mul(spaceWorld.getRadius());
 			shape.set(p1,p2);//(width / 2, 1, new Vec2(0, 0), 0);
 			body.createFixture(fd);
-		}
+		}*/
 
 		// add four walls to the static body
 		 

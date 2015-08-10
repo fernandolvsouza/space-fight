@@ -19,7 +19,12 @@ public class SwingUserInputStream implements GameInputStream {
 			eventsBitMap[i] = false;			
 		}
 	}
-	
+
+
+	@Override
+	public float[] getMouseMoveEvent(SpaceShip player) {
+		return new float[0];
+	}
 
 	@Override
 	public boolean hasTurnLeftEvent(SpaceShip player) {

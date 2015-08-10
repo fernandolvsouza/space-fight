@@ -8,6 +8,7 @@ import com.haters.games.GameController;
 import com.haters.games.input.GameInputStream;
 import com.haters.games.output.NetworkOutputStream;
 import com.haters.games.output.GameSerializer;
+import org.jbox2d.common.Vec2;
 
 /**
  * @author Fernando Valente
@@ -15,7 +16,7 @@ import com.haters.games.output.GameSerializer;
 
 public class GameLogic {
 	
-	private static final int numberOfBots = 100;
+	private static final int numberOfBots = 3;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
@@ -68,7 +69,7 @@ public class GameLogic {
 			}
 			
 			if(bot.shouldFire(enemies)){	
-				bot.fire();
+				bot.fireToPosition(null);
 			}
 
 			bot.accelerate(AccelerationState.UP);
@@ -123,7 +124,11 @@ public class GameLogic {
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				player.fire();
+				float x = istream.getMouseMoveEvent(player)[0];
+				float y = istream.getMouseMoveEvent(player)[1];
+
+				Vec2 to = new Vec2(x,y);
+				player.fireToPosition(to);
 			}
 
 			player.detectGameEntities();
