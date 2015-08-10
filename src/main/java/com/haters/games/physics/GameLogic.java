@@ -7,7 +7,6 @@ import java.util.Set;
 import com.haters.games.GameController;
 import com.haters.games.input.GameInputStream;
 import com.haters.games.output.NetworkOutputStream;
-import com.haters.games.output.GameSerializer;
 import org.jbox2d.common.Vec2;
 
 /**
@@ -42,7 +41,7 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			SpaceShip bot = SpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(),planeSequence++,killthen);
+			SpaceShip bot = PolygonSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), planeSequence++, killthen);
 			bots.add(bot);			
 		}
 
@@ -53,7 +52,7 @@ public class GameLogic {
 
 		for(SpaceShip bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
-				killthen.add(bot);
+				killthen.add((Destroyable)bot);
 				bots.remove(bot);
 				break;
 			}
@@ -62,7 +61,7 @@ public class GameLogic {
 			
 			Set<SpaceShip> enemies = bot.getShipsInRange();
 			//Boundaries bounds =  bot.getBoundsInRange();
-			if(bot.avoidColision(spaceWorld.getDebugDraw())){
+			if(bot.avoidColision()){
 				if(enemies.size() !=0){
 					bot.rotateTo(enemies.iterator().next().getBody().getPosition());
 				}
@@ -80,7 +79,7 @@ public class GameLogic {
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add(SpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
+				players.add((SpaceShip)PolygonSpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
 			}
 			istream.eraseNewPlayersEvents();
 		}
@@ -89,7 +88,7 @@ public class GameLogic {
 			for(Integer id : istream.getRemovePlayers()) {
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == id) {
-						killthen.add(players.get(i));
+						killthen.add((Destroyable)players.get(i));
 						players.remove(i);
 						i--;
 					}
@@ -102,7 +101,7 @@ public class GameLogic {
 		for (int i = 0; i < players.size(); i++) {
 			SpaceShip player = this.players.get(i);
 			if (player.getCurrentEnergy() <= 0) {
-				killthen.add(player);
+				killthen.add((Destroyable)player);
 				players.remove(player);
 				i--;
 				continue;
@@ -134,10 +133,6 @@ public class GameLogic {
 			player.detectGameEntities();
 		}
 
-		if(!players.isEmpty()) {
-			controller.setCamera(players.get(0).getBody().getPosition());
-		}
-		//spaceWorld.drawDebugData();
 	}
 	
 	public void afterStep(){

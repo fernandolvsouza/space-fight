@@ -2,22 +2,18 @@ package com.haters.games.physics;
 
 import java.util.Random;
 
-import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import com.haters.games.render.swing.DebugDrawJ2D;
+
 
 public class SpaceWorld  {
 	private World world;
 	private int radius = 50;
 	private Boundaries boundaries;
-	private DebugDrawJ2D debugDraw;
 
-	public SpaceWorld(World world, DebugDrawJ2D debugDraw) {
+	public SpaceWorld(World world) {
 		this.world = world;
-		world.setDebugDraw(debugDraw);	
-		this.debugDraw = debugDraw;
 	}
 	
 	public World getWorld(){
@@ -48,10 +44,7 @@ public class SpaceWorld  {
 	public void step(float f, int velocityIterations, int positionIterations) {
 		world.step(f, velocityIterations, positionIterations);	
 	}
-	
-	public DebugDraw getDebugDraw() {
-		return this.debugDraw;	
-	}
+
 
 	public void drawDebugData() {
 		world.drawDebugData();

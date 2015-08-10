@@ -2,6 +2,7 @@ package com.haters.games.input;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
 
 

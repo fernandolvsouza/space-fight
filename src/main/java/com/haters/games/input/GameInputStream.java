@@ -1,6 +1,7 @@
 package com.haters.games.input;
 
 
+import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
 
 import java.util.List;

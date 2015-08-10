@@ -20,7 +20,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	
 	public SpaceShip plane;
 
-	public DetectEntitiesCallback(SpaceShip plane) {
+	public DetectEntitiesCallback(PolygonSpaceShip plane) {
 		entities = new HashSet<GameEntity>();
 		planes = new HashSet<SpaceShip>();
 		bullets = new HashSet<Bullet>();
@@ -35,8 +35,8 @@ public class DetectEntitiesCallback implements QueryCallback {
 			return true;
 		}
 		
-		if (userdata instanceof SpaceShip ) {
-			planes.add((SpaceShip) userdata);
+		if (userdata instanceof PolygonSpaceShip) {
+			planes.add((PolygonSpaceShip) userdata);
 			othersFixtures.add(fix);
 		}
 		
@@ -58,9 +58,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	}
 	
 	public void reset(){
-		if(!plane.isbot()){
-			//System.out.println("Entities =  " + entities.size() + " , Planes = " + planes.size() + " , Bullets = " + bullets.size() + " , limits  = " + boundaries );
-		}
+
 		entities.clear();
 		planes.clear();
 		bullets.clear();
@@ -68,12 +66,5 @@ public class DetectEntitiesCallback implements QueryCallback {
 		othersFixtures.clear();
 		boundaries = null;
 	}
-/*	public void debug(DebugDraw debugDraw) {
-		Vec2[] debug = new Vec2[4];
-		debug[0] = new Vec2(aabb.lowerBound.x, aabb.lowerBound.y);
-		debug[1] = new Vec2(aabb.upperBound.x, aabb.lowerBound.y);
-		debug[2] = new Vec2(aabb.upperBound.x, aabb.upperBound.y);
-		debug[3] = new Vec2(aabb.lowerBound.x, aabb.upperBound.y);
-		debugDraw.drawPolygon(debug, 4, Color3f.BLUE);
-	}*/
+
 }

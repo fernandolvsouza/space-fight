@@ -3,18 +3,16 @@ package com.haters.games;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.IViewportTransform;
-import org.jbox2d.common.OBBViewportTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import com.haters.games.input.GameInputStream;
 import com.haters.games.input.NetworkInputStream;
 import com.haters.games.output.NetworkOutputStream;
-import com.haters.games.output.GameSerializer;
+
 import com.haters.games.physics.GameLogic;
 import com.haters.games.physics.SpaceWorld;
-import com.haters.games.render.RenderEngine;
-import com.haters.games.render.swing.DebugDrawJ2D;
+
 
 
 public class GameController implements Runnable {
@@ -28,43 +26,17 @@ public class GameController implements Runnable {
 	private final Vec2 initPosition = new Vec2(0,0);
 	private final float initScale = 7;
 
-	private  RenderEngine engine = null;
-	private DebugDrawJ2D debugDraw;
 	private Thread animation;
-	
-	public GameController(RenderEngine engine,DebugDrawJ2D debugDraw) {
-		super();
-		this.engine = engine;
-		this.debugDraw = debugDraw;
-	    this.transform = new OBBViewportTransform();
-	    this.animation = new Thread(this, "thread-1");
-
-	    transform.setCamera(initPosition.x, initPosition.y, initScale);
-	    transform.setExtents(engine.getInitialWidth()/2, engine.getInitialHeight()/2);
-	    this.debugDraw.setViewportTransform(transform);
-	    configureDebugDraw(this.debugDraw);  
-	}
 
 	public GameController() {
 		super();
 		this.animation = new Thread(this, "thread-1");
 	}
-	
-	private void configureDebugDraw(DebugDrawJ2D debugDraw){
-	    int flags = 0;
-	    flags += DebugDraw.e_shapeBit; // disable 0
-	    flags += 0; //DebugDraw.e_jointBit 
-	    flags += 0; // disable 0
-	    flags += 0;  //DebugDraw.e_centerOfMassBit
-	    flags += 0; //DebugDraw.e_dynamicTreeBit
-	    flags += 0;// DebugDraw.e_wireframeDrawingBit
-	    debugDraw.setFlags(flags);
-	}
 
 	@Override
 	public void run() {
 		
-		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)),this.debugDraw);
+		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)));
 		final GameInputStream istream = new NetworkInputStream();
 		
 		GameLogic logic = new GameLogic(spaceWorld,this, istream, new NetworkOutputStream());
@@ -78,7 +50,6 @@ public class GameController implements Runnable {
 
 		beforeTime = updateTime = System.nanoTime();
 	    sleepTime = 0;
-	    //engine.grabFocus();
 	    
 		while (true) {
 			//engine.grabFocus();
@@ -90,17 +61,11 @@ public class GameController implements Runnable {
 			} else {
 				updateTime = System.nanoTime();
 			}
-			//render
-			if(engine != null && engine.render()){
-				istream.processEvents();
-				logic.step(1f / frameRate, VelocityIterations, PositionIterations);
-				logic.afterStep();
-				engine.paintScreen();
-			}else{
-				istream.processEvents();
-				logic.step(1f / frameRate, VelocityIterations, PositionIterations);
-				logic.afterStep();
-			}
+
+			istream.processEvents();
+			logic.step(1f / frameRate, VelocityIterations, PositionIterations);
+			logic.afterStep();
+
 			
 			afterTime = System.nanoTime();
 
@@ -117,11 +82,6 @@ public class GameController implements Runnable {
 			//System.out.println("frame rate: " + frameRate);
 			
 		}
-	}
-	
-	public void setCamera(Vec2 pos){
-		if(transform != null)
-		transform.setCamera(pos.x, pos.y, initScale);
 	}
 
 	public void start() {

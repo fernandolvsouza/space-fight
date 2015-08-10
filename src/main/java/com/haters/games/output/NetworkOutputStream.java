@@ -1,8 +1,8 @@
 package com.haters.games.output;
 
+import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
 import com.haters.games.physics.SpaceWorld;
-import sun.jvm.hotspot.memory.Space;
 
 import java.io.IOException;
 import java.io.PrintWriter;

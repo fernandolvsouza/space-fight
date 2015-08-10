@@ -2,20 +2,14 @@ package com.haters.games.output;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Fixture;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.haters.games.physics.Bullet;
+import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
-import com.haters.games.physics.SpaceWorld;
 
 public class GameSerializer {
 	
