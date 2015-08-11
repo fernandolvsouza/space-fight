@@ -1,11 +1,11 @@
 package com.haters.games.physics;
 
-import java.util.List;
-
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
+
+import java.util.List;
 
 public class CollisionCallback implements ContactListener {
 

@@ -38,4 +38,6 @@ public interface SpaceShip {
     boolean shouldFire(Set<SpaceShip> enemies);
 
     World getWorld();
+
+    String getType();
 }

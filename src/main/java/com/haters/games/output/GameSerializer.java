@@ -43,6 +43,7 @@ public class GameSerializer {
 	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{
 		jw.beginObject().
 			name("id").value(ship.getId()).
+			name("type").value(ship.getType()).
 			name("angle").value(String.format("%.2f", ship.getBody().getAngle())).
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
 			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).

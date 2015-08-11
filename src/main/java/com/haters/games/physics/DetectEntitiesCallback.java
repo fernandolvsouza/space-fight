@@ -1,12 +1,12 @@
 package com.haters.games.physics;
 
+import org.jbox2d.callbacks.QueryCallback;
+import org.jbox2d.dynamics.Fixture;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.jbox2d.callbacks.QueryCallback;
-import org.jbox2d.dynamics.Fixture;
 
 
 public class DetectEntitiesCallback implements QueryCallback {
@@ -20,7 +20,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	
 	public SpaceShip plane;
 
-	public DetectEntitiesCallback(PolygonSpaceShip plane) {
+	public DetectEntitiesCallback(SpaceShip plane) {
 		entities = new HashSet<GameEntity>();
 		planes = new HashSet<SpaceShip>();
 		bullets = new HashSet<Bullet>();

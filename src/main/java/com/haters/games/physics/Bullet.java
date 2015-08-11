@@ -1,13 +1,13 @@
 package com.haters.games.physics;
 
-import java.util.Date;
-
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
+
+import java.util.Date;
 
 public class Bullet implements Destroyable, GameEntity{
 

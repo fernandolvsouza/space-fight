@@ -1,22 +1,14 @@
 package com.haters.games.physics;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
 import org.jbox2d.collision.RayCastOutput;
 import org.jbox2d.collision.shapes.PolygonShape;
-
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.*;
+
+import java.util.List;
+import java.util.Set;
 
 
 public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
@@ -194,6 +186,11 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 			return MathUtils.abs(angle) < 30 *MathUtils.DEG2RAD;
 		}
 		return false;
+	}
+
+	@Override
+	public String getType() {
+		return "polygon";
 	}
 
 	public void accelerate(AccelerationState state) {

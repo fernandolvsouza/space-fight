@@ -1,13 +1,13 @@
 package com.haters.games.physics;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import com.haters.games.GameController;
 import com.haters.games.input.GameInputStream;
 import com.haters.games.output.NetworkOutputStream;
 import org.jbox2d.common.Vec2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Fernando Valente
@@ -79,7 +79,7 @@ public class GameLogic {
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add((SpaceShip)PolygonSpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
+				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, killthen, false));
 			}
 			istream.eraseNewPlayersEvents();
 		}

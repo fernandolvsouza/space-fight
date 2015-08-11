@@ -1,9 +1,9 @@
 package com.haters.games.physics;
 
-import java.util.Random;
-
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
+
+import java.util.Random;
 
 
 
