@@ -1,13 +1,13 @@
 package com.haters.games.physics;
 
-import com.haters.games.GameController;
-import com.haters.games.input.GameInputStream;
-import com.haters.games.output.NetworkOutputStream;
-import org.jbox2d.common.Vec2;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.jbox2d.common.Vec2;
+
+import com.haters.games.input.GameInputStream;
+import com.haters.games.output.NetworkOutputStream;
 
 /**
  * @author Fernando Valente
@@ -15,22 +15,20 @@ import java.util.Set;
 
 public class GameLogic {
 	
-	private static final int numberOfBots = 3;
+	private static final int numberOfBots = 30;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
 	
 	private SpaceWorld spaceWorld;
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
-	private GameController controller;
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 	
 	private int planeSequence = 0;
 	
-	public GameLogic(SpaceWorld spaceWorld, GameController controller, GameInputStream stream, NetworkOutputStream outputStream) {
+	public GameLogic(SpaceWorld spaceWorld, GameInputStream stream, NetworkOutputStream outputStream) {
 		this.spaceWorld = spaceWorld;
-		this.controller = controller;
 		this.istream = stream;
 		this.ostream = outputStream;
 	}

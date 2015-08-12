@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class SpaceWorld  {
 	private World world;
-	private int radius = 50;
+	private int radius = 200;
 	private Boundaries boundaries;
 
 	public SpaceWorld(World world) {

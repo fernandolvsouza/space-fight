@@ -130,4 +130,8 @@ public class Bullet implements Destroyable, GameEntity{
 		return body;
 	}
 	
+	public int getId() {
+		return sequence;
+	}
+	
 }
