@@ -51,6 +51,7 @@ public class GameSerializer {
 			jw.beginArray();
 			for (Bullet b : ship.getBullets()) {
 				jw.beginObject().
+				name("id").value(String.format("%d", b.getId())).
 				name("x").value(String.format("%.2f", b.getBody().getPosition().x)).
 				name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
 				endObject();
