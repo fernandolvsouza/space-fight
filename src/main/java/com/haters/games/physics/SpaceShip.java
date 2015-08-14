@@ -27,6 +27,8 @@ public interface SpaceShip {
     void detectGameEntities();
 
     Set<SpaceShip> getShipsInRange();
+    
+    Set<Bullet> getBulletsInRange();
 
     List<Bullet> getBullets();
 

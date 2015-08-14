@@ -24,7 +24,6 @@ public abstract class BasicShip {
 
     private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
     private long lastFireTime = 0;
-    private int bulletsSequence = 0;
     private final static int maximumActiveBullets = 30;
 
     protected boolean isbot = true;
@@ -75,7 +74,7 @@ public abstract class BasicShip {
 
         long now = new Date().getTime();
         if( now - lastFireTime > Bullet.FireFrequency) {
-            Bullet bullet = Bullet.create((SpaceShip)this,bulletsSequence++);
+            Bullet bullet = Bullet.create((SpaceShip)this,Sequence.getSequence());
             this.bullets.add(bullet);
             if(to == null)
                 bullet.fire();
@@ -127,6 +126,10 @@ public abstract class BasicShip {
 
     public Set<SpaceShip> getShipsInRange() {
         return this.detectionCallback.planes;
+    }
+    
+    public Set<Bullet> getBulletsInRange() {
+        return this.detectionCallback.bullets;
     }
 
     public Boundaries getBoundsInRange() {

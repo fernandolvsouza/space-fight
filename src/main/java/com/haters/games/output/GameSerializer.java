@@ -22,7 +22,7 @@ public class GameSerializer {
 					name("player");
 					shipToJson(player,jw);
 			jw.name("scene");
-					serialize(player.getShipsInRange(),jw);
+					serialize(player.getShipsInRange(),player.getBulletsInRange(),jw);
 			jw.endObject();
 			out.append("\n");
 			out.flush();
@@ -31,12 +31,32 @@ public class GameSerializer {
 		}
 	}
 
-	private JsonWriter serialize(Set<SpaceShip> ships,JsonWriter jw) throws IOException {
-		jw.beginObject().name("ships").beginArray();
-		for (SpaceShip p : ships) {
-			shipToJson(p,jw);
-		}
-		jw.endArray().endObject();
+	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, JsonWriter jw) throws IOException {
+		jw.beginObject().
+			name("ships").beginArray();
+			
+			for (SpaceShip p : ships) {
+				shipToJson(p,jw);
+			}
+			jw.endArray().			
+			
+			name("bullets").
+			beginArray();
+			for (Bullet b : bullets) {
+				bulletToJson(b,jw);
+			}
+			jw.endArray().
+		endObject();
+		return jw;
+	}
+	
+	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
+		jw.beginObject().
+		name("id").value(String.format("%d", b.getId())).
+		name("x").value(String.format("%.2f", b.getBody().getPosition().x)).
+		name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
+		name("type").value("bullet").
+		endObject();
 		return jw;
 	}
 	
@@ -46,8 +66,8 @@ public class GameSerializer {
 			name("type").value(ship.getType()).
 			name("angle").value(String.format("%.2f", ship.getBody().getAngle())).
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
-			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).
-			name("bullets");
+			name("y").value(String.format("%.2f", ship.getBody().getPosition().y));
+			/*name("bullets");
 			jw.beginArray();
 			for (Bullet b : ship.getBullets()) {
 				jw.beginObject().
@@ -56,7 +76,8 @@ public class GameSerializer {
 				name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
 				endObject();
 			}
-			jw.endArray();	
+			jw.endArray();*/	
 		return jw.endObject();
 	}
+
 }

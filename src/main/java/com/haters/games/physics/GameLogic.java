@@ -25,7 +25,7 @@ public class GameLogic {
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 	
-	private int planeSequence = 0;
+
 	
 	public GameLogic(SpaceWorld spaceWorld, GameInputStream stream, NetworkOutputStream outputStream) {
 		this.spaceWorld = spaceWorld;
@@ -39,7 +39,7 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			SpaceShip bot = PolygonSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), planeSequence++, killthen);
+			SpaceShip bot = PolygonSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen);
 			bots.add(bot);			
 		}
 
@@ -143,5 +143,5 @@ public class GameLogic {
 		ostream.streamGame(spaceWorld,bots,players);
 	
 	}
-	 
+ 
 }
