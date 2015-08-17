@@ -14,7 +14,7 @@ import com.haters.games.output.NetworkOutputStream;
  */
 
 public class GameLogic {
-	
+
 	private static final int numberOfBots = 100;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
@@ -39,7 +39,7 @@ public class GameLogic {
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
 		for(int i=0;i<numberOfBots;i++){
-			SpaceShip bot = PolygonSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen);
+			SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen);
 			bots.add(bot);			
 		}
 

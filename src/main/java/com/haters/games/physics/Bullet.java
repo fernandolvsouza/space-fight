@@ -1,6 +1,7 @@
 package com.haters.games.physics;
 
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -13,7 +14,7 @@ public class Bullet implements Destroyable, GameEntity{
 
 	public static final long FireFrequency = 300;
 	private static final int damage = 1;
-	private static final float fireLinearImpulse = 1.0f;
+	private static final float fireLinearImpulse = 10.0f;
 	
 	private Body body;
 	private BodyDef bd;
@@ -22,7 +23,8 @@ public class Bullet implements Destroyable, GameEntity{
 	private int sequence;	
 	
 	private final long timeCreated = new Date().getTime();
-	
+	private float velocityAngle;
+
 	private Bullet(SpaceShip plane,int sequence) {
 		this.plane = plane;
 		this.sequence = sequence;
@@ -49,15 +51,22 @@ public class Bullet implements Destroyable, GameEntity{
 	}
 
 	public void fire() {
-		Vec2 from = plane.getBody().getWorldPoint(new Vec2(5, 0));
+		Vec2 from = plane.getBody().getWorldPoint(new Vec2(4, 0));
 		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
 		fireToDirection(from,direction);
 	}
 
 	public void fireToPosition(Vec2 to) {
-		Vec2 from = plane.getBody().getWorldPoint(new Vec2(5, 0));
-		Vec2 direction = to.sub(from);
-		fireToDirection(from,direction);
+		Vec2 center = plane.getBody().getWorldPoint(new Vec2(0, 0));
+		Vec2 direction = to.sub(center);
+
+		float radius = ((CircleSpaceShip) plane).getRadius();
+		float angle = MathUtils.atan2(direction.y,direction.x);
+
+
+		Vec2 from = new Vec2(center.x + 2.5f*MathUtils.cos(angle),center.y + 2.5f*MathUtils.sin(angle));
+
+		fireToDirection(from , direction);
 	}
 
 	private void fireToDirection(Vec2 from, Vec2 direction) {
@@ -73,7 +82,7 @@ public class Bullet implements Destroyable, GameEntity{
 
 		float planeSpeed = plane.getBody().getLinearVelocity().length();
 
-		float bulletspeed = 100.0f;
+		float bulletspeed = 6000000.0f;
 		float velChange = bulletspeed - planeSpeed;
 		float impulse = body.getMass() * velChange;
 
@@ -133,5 +142,8 @@ public class Bullet implements Destroyable, GameEntity{
 	public int getId() {
 		return sequence;
 	}
-	
+
+	public float getVelocityAngle() {
+		return MathUtils.atan2(this.body.getLinearVelocity().y,this.body.getLinearVelocity().x);
+	}
 }

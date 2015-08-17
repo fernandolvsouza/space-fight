@@ -56,6 +56,7 @@ public class GameSerializer {
 		name("x").value(String.format("%.2f", b.getBody().getPosition().x)).
 		name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
 		name("type").value("bullet").
+		name("angle").value(String.format("%.2f", b.getVelocityAngle())).
 		endObject();
 		return jw;
 	}

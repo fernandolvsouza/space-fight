@@ -33,10 +33,10 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     @Override
     protected void init(Vec2 pos) {
 
-        // body definition
+            // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
-        bd.linearDamping = 0.5f;
+        bd.linearDamping = 0.7f;
         bd.angularDamping = 1000.0f;
 
         // shape definition
@@ -59,6 +59,10 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
         this.body.setUserData(this);
         this.detectionCallback = new DetectEntitiesCallback(this);
 
+    }
+
+    public float getRadius(){
+        return 2.0f;
     }
 
     @Override
@@ -96,7 +100,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
     private void goToDirection(Vec2 direction){
         direction.normalize();
-        float impulse = 15;
+        float impulse = 9.5f;
         this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
     }
 
