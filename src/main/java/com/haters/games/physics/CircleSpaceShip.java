@@ -34,7 +34,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     @Override
     protected void init(Vec2 pos) {
 
-            // body definition
+        // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
         bd.linearDamping = 0.7f;
@@ -73,7 +73,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
     @Override
     protected float getEnemyDetectRange() {
-        return 70;
+    	return isbot ? 50 : 100;
     }
 
     private void goToDirection(Vec2 direction){

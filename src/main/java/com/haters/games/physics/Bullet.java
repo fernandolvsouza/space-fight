@@ -20,7 +20,8 @@ public class Bullet implements Destroyable, GameEntity{
 	private BodyDef bd;
 	private FixtureDef fd;
 	private SpaceShip plane;
-	private int sequence;	
+	private int sequence;
+	private boolean isbot;
 	
 	private final long timeCreated = new Date().getTime();
 	private float velocityAngle;
@@ -28,6 +29,7 @@ public class Bullet implements Destroyable, GameEntity{
 	private Bullet(SpaceShip plane,int sequence) {
 		this.plane = plane;
 		this.sequence = sequence;
+		this.isbot = this.plane.isbot();
 		init();
 	}
 

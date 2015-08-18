@@ -1,6 +1,7 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -58,15 +59,22 @@ public class GameLogic {
 			bot.detectGameEntities();
 			//bot.setAttackMode();
 			
-			Set<SpaceShip> enemies = bot.getShipsInRange();
+			Set<SpaceShip> ships = bot.getShipsInRange();
+			Set<SpaceShip> players = new LinkedHashSet<SpaceShip>(); 
+			
+			for (SpaceShip ship : ships) {
+				if(!ship.isbot()){
+					players.add(ship);
+				}
+			}
 			//Boundaries bounds =  bot.getBoundsInRange();
 			if(bot.avoidColision()){
-				if(enemies.size() !=0){
-					bot.rotateTo(enemies.iterator().next().getBody().getPosition());
+				if(players.size() !=0){
+					bot.rotateTo(players.iterator().next().getBody().getPosition());
 				}
 			}
 			
-			if(bot.shouldFire(enemies)){	
+			if(bot.shouldFire(players)){	
 				bot.fire();
 			}
 
