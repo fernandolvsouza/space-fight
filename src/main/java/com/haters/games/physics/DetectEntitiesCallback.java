@@ -35,8 +35,8 @@ public class DetectEntitiesCallback implements QueryCallback {
 			return true;
 		}
 		
-		if (userdata instanceof PolygonSpaceShip) {
-			planes.add((PolygonSpaceShip) userdata);
+		if (userdata instanceof PolygonSpaceShip || userdata instanceof CircleSpaceShip) {
+			planes.add((SpaceShip) userdata);
 			othersFixtures.add(fix);
 		}
 		

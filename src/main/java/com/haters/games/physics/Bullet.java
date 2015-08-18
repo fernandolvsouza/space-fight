@@ -13,7 +13,7 @@ import java.util.Date;
 public class Bullet implements Destroyable, GameEntity{
 
 	public static final long FireFrequency = 300;
-	private static final int damage = 1;
+	private static final int damage = 10;
 	private static final float fireLinearImpulse = 10.0f;
 	
 	private Body body;
@@ -44,23 +44,24 @@ public class Bullet implements Destroyable, GameEntity{
 		fd = new FixtureDef();
 		fd.shape = shape;
 		fd.density = 0.2f;
+		fd.isSensor = true;
 	}
 
 	public static Bullet create(SpaceShip plane,int sequence) {
 		return new Bullet(plane,sequence);
 	}
 
-	public void fire() {
+	/*public void fire() {
 		Vec2 from = plane.getBody().getWorldPoint(new Vec2(4, 0));
 		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
 		fireToDirection(from,direction);
-	}
+	}*/
 
-	public void fireToPosition(Vec2 to) {
+	public void fire() {
 		Vec2 center = plane.getBody().getWorldPoint(new Vec2(0, 0));
-		Vec2 direction = to.sub(center);
+		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
 
-		float radius = ((CircleSpaceShip) plane).getRadius();
+		//float radius = ((CircleSpaceShip) plane).getRadius();
 		float angle = MathUtils.atan2(direction.y,direction.x);
 
 

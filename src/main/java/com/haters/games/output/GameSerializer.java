@@ -65,19 +65,10 @@ public class GameSerializer {
 		jw.beginObject().
 			name("id").value(ship.getId()).
 			name("type").value(ship.getType()).
-			name("angle").value(String.format("%.2f", ship.getBody().getAngle())).
+			name("angle").value(String.format("%.2f", ship.getAngle())).
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
-			name("y").value(String.format("%.2f", ship.getBody().getPosition().y));
-			/*name("bullets");
-			jw.beginArray();
-			for (Bullet b : ship.getBullets()) {
-				jw.beginObject().
-				name("id").value(String.format("%d", b.getId())).
-				name("x").value(String.format("%.2f", b.getBody().getPosition().x)).
-				name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
-				endObject();
-			}
-			jw.endArray();*/	
+			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).
+			name("isbot").value(ship.isbot());	
 		return jw.endObject();
 	}
 

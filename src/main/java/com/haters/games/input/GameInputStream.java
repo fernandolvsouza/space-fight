@@ -1,19 +1,18 @@
 package com.haters.games.input;
 
 
-import com.haters.games.physics.PolygonSpaceShip;
-import com.haters.games.physics.SpaceShip;
-
 import java.util.List;
+
+import com.haters.games.physics.SpaceShip;
 
 public interface GameInputStream {
 
 	float[] getMouseMoveEvent(SpaceShip player);
 
-	boolean hasTurnLeftEvent(SpaceShip player);
-	boolean hasTurnRightEvent(SpaceShip player);
-	boolean hasAccelerationEvent(SpaceShip player);
-	boolean hasBreakEvent(SpaceShip player);
+	boolean hasLeftEvent(SpaceShip player);
+	boolean hasRightEvent(SpaceShip player);
+	boolean hasUpEvent(SpaceShip player);
+	boolean hasDownEvent(SpaceShip player);
 	boolean hasFireEvent(SpaceShip player);
 	boolean hasNewPlayerEvent();
 	boolean hasRemovePlayerEvent();

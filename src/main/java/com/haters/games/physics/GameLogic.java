@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 
 import com.haters.games.input.GameInputStream;
@@ -66,10 +67,10 @@ public class GameLogic {
 			}
 			
 			if(bot.shouldFire(enemies)){	
-				bot.fireToPosition(null);
+				bot.fire();
 			}
 
-			bot.accelerate(AccelerationState.UP);
+			bot.up();
 			
 		}
 
@@ -98,38 +99,45 @@ public class GameLogic {
 
 		for (int i = 0; i < players.size(); i++) {
 			SpaceShip player = this.players.get(i);
+		
+			if (istream.getMouseMoveEvent(player) != null) {
+				float x = istream.getMouseMoveEvent(player)[0];
+				float y = istream.getMouseMoveEvent(player)[1];
+				player.setMousePosition(new Vec2(x,y));
+			}
+			
 			if (player.getCurrentEnergy() <= 0) {
 				killthen.add((Destroyable)player);
 				players.remove(player);
 				i--;
 				continue;
 			}
-			if (istream.hasTurnLeftEvent(player)) { //37
-				player.turn(TurnState.LEFT);
+			if (istream.hasLeftEvent(player)) { //37
+				player.left();
 			}
 
-			if (istream.hasTurnRightEvent(player)) { //39
-				player.turn(TurnState.RIGHT);
+			if (istream.hasRightEvent(player)) { //39
+				player.right();
 			}
 
-			if (istream.hasAccelerationEvent(player)) { //38
-				player.accelerate(AccelerationState.UP);
+			if (istream.hasUpEvent(player)) { //38
+				player.up();
 			}
 
-			if (istream.hasBreakEvent(player)) { //40
-				player.accelerate(AccelerationState.DOWN);
+			if (istream.hasDownEvent(player)) { //40
+				player.down();
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				float x = istream.getMouseMoveEvent(player)[0];
-				float y = istream.getMouseMoveEvent(player)[1];
-
-				Vec2 to = new Vec2(x,y);
-				player.fireToPosition(to);
+				//player.fireToPosition(player.getMousePosition());
+				player.fire();
 			}
 
 			player.detectGameEntities();
 		}
+		
+		//System.out.println("players:" + players.size());
+		//System.out.println("bots:" + bots.size());
 
 	}
 	

@@ -38,22 +38,22 @@ public class NetworkInputStream implements GameInputStream {
 	}
 
 	@Override
-	public boolean hasTurnLeftEvent(SpaceShip player) {
+	public boolean hasLeftEvent(SpaceShip player) {
 		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.LEFT.ordinal()];
 	}
 
 	@Override
-	public boolean hasTurnRightEvent(SpaceShip player) {
+	public boolean hasRightEvent(SpaceShip player) {
 		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.RIGHT.ordinal()];
 	}
 
 	@Override
-	public boolean hasAccelerationEvent(SpaceShip player) {
+	public boolean hasUpEvent(SpaceShip player) {
 		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.UP.ordinal()];
 	}
 
 	@Override
-	public boolean hasBreakEvent(SpaceShip player) {
+	public boolean hasDownEvent(SpaceShip player) {
 		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.DOWN.ordinal()];
 	}
 

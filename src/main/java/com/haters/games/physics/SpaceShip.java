@@ -16,13 +16,13 @@ public interface SpaceShip {
 
     Body getBody();
 
-    void turn(TurnState left);
+    //void turn(TurnState left);
 
-    void accelerate(AccelerationState up);
+    //void accelerate(AccelerationState up);
 
     int getCurrentEnergy();
 
-    void fireToPosition(Vec2 to);
+    void fire();
 
     void detectGameEntities();
 
@@ -32,6 +32,8 @@ public interface SpaceShip {
 
     List<Bullet> getBullets();
 
+   boolean isbot();
+    
     //bot methods
     boolean avoidColision();
 
@@ -42,4 +44,19 @@ public interface SpaceShip {
     World getWorld();
 
     String getType();
+    
+    float getAngle();
+
+	void setMousePosition(Vec2 to);
+
+	Vec2 getMousePosition();
+
+	void left();
+
+	void right();
+
+	void up();
+
+	void down();
+    
 }

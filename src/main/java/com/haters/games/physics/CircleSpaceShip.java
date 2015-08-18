@@ -1,6 +1,7 @@
 package com.haters.games.physics;
 
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
@@ -37,7 +38,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
         bd.linearDamping = 0.7f;
-        bd.angularDamping = 1000.0f;
+        bd.angularDamping = 5.0f;
 
         // shape definition
         CircleShape shape = new CircleShape();
@@ -67,7 +68,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
     @Override
     protected int getTotalEnergy() {
-        return 100;
+        return isbot ? 10 : 100;
     }
 
     @Override
@@ -75,52 +76,53 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
         return 70;
     }
 
-    @Override
-    public void turn(TurnState state) {
-        Vec2 direction;
-        if (state == TurnState.LEFT) {
-            direction = new Vec2(-1, 0);
-        } else{
-            direction = new Vec2(1, 0);
-        }
-        goToDirection(direction);
-    }
-
-    @Override
-    public void accelerate(AccelerationState state) {
-        Vec2 direction;
-
-        if (state == AccelerationState.UP) {
-            direction = new Vec2(0, 1);
-        }else {
-            direction = new Vec2(0, -1);
-        }
-        goToDirection(direction);
-    }
-
     private void goToDirection(Vec2 direction){
         direction.normalize();
-        float impulse = 9.5f;
+        float impulse = 7.5f;
         this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
-    }
-
-    @Override
-    public boolean avoidColision() {
-        return true;
-    }
-
-    @Override
-    public void rotateTo(Vec2 position) {
-
-    }
-
-    @Override
-    public boolean shouldFire(Set<SpaceShip> enemies) {
-        return false;
     }
 
     @Override
     public String getType() {
         return "circle";
     }
+    
+	@Override
+	public float getAngle() {
+		
+		return body.getAngle();
+		
+		/*Vec2 center = body.getWorldPoint(new Vec2(0, 0));
+		Vec2 direction = mouse_pos.sub(center);
+		return MathUtils.atan2(direction.y,direction.x);*/
+	}
+	@Override
+	public void setMousePosition(Vec2 mouse_pos) {
+		this.mouse_pos = mouse_pos;
+		rotateTo(mouse_pos);
+	}
+	@Override
+	public Vec2 getMousePosition() {
+		return mouse_pos;
+	}
+	
+	@Override
+	public void left() {
+		goToDirection(body.getWorldVector(new Vec2(0, +1)));	
+	}
+	
+	@Override
+	public void right() {
+		goToDirection(body.getWorldVector(new Vec2(0, -1)));
+	}
+	
+	@Override
+	public void up() {
+		goToDirection(body.getWorldVector(new Vec2(1, 0)));
+	}
+	
+	@Override
+	public void down() {
+		goToDirection(body.getWorldVector(new Vec2(-1, 0)));
+	}
 }
