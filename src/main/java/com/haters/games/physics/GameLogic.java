@@ -1,11 +1,11 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 
 import com.haters.games.input.GameInputStream;
@@ -17,7 +17,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 100;
+	private static final int numberOfBots = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
@@ -26,6 +26,8 @@ public class GameLogic {
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
+	private long spawnbotsfrequency = 60000;
+	private long lastspawntime = 0;
 	
 
 	
@@ -40,16 +42,23 @@ public class GameLogic {
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
 		
-		for(int i=0;i<numberOfBots;i++){
-			SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen);
-			bots.add(bot);			
-		}
-
 	}
 
 	public void step(float f, int velocityIterations, int positionIterations) {
 		spaceWorld.step(f, velocityIterations, positionIterations);
-
+		
+		
+		long now = new Date().getTime();
+		if(now - lastspawntime > spawnbotsfrequency){
+			int createbots = numberOfBots-bots.size();
+			for(int i=0;i<createbots;i++){
+				SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen).setCruiseMode();
+				bots.add(bot);			
+			}
+			lastspawntime = now;
+		}
+		
+		
 		for(SpaceShip bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
 				killthen.add((Destroyable)bot);
@@ -86,7 +95,7 @@ public class GameLogic {
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, killthen, false));
+				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
 			}
 			istream.eraseNewPlayersEvents();
 		}
@@ -107,6 +116,7 @@ public class GameLogic {
 
 		for (int i = 0; i < players.size(); i++) {
 			SpaceShip player = this.players.get(i);
+			player.heal();
 		
 			if (istream.getMouseMoveEvent(player) != null) {
 				float x = istream.getMouseMoveEvent(player)[0];
@@ -137,15 +147,11 @@ public class GameLogic {
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				//player.fireToPosition(player.getMousePosition());
 				player.fire();
 			}
 
 			player.detectGameEntities();
 		}
-		
-		//System.out.println("players:" + players.size());
-		//System.out.println("bots:" + bots.size());
 
 	}
 	

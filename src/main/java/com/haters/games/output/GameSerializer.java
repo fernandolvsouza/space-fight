@@ -2,6 +2,7 @@ package com.haters.games.output;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -15,14 +16,14 @@ public class GameSerializer {
 	
 	static Gson g = new GsonBuilder().create() ;
 
-	public void serializeForPlayer(SpaceShip player, Writer out) {
+	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players, Writer out) {
 		try {
 			JsonWriter jw = new JsonWriter(out) ;
 			jw.beginObject().
 					name("player");
 					shipToJson(player,jw);
 			jw.name("scene");
-					serialize(player.getShipsInRange(),player.getBulletsInRange(),jw);
+					serialize(player.getShipsInRange(),player.getBulletsInRange(),bots.size(),players.size(),jw);
 			jw.endObject();
 			out.append("\n");
 			out.flush();
@@ -31,8 +32,10 @@ public class GameSerializer {
 		}
 	}
 
-	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, JsonWriter jw) throws IOException {
+	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
 		jw.beginObject().
+			name("totalbots").value(String.format("%d", totalbots)).
+			name("totalplayers").value(String.format("%d", totalplayers)).
 			name("ships").beginArray();
 			
 			for (SpaceShip p : ships) {
@@ -68,7 +71,9 @@ public class GameSerializer {
 			name("angle").value(String.format("%.2f", ship.getAngle())).
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
 			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).
-			name("isbot").value(ship.isbot());	
+			name("energy").value(String.format("%d", ship.getCurrentEnergy()*100/ship.getTotalEnergy())).
+			name("isbot").value(ship.isbot());
+		
 		return jw.endObject();
 	}
 

@@ -37,7 +37,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
         // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
-        bd.linearDamping = 0.7f;
+        bd.linearDamping = 1.0f;
         bd.angularDamping = 5.0f;
 
         // shape definition
@@ -67,7 +67,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     }
 
     @Override
-    protected int getTotalEnergy() {
+    public int getTotalEnergy() {
         return isbot ? 10 : 100;
     }
 

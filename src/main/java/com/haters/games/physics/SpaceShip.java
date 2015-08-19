@@ -21,6 +21,8 @@ public interface SpaceShip {
     //void accelerate(AccelerationState up);
 
     int getCurrentEnergy();
+    
+    int getTotalEnergy();
 
     void fire();
 
@@ -58,5 +60,7 @@ public interface SpaceShip {
 	void up();
 
 	void down();
+	
+	void heal();
     
 }

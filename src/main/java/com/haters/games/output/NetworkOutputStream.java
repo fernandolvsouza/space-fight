@@ -32,7 +32,7 @@ public class NetworkOutputStream {
 
 	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players) {
 		for (SpaceShip player : players){
-            serializer.serializeForPlayer(player, getWriter());
+            serializer.serializeForPlayer(player,bots,players,getWriter());
         }
 	}
 }

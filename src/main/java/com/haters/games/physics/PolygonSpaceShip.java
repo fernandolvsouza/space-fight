@@ -87,7 +87,7 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 	}
 
 	@Override
-	protected int getTotalEnergy() {
+	public int getTotalEnergy() {
 		
 		return isbot ? 10 : totalEnergy;
 	}

@@ -33,6 +33,7 @@ public abstract class BasicShip {
     protected boolean isbot = true;
     private int currentEnergy;
     protected final long timeCreated = new Date().getTime();
+    private long lasthealtime = 0;
 
     protected DetectEntitiesCallback detectionCallback;
 
@@ -143,8 +144,10 @@ public abstract class BasicShip {
 		while ( totalRotation < -180 * MathUtils.DEG2RAD ) totalRotation += 360 * MathUtils.DEG2RAD;
 		while ( totalRotation >  180 * MathUtils.DEG2RAD ) totalRotation -= 360 * MathUtils.DEG2RAD;
 		float desiredAngularVelocity = totalRotation * 60;
-		float change = 30 * MathUtils.DEG2RAD; //allow 10 degree rotation per time step
-		desiredAngularVelocity = MathUtils.min( change, MathUtils.max(-change, desiredAngularVelocity));
+		if(isbot){
+			float change = 10 * MathUtils.DEG2RAD; //allow 10 degree rotation per time step
+			desiredAngularVelocity = MathUtils.min( change, MathUtils.max(-change, desiredAngularVelocity));
+		}
 		
 		float impulse = this.body.getInertia() * desiredAngularVelocity;// disregard time factor
 		this.body.applyAngularImpulse(impulse);
@@ -157,10 +160,7 @@ public abstract class BasicShip {
         if( now - lastFireTime > Bullet.FireFrequency) {
             Bullet bullet = Bullet.create((SpaceShip)this,Sequence.getSequence());
             this.bullets.add(bullet);
-            //if(to == null)
-                bullet.fire();
-            //else
-             //   bullet.fireToPosition(to);
+            bullet.fire();
             lastFireTime = now;
         }
         removeExcessBullets();
@@ -230,12 +230,13 @@ public abstract class BasicShip {
         return isbot;
     }
 
-    public BasicShip setAttackMode() {
+    public SpaceShip setAttackMode() {
         this.body.m_linearDamping = attackModeLinearDamping;
-        return this;
+        return (SpaceShip)this;
     }
-    public void setCruiseMode() {
+    public SpaceShip setCruiseMode() {
         this.body.m_linearDamping = cruiseModeLinearDamping;
+        return (SpaceShip)this;
     }
 
     @Override
@@ -247,6 +248,7 @@ public abstract class BasicShip {
         result = prime * result + (int) (timeCreated ^ (timeCreated >>> 32));
         return result;
     }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -265,8 +267,22 @@ public abstract class BasicShip {
         return true;
     }
 
+    public void heal(){
+    	long now = new Date().getTime();
+    	if(now-lasthealtime > getHealFrequency()){
+    		int plus = getTotalEnergy()/10;
+    		this.currentEnergy = this.currentEnergy + plus;
+    		if(this.currentEnergy > this.getTotalEnergy()) 
+    			this.currentEnergy =  this.getTotalEnergy();
+    		lasthealtime = now;
+    	}
+    }
+    
+    private long getHealFrequency() {
+		return 10000;
+	}
 
-    protected abstract void init(Vec2 vec2);
+	protected abstract void init(Vec2 vec2);
     protected abstract int getTotalEnergy();
     protected abstract float getEnemyDetectRange();
 
