@@ -24,7 +24,7 @@ public abstract class BasicShip {
 
     protected Body body;
     protected World world;
-    protected List<Destroyable> killthen;
+    protected DestroyPool killthen;
 
     private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
     private long lastFireTime = 0;
@@ -34,13 +34,17 @@ public abstract class BasicShip {
     private int currentEnergy;
     protected final long timeCreated = new Date().getTime();
     private long lasthealtime = 0;
+    private long lastDamageTime = -1;
+	private long damagePeriod = 100;
+    
 
     protected DetectEntitiesCallback detectionCallback;
+	private boolean readyToDestroy = false;
 
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
 
-    protected BasicShip(World world, Vec2 pos, int id, List<Destroyable> killthen) {
+    protected BasicShip(World world, Vec2 pos, int id, DestroyPool killthen) {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
@@ -48,7 +52,7 @@ public abstract class BasicShip {
         init(pos);
     }
 
-    protected BasicShip(World world, int id, List<Destroyable> killthen, boolean isbot) {
+    protected BasicShip(World world, int id, DestroyPool killthen, boolean isbot) {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
@@ -194,6 +198,7 @@ public abstract class BasicShip {
 
     public void damage(Bullet b) {
         this.currentEnergy -= b.getDamage();
+        this.lastDamageTime = new Date().getTime();
     }
 
     public void destroy() {
@@ -267,7 +272,7 @@ public abstract class BasicShip {
         return true;
     }
 
-    public void heal(){
+    public void autoheal(){
     	long now = new Date().getTime();
     	if(now-lasthealtime > getHealFrequency()){
     		int plus = getTotalEnergy()/10;
@@ -280,6 +285,20 @@ public abstract class BasicShip {
     
     private long getHealFrequency() {
 		return 10000;
+	}
+    
+	public void setReadyToDestroy(boolean b){
+		readyToDestroy = b;
+	}
+	
+	public boolean readyToDestroy(){
+		return readyToDestroy ;
+	}
+	
+	public boolean isDamaged(){
+		if(lastDamageTime < 0)
+			return false;
+		return (new Date().getTime() - lastDamageTime < damagePeriod );
 	}
 
 	protected abstract void init(Vec2 vec2);

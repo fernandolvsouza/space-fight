@@ -9,11 +9,11 @@ import java.util.List;
 
 public class CollisionCallback implements ContactListener {
 
-	private List<Destroyable> killthen;
+	private DestroyPool destroyPool;
 	
-	public CollisionCallback(List<Destroyable> killthen) {
+	public CollisionCallback(DestroyPool destroyPool) {
 		super();
-		this.killthen = killthen;
+		this.destroyPool = destroyPool;
 	}
 
 	@Override
@@ -24,24 +24,24 @@ public class CollisionCallback implements ContactListener {
 		if(contactType(dataA,dataB,Bullet.class,CircleSpaceShip.class)){
 			CircleSpaceShip plane = (dataA instanceof CircleSpaceShip ? (CircleSpaceShip)dataA : (CircleSpaceShip)dataB);
 			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
-			killthen.add(bullet);
+			destroyPool.add(bullet);
 			plane.damage(bullet);
 			
 		}else if(contactType(dataA,dataB,Bullet.class,PolygonSpaceShip.class)){
 			PolygonSpaceShip plane = (dataA instanceof PolygonSpaceShip ? (PolygonSpaceShip)dataA : (PolygonSpaceShip)dataB);
 			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
-			killthen.add(bullet);
+			destroyPool.add(bullet);
 			plane.damage(bullet);
 			
 		}else if(contactType(dataA,dataB,Bullet.class,Bullet.class)){
-			killthen.add((Bullet)dataA);
-			killthen.add((Bullet)dataB);
+			destroyPool.add((Bullet)dataA);
+			destroyPool.add((Bullet)dataB);
 		} else {
 			if(dataA instanceof Bullet){
-				killthen.add((Bullet)dataA);
+				destroyPool.add((Bullet)dataA);
 			}
 			if(dataB instanceof Bullet){
-				killthen.add((Bullet)dataB);
+				destroyPool.add((Bullet)dataB);
 			}
 		}
 	}

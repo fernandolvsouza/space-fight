@@ -20,7 +20,7 @@ public class GameLogic {
 	private static final int numberOfBots = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
-	private final List<Destroyable> killthen = new ArrayList<Destroyable>();
+	private final DestroyPool destroypool = new DestroyPool();
 	
 	private SpaceWorld spaceWorld;
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
@@ -40,7 +40,7 @@ public class GameLogic {
 	public void init() {
 
 		spaceWorld.setup();
-		spaceWorld.getWorld().setContactListener(new CollisionCallback(killthen));
+		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
 		
 	}
 
@@ -52,7 +52,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), killthen).setCruiseMode();
+				SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
@@ -61,7 +61,7 @@ public class GameLogic {
 		
 		for(SpaceShip bot : bots){
 			if(bot.getCurrentEnergy() <= 0){
-				killthen.add((Destroyable)bot);
+				destroypool.add((Destroyable)bot);
 				bots.remove(bot);
 				break;
 			}
@@ -95,7 +95,7 @@ public class GameLogic {
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, killthen, false).setAttackMode());
+				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, destroypool, false).setAttackMode());
 			}
 			istream.eraseNewPlayersEvents();
 		}
@@ -104,7 +104,7 @@ public class GameLogic {
 			for(Integer id : istream.getRemovePlayers()) {
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == id) {
-						killthen.add((Destroyable)players.get(i));
+						destroypool.add((Destroyable)players.get(i));
 						players.remove(i);
 						i--;
 					}
@@ -116,7 +116,7 @@ public class GameLogic {
 
 		for (int i = 0; i < players.size(); i++) {
 			SpaceShip player = this.players.get(i);
-			player.heal();
+			player.autoheal();
 		
 			if (istream.getMouseMoveEvent(player) != null) {
 				float x = istream.getMouseMoveEvent(player)[0];
@@ -125,7 +125,7 @@ public class GameLogic {
 			}
 			
 			if (player.getCurrentEnergy() <= 0) {
-				killthen.add((Destroyable)player);
+				destroypool.add((Destroyable)player);
 				players.remove(player);
 				i--;
 				continue;
@@ -156,14 +156,8 @@ public class GameLogic {
 	}
 	
 	public void afterStep(){
-		for (Destroyable object : killthen) {
-			object.destroy();
-			object = null;
-		}
-		
-		killthen.clear();
 		ostream.streamGame(spaceWorld,bots,players);
-	
+		destroypool.destroyAll();
 	}
  
 }

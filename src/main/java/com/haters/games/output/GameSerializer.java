@@ -72,7 +72,8 @@ public class GameSerializer {
 			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
 			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).
 			name("energy").value(String.format("%d", ship.getCurrentEnergy()*100/ship.getTotalEnergy())).
-			name("isbot").value(ship.isbot());
+			name("isbot").value(ship.isbot()).
+			name("isdamaged").value(ship.isDamaged());
 		
 		return jw.endObject();
 	}

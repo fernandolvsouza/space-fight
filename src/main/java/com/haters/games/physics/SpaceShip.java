@@ -12,47 +12,49 @@ import java.util.Set;
  */
 public interface SpaceShip {
 
+	//getters
+	
     int getId();
 
     Body getBody();
+    
+    World getWorld();
+    
+    String getType();
+    
+    float getAngle();
 
-    //void turn(TurnState left);
-
-    //void accelerate(AccelerationState up);
+	Vec2 getMousePosition();
 
     int getCurrentEnergy();
     
     int getTotalEnergy();
-
-    void fire();
-
-    void detectGameEntities();
-
+    
     Set<SpaceShip> getShipsInRange();
     
     Set<Bullet> getBulletsInRange();
 
     List<Bullet> getBullets();
-
-   boolean isbot();
     
-    //bot methods
-    boolean avoidColision();
-
-    void rotateTo(Vec2 position);
-
-    boolean shouldFire(Set<SpaceShip> enemies);
-
-    World getWorld();
-
-    String getType();
+    boolean isbot();
     
-    float getAngle();
+    boolean isDamaged();
+    
+    //setter
+    
+    void setMousePosition(Vec2 to);
+    
+    
+    //generic actions
+    void fire();
+    
+    void autoheal();
 
-	void setMousePosition(Vec2 to);
-
-	Vec2 getMousePosition();
-
+    void detectGameEntities();
+   
+    
+    //moving methods
+	
 	void left();
 
 	void right();
@@ -60,7 +62,13 @@ public interface SpaceShip {
 	void up();
 
 	void down();
-	
-	void heal();
+
+    void rotateTo(Vec2 position);
     
+    //bot methods
+    
+    boolean avoidColision();
+
+    boolean shouldFire(Set<SpaceShip> enemies);
+	    
 }

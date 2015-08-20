@@ -23,18 +23,18 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 
 
 
-	static public PolygonSpaceShip create(World world,int id, List<Destroyable> killthen, boolean isbot){
+	static public PolygonSpaceShip create(World world,int id, DestroyPool killthen, boolean isbot){
 		return new PolygonSpaceShip(world,id,killthen,isbot);
 	}
-	static public PolygonSpaceShip create(World world, Vec2 pos, int id, List<Destroyable> killthen){
+	static public PolygonSpaceShip create(World world, Vec2 pos, int id, DestroyPool killthen){
 		return new PolygonSpaceShip(world,pos,id,killthen);
 	}
 
-	private PolygonSpaceShip(World world, Vec2 pos, int id, List<Destroyable> killthen) {
+	private PolygonSpaceShip(World world, Vec2 pos, int id, DestroyPool killthen) {
 		super(world,pos, id, killthen);
 	}
 
-	private PolygonSpaceShip(World world, int id, List<Destroyable> killthen, boolean isbot) {
+	private PolygonSpaceShip(World world, int id, DestroyPool killthen, boolean isbot) {
 		super(world,id,killthen,isbot);
 	}
 

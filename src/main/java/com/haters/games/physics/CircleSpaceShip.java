@@ -16,18 +16,18 @@ import java.util.Set;
  */
 public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
 
-    static public CircleSpaceShip create(World world,int id, List<Destroyable> killthen, boolean isbot){
+    static public CircleSpaceShip create(World world,int id, DestroyPool killthen, boolean isbot){
         return new CircleSpaceShip(world,id,killthen,isbot);
     }
-    static public CircleSpaceShip create(World world, Vec2 pos, int id, List<Destroyable> killthen){
+    static public CircleSpaceShip create(World world, Vec2 pos, int id, DestroyPool killthen){
         return new CircleSpaceShip(world,pos,id,killthen);
     }
 
-    protected CircleSpaceShip(World world, Vec2 pos, int id, List<Destroyable> killthen) {
+    protected CircleSpaceShip(World world, Vec2 pos, int id, DestroyPool killthen) {
         super(world, pos, id, killthen);
     }
 
-    protected CircleSpaceShip(World world, int id, List<Destroyable> killthen, boolean isbot) {
+    protected CircleSpaceShip(World world, int id, DestroyPool killthen, boolean isbot) {
         super(world, id, killthen, isbot);
     }
 
@@ -89,12 +89,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     
 	@Override
 	public float getAngle() {
-		
 		return body.getAngle();
-		
-		/*Vec2 center = body.getWorldPoint(new Vec2(0, 0));
-		Vec2 direction = mouse_pos.sub(center);
-		return MathUtils.atan2(direction.y,direction.x);*/
 	}
 	@Override
 	public void setMousePosition(Vec2 mouse_pos) {

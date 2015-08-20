@@ -14,7 +14,6 @@ public class Bullet implements Destroyable, GameEntity{
 
 	public static final long FireFrequency = 300;
 	private static final int damage = 10;
-	private static final float fireLinearImpulse = 10.0f;
 	
 	private Body body;
 	private BodyDef bd;
@@ -24,7 +23,7 @@ public class Bullet implements Destroyable, GameEntity{
 	private boolean isbot;
 	
 	private final long timeCreated = new Date().getTime();
-	private float velocityAngle;
+	private boolean readyToDestroy = false;
 
 	private Bullet(SpaceShip plane,int sequence) {
 		this.plane = plane;
@@ -52,12 +51,6 @@ public class Bullet implements Destroyable, GameEntity{
 	public static Bullet create(SpaceShip plane,int sequence) {
 		return new Bullet(plane,sequence);
 	}
-
-	/*public void fire() {
-		Vec2 from = plane.getBody().getWorldPoint(new Vec2(4, 0));
-		Vec2 direction = plane.getBody().getWorldVector(new Vec2(1, 0));
-		fireToDirection(from,direction);
-	}*/
 
 	public void fire() {
 		Vec2 center = plane.getBody().getWorldPoint(new Vec2(0, 0));
@@ -148,5 +141,13 @@ public class Bullet implements Destroyable, GameEntity{
 
 	public float getVelocityAngle() {
 		return MathUtils.atan2(this.body.getLinearVelocity().y,this.body.getLinearVelocity().x);
+	}
+	
+	public void setReadyToDestroy(boolean b){
+		readyToDestroy  = b;
+	}
+	
+	public boolean readyToDestroy(){
+		return readyToDestroy ;
 	}
 }

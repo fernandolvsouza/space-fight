@@ -79,4 +79,14 @@ public class Boundaries implements Destroyable,GameEntity{
 		this.spaceWorld.getWorld().destroyBody(this.body);
 		
 	}
+
+	@Override
+	public void setReadyToDestroy(boolean b) {
+				
+	}
+
+	@Override
+	public boolean readyToDestroy() {
+		return false;
+	}
 }

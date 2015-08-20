@@ -1,14 +1,13 @@
 package com.haters.games.output;
 
-import com.haters.games.physics.PolygonSpaceShip;
-import com.haters.games.physics.SpaceShip;
-import com.haters.games.physics.SpaceWorld;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.Socket;
 import java.util.List;
+
+import com.haters.games.physics.SpaceShip;
+import com.haters.games.physics.SpaceWorld;
 
 public class NetworkOutputStream {
 	private PrintWriter out;
