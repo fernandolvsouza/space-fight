@@ -1,5 +1,12 @@
 package com.haters.games.physics;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
 import org.jbox2d.collision.RayCastOutput;
@@ -8,11 +15,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
-
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by flvs on 8/9/15.
@@ -217,6 +219,21 @@ public abstract class BasicShip {
     public Set<Bullet> getBulletsInRange() {
         return this.detectionCallback.bullets;
     }
+    
+    public Set<Garbage> getGarbagesInRange(){
+        return this.detectionCallback.garbages;
+    }
+    
+    public Set<SpaceShip> getAlivePlayersInRange(){
+    	Set<SpaceShip> players = getShipsInRange();
+    	Set<SpaceShip> alive = new LinkedHashSet<SpaceShip>();
+		for (SpaceShip spaceShip : players) {
+			if(!spaceShip.getType().equals("dead") && !spaceShip.isbot()){
+				alive.add(spaceShip);
+			}
+		}
+		return alive;		
+    }
 
     public Boundaries getBoundsInRange() {
         return this.detectionCallback.boundaries;
@@ -284,7 +301,7 @@ public abstract class BasicShip {
     }
     
     private long getHealFrequency() {
-		return 10000;
+		return 5000;
 	}
     
 	public void setReadyToDestroy(boolean b){

@@ -36,6 +36,10 @@ public interface SpaceShip {
 
     List<Bullet> getBullets();
     
+    Set<SpaceShip> getAlivePlayersInRange();
+    
+    Set<Garbage> getGarbagesInRange();
+    
     boolean isbot();
     
     boolean isDamaged();

@@ -14,6 +14,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	public Set<GameEntity> entities;
 	public Set<SpaceShip> planes;
 	public Set<Bullet> bullets;
+	public Set<Garbage> garbages;
 	public Boundaries boundaries;
 	public List<Fixture> boundFixtures;
 	public List<Fixture> othersFixtures;
@@ -24,6 +25,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 		entities = new HashSet<GameEntity>();
 		planes = new HashSet<SpaceShip>();
 		bullets = new HashSet<Bullet>();
+		garbages = new HashSet<Garbage>();
 		boundFixtures = new ArrayList<Fixture>();
 		othersFixtures = new ArrayList<Fixture>();
 		this.plane = plane;
@@ -37,6 +39,11 @@ public class DetectEntitiesCallback implements QueryCallback {
 		
 		if (userdata instanceof PolygonSpaceShip || userdata instanceof CircleSpaceShip) {
 			planes.add((SpaceShip) userdata);
+			othersFixtures.add(fix);
+		}
+		
+		if (userdata instanceof Garbage) {
+			garbages.add((Garbage)userdata);
 			othersFixtures.add(fix);
 		}
 		
@@ -61,6 +68,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 
 		entities.clear();
 		planes.clear();
+		garbages.clear();
 		bullets.clear();
 		boundFixtures.clear();
 		othersFixtures.clear();

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.haters.games.physics.Bullet;
+import com.haters.games.physics.Garbage;
 import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
 
@@ -23,7 +24,7 @@ public class GameSerializer {
 					name("player");
 					shipToJson(player,jw);
 			jw.name("scene");
-					serialize(player.getShipsInRange(),player.getBulletsInRange(),bots.size(),players.size(),jw);
+					serialize(player.getShipsInRange(),player.getBulletsInRange(),player.getGarbagesInRange(),bots.size(),players.size(),jw);
 			jw.endObject();
 			out.append("\n");
 			out.flush();
@@ -32,7 +33,7 @@ public class GameSerializer {
 		}
 	}
 
-	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
+	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, Set<Garbage> garbages, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
 		jw.beginObject().
 			name("totalbots").value(String.format("%d", totalbots)).
 			name("totalplayers").value(String.format("%d", totalplayers)).
@@ -49,10 +50,27 @@ public class GameSerializer {
 				bulletToJson(b,jw);
 			}
 			jw.endArray().
+			
+			name("trash").
+			beginArray();
+			for (Garbage g : garbages) {
+				garbageToJson(g,jw);
+			}
+			jw.endArray().
 		endObject();
 		return jw;
 	}
 	
+	private JsonWriter garbageToJson(Garbage g, JsonWriter jw) throws IOException{
+		jw.beginObject().
+		name("id").value(String.format("%d", g.getId())).
+		name("x").value(String.format("%.2f", g.getBody().getPosition().x)).
+		name("y").value(String.format("%.2f", g.getBody().getPosition().y)).
+		name("type").value("").
+		endObject();
+		return jw;
+	}
+
 	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
 		jw.beginObject().
 		name("id").value(String.format("%d", b.getId())).

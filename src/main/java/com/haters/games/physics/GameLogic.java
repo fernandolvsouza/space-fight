@@ -1,6 +1,7 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -17,13 +18,15 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 10;
+	private static final int numberOfBots = 30;
+	private static final int numberOfGarbage = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();
 	
 	private SpaceWorld spaceWorld;
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
+	private List<Garbage> garbages = new ArrayList<Garbage>(numberOfGarbage);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 	private long spawnbotsfrequency = 60000;
@@ -41,9 +44,12 @@ public class GameLogic {
 
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
+		for(int i=0;i<garbages.size();i++){ 
+			garbages.add(new Garbage(spaceWorld));			
+		}
 		
 	}
-
+	
 	public void step(float f, int velocityIterations, int positionIterations) {
 		spaceWorld.step(f, velocityIterations, positionIterations);
 		
@@ -58,32 +64,29 @@ public class GameLogic {
 			lastspawntime = now;
 		}
 		
-		
-		for(SpaceShip bot : bots){
+		for (int i = 0; i < bots.size(); i++) {
+			SpaceShip bot = bots.get(i);			
+			
 			if(bot.getCurrentEnergy() <= 0){
 				destroypool.add((Destroyable)bot);
 				bots.remove(bot);
-				break;
+				i--;
+				continue;
 			}
 			bot.detectGameEntities();
 			//bot.setAttackMode();
 			
-			Set<SpaceShip> ships = bot.getShipsInRange();
-			Set<SpaceShip> players = new LinkedHashSet<SpaceShip>(); 
-			
-			for (SpaceShip ship : ships) {
-				if(!ship.isbot()){
-					players.add(ship);
-				}
-			}
+			Set<SpaceShip> alivePlayers = bot.getAlivePlayersInRange();
+
+
 			//Boundaries bounds =  bot.getBoundsInRange();
 			if(bot.avoidColision()){
-				if(players.size() !=0){
-					bot.rotateTo(players.iterator().next().getBody().getPosition());
+				if(alivePlayers.size() !=0){
+					bot.rotateTo(alivePlayers.iterator().next().getBody().getPosition());
 				}
 			}
 			
-			if(bot.shouldFire(players)){	
+			if(bot.shouldFire(alivePlayers)){	
 				bot.fire();
 			}
 
@@ -125,10 +128,11 @@ public class GameLogic {
 			}
 			
 			if (player.getCurrentEnergy() <= 0) {
-				destroypool.add((Destroyable)player);
 				players.remove(player);
-				i--;
-				continue;
+				players.add(i,new DeadShip(player));
+				//destroypool.add((Destroyable)player);
+				//i--;
+				//continue;
 			}
 			if (istream.hasLeftEvent(player)) { //37
 				player.left();

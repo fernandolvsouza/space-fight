@@ -1,7 +1,5 @@
 package com.haters.games.physics;
 
-import java.util.List;
-
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
