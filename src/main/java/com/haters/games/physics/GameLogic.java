@@ -127,7 +127,8 @@ public class GameLogic {
 				player.setMousePosition(new Vec2(x,y));
 			}
 			
-			if (player.getCurrentEnergy() <= 0) {
+			if (player.getCurrentEnergy() <= 0 && !(player instanceof DeadShip)) {
+				System.out.println("DeadShip!!");
 				players.remove(player);
 				players.add(i,new DeadShip(player));
 				//destroypool.add((Destroyable)player);
