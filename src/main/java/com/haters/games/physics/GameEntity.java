@@ -1,5 +1,5 @@
 package com.haters.games.physics;
 
-public interface GameEntity {
+public interface GameEntity extends Destroyable{
 
 }

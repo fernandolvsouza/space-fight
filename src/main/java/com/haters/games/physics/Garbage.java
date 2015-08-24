@@ -74,4 +74,19 @@ public class Garbage implements GameEntity{
 	public Body getBody() {
 		return body;
 	}
+
+	@Override
+	public void setReadyToDestroy(boolean b) {
+
+	}
+
+	@Override
+	public boolean readyToDestroy() {
+		return false;
+	}
+
+	@Override
+	public void destroy() {
+
+	}
 }

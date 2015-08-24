@@ -8,7 +8,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
-public class DeadShip implements SpaceShip, Destroyable,GameEntity{
+public class DeadShip implements SpaceShip{
 
 	private SpaceShip deadplayer; 
 	public DeadShip(SpaceShip player){
@@ -131,17 +131,17 @@ public class DeadShip implements SpaceShip, Destroyable,GameEntity{
 
 	@Override
 	public void setReadyToDestroy(boolean b) {
-		((Destroyable) deadplayer).setReadyToDestroy(b);
+		deadplayer.setReadyToDestroy(b);
 	}
 
 	@Override
 	public boolean readyToDestroy() {
-		return ((Destroyable) deadplayer).readyToDestroy();
+		return deadplayer.readyToDestroy();
 	}
 
 	@Override
 	public void destroy() {
-		((Destroyable) deadplayer).destroy();		
+		deadplayer.destroy();
 	}
 
 	@Override

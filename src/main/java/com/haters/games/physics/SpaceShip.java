@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by flvs on 8/9/15.
  */
-public interface SpaceShip {
+public interface SpaceShip  extends GameEntity{
 
 	//getters
 	
