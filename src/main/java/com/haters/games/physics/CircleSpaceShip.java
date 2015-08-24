@@ -16,18 +16,18 @@ import java.util.Set;
  */
 public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
 
-    static public CircleSpaceShip create(World world,int id, DestroyPool killthen, boolean isbot){
+    static public CircleSpaceShip create(SpaceWorld world,int id, DestroyPool killthen, boolean isbot){
         return new CircleSpaceShip(world,id,killthen,isbot);
     }
-    static public CircleSpaceShip create(World world, Vec2 pos, int id, DestroyPool killthen){
+    static public CircleSpaceShip create(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
         return new CircleSpaceShip(world,pos,id,killthen);
     }
 
-    protected CircleSpaceShip(World world, Vec2 pos, int id, DestroyPool killthen) {
+    protected CircleSpaceShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
         super(world, pos, id, killthen);
     }
 
-    protected CircleSpaceShip(World world, int id, DestroyPool killthen, boolean isbot) {
+    protected CircleSpaceShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
         super(world, id, killthen, isbot);
     }
 
@@ -53,7 +53,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
         // create dynamic body
         bd.setPosition(pos);
-        this.body = this.world.createBody(bd);
+        this.body = this.world.getWorld().createBody(bd);
         this.body.createFixture(fd);
 
         //this.body.setTransform(this.body.getPosition(),90 * MathUtils.DEG2RAD);

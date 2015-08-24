@@ -1,11 +1,5 @@
 package com.haters.games.input;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.haters.games.physics.PolygonSpaceShip;
-import com.haters.games.physics.SpaceShip;
-
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -15,8 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.haters.games.physics.SpaceShip;
+
 enum EventType {
-	LEFT, RIGHT, UP, DOWN, FIRE, MOUSE_MOVE, NEW_PLAYER, REMOVE_PLAYER
+	LEFT, RIGHT, UP, DOWN, FIRE, MOUSE_MOVE, NEW_PLAYER, REMOVE_PLAYER, BE_BORN, DIE
 }
 
 public class NetworkInputStream implements GameInputStream {
@@ -24,6 +22,7 @@ public class NetworkInputStream implements GameInputStream {
 	private Map<Integer,Object[]> inputStateByPlayers = new HashMap<Integer, Object[]>();
 	private List<Integer> newPlayers = new ArrayList<Integer>();
 	private List<Integer> removePlayers = new ArrayList<Integer>();
+	private List<Integer> bebornPlayers = new ArrayList<Integer>();
 	private SocketChannel channel;
 	private StringBuilder eventbuffer = new StringBuilder();
 
@@ -68,18 +67,18 @@ public class NetworkInputStream implements GameInputStream {
 	}
 
 	@Override
-	public boolean hasRemovePlayerEvent() {
-		return !removePlayers.isEmpty();
+	public boolean hasRemovePlayerEvent(SpaceShip player) {
+		return removePlayers.contains(player.getId());
+	}
+	
+	@Override
+	public boolean hasBeBornEvent(SpaceShip player) {
+		return bebornPlayers.contains(player.getId());
 	}
 
 	@Override
 	public List<Integer> getNewPlayers() {
 		return newPlayers;
-	}
-
-	@Override
-	public List<Integer> getRemovePlayers() {
-		return removePlayers;
 	}
 
 	@Override
@@ -91,6 +90,12 @@ public class NetworkInputStream implements GameInputStream {
 	public void eraseRemovePlayersEvents() {
 		removePlayers.clear();
 	}
+	
+	@Override
+	public void eraseBeBornPlayersEvents() {
+		bebornPlayers.clear();
+	}
+
 
 	@Override
 	public void processEvents() {
@@ -109,6 +114,8 @@ public class NetworkInputStream implements GameInputStream {
 				}else if (EventType.valueOf(event) == EventType.REMOVE_PLAYER) {
 					removePlayers.add(userId);
 					inputStateByPlayers.remove(userId);
+				}else if (EventType.valueOf(event) == EventType.BE_BORN) {
+					bebornPlayers.add(userId);
 				}else if (EventType.valueOf(event) == EventType.MOUSE_MOVE){
 					if(inputStateByPlayers.containsKey(userId)) {
 						float x = payload.getAsJsonObject().get("x").getAsFloat();

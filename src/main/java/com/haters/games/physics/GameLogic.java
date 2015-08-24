@@ -58,7 +58,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.create(spaceWorld.getWorld(), spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
+				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
@@ -91,34 +91,25 @@ public class GameLogic {
 			}
 
 			bot.up();
-			
 		}
-
-
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add((SpaceShip)CircleSpaceShip.create(spaceWorld.getWorld(), id, destroypool, false).setAttackMode());
+				players.add(new DeadShip(CircleSpaceShip.create(spaceWorld, id, destroypool, false).setAttackMode()));
 			}
-			istream.eraseNewPlayersEvents();
 		}
 
-		if (istream.hasRemovePlayerEvent()) {
-			for(Integer id : istream.getRemovePlayers()) {
-				for (int i = 0; i < players.size(); i++) {
-					if (players.get(i).getId() == id) {
-						destroypool.add((Destroyable)players.get(i));
-						players.remove(i);
-						i--;
-					}
-				}
-			}
-			System.out.println("players size : " +  players.size());
-			istream.eraseRemovePlayersEvents();
-		}
 
 		for (int i = 0; i < players.size(); i++) {
 			SpaceShip player = this.players.get(i);
+			
+			if (istream.hasRemovePlayerEvent(player)) {
+				destroypool.add(player);
+				players.remove(i);
+				i--;
+				continue;
+			}
+			
 			player.autoheal();
 		
 			if (istream.getMouseMoveEvent(player) != null) {
@@ -131,9 +122,6 @@ public class GameLogic {
 				System.out.println("DeadShip!!");
 				players.remove(player);
 				players.add(i,new DeadShip(player));
-				//destroypool.add((Destroyable)player);
-				//i--;
-				//continue;
 			}
 			if (istream.hasLeftEvent(player)) { //37
 				player.left();
@@ -154,9 +142,23 @@ public class GameLogic {
 			if (istream.hasFireEvent(player)) { //'s'
 				player.fire();
 			}
-
+			
 			player.detectGameEntities();
-		}
+			
+			if (istream.hasBeBornEvent(player)) {
+				if(player instanceof DeadShip){
+					players.remove(i);
+					players.add(i,((DeadShip)player).reborn());
+					System.out.println("BornShip!!");
+
+				}
+
+			}
+		}	
+		
+		istream.eraseNewPlayersEvents();
+		istream.eraseRemovePlayersEvents();
+		istream.eraseBeBornPlayersEvents();
 
 	}
 	

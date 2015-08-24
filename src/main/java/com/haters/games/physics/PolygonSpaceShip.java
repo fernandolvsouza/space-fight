@@ -6,7 +6,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 
 
 public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
@@ -21,18 +20,18 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 
 
 
-	static public PolygonSpaceShip create(World world,int id, DestroyPool killthen, boolean isbot){
+	static public PolygonSpaceShip create(SpaceWorld world,int id, DestroyPool killthen, boolean isbot){
 		return new PolygonSpaceShip(world,id,killthen,isbot);
 	}
-	static public PolygonSpaceShip create(World world, Vec2 pos, int id, DestroyPool killthen){
+	static public PolygonSpaceShip create(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
 		return new PolygonSpaceShip(world,pos,id,killthen);
 	}
 
-	private PolygonSpaceShip(World world, Vec2 pos, int id, DestroyPool killthen) {
+	private PolygonSpaceShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
 		super(world,pos, id, killthen);
 	}
 
-	private PolygonSpaceShip(World world, int id, DestroyPool killthen, boolean isbot) {
+	private PolygonSpaceShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
 		super(world,id,killthen,isbot);
 	}
 
@@ -74,7 +73,7 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 
 		// create dynamic body
 		bd.setPosition(pos);
-		this.body = this.world.createBody(bd);
+		this.body = this.world.getWorld().createBody(bd);
 		this.body.createFixture(fd);
 		this.body.createFixture(fd2);
 

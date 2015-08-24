@@ -20,6 +20,8 @@ public interface SpaceShip  extends GameEntity{
     
     World getWorld();
     
+    SpaceWorld getSpaceWorld();
+    
     String getType();
     
     float getAngle();
@@ -53,6 +55,8 @@ public interface SpaceShip  extends GameEntity{
     void fire();
     
     void autoheal();
+    
+	void restoreEnergy();
 
     void detectGameEntities();
    
@@ -74,5 +78,6 @@ public interface SpaceShip  extends GameEntity{
     boolean avoidColision();
 
     boolean shouldFire(Set<SpaceShip> enemies);
-	    
+
+    	    
 }

@@ -25,7 +25,7 @@ public abstract class BasicShip {
     protected Vec2 mouse_pos;
 
     protected Body body;
-    protected World world;
+    protected SpaceWorld world;
     protected DestroyPool killthen;
 
     private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
@@ -46,7 +46,7 @@ public abstract class BasicShip {
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
 
-    protected BasicShip(World world, Vec2 pos, int id, DestroyPool killthen) {
+    protected BasicShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
@@ -54,7 +54,7 @@ public abstract class BasicShip {
         init(pos);
     }
 
-    protected BasicShip(World world, int id, DestroyPool killthen, boolean isbot) {
+    protected BasicShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
@@ -73,6 +73,10 @@ public abstract class BasicShip {
     }
 
     public World getWorld(){
+        return world.getWorld();
+    }
+    
+    public SpaceWorld getSpaceWorld(){
         return world;
     }
 
@@ -80,6 +84,7 @@ public abstract class BasicShip {
         return this.bullets;
     }
     
+
 	public boolean avoidColision() {
 		float rayLength = 10;
 		int[] angles = new int[10];
@@ -209,7 +214,7 @@ public abstract class BasicShip {
             bullet = null;
         }
         bullets.clear();
-        this.world.destroyBody(this.body);
+        this.world.getWorld().destroyBody(this.body);
     }
 
     public Set<SpaceShip> getShipsInRange() {
@@ -244,7 +249,7 @@ public abstract class BasicShip {
         AABB aabb = new AABB();
         aabb.lowerBound.set(new Vec2(this.body.getPosition().x - getEnemyDetectRange(),this.body.getPosition().y - getEnemyDetectRange()));
         aabb.upperBound.set(new Vec2(this.body.getPosition().x + getEnemyDetectRange(),this.body.getPosition().y + getEnemyDetectRange()));
-        this.world.queryAABB(detectionCallback, aabb);
+        this.world.getWorld().queryAABB(detectionCallback, aabb);
     }
 
 
@@ -273,18 +278,8 @@ public abstract class BasicShip {
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BasicShip other = (BasicShip) obj;
-        if (id != other.id)
-            return false;
-        if (isbot != other.isbot)
-            return false;
-        if (timeCreated != other.timeCreated)
+    	SpaceShip other = (SpaceShip) obj;
+        if (id != other.getId())
             return false;
         return true;
     }
@@ -299,6 +294,11 @@ public abstract class BasicShip {
     		lasthealtime = now;
     	}
     }
+    
+    public void restoreEnergy(){
+    	currentEnergy = getTotalEnergy();
+	}
+    
     
     private long getHealFrequency() {
 		return 5000;

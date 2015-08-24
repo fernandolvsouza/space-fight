@@ -154,4 +154,31 @@ public class DeadShip implements SpaceShip{
 	public Set<Garbage> getGarbagesInRange() {
 		return deadplayer.getGarbagesInRange();
 	}
+
+	public SpaceShip reborn() {
+		deadplayer.getBody().setTransform(deadplayer.getSpaceWorld().getRandomPosition(), deadplayer.getBody().getAngle());
+		deadplayer.restoreEnergy();
+		deadplayer.getBody().getFixtureList().setSensor(false);
+		deadplayer.getBody().setUserData(deadplayer);
+		return deadplayer;
+	}
+	
+	@Override
+    public int hashCode(){
+		return deadplayer.hashCode();
+	}
+    
+	@Override
+    public boolean equals(Object obj){
+		return deadplayer.equals(obj);
+	}
+
+	@Override
+	public SpaceWorld getSpaceWorld() {
+		return deadplayer.getSpaceWorld();
+	}
+
+	@Override
+	public void restoreEnergy() {
+	}
 }
