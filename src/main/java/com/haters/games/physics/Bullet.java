@@ -139,7 +139,7 @@ public class Bullet implements Destroyable, GameEntity{
 		return sequence;
 	}
 
-	public float getVelocityAngle() {
+	public float getAngle() {
 		return MathUtils.atan2(this.body.getLinearVelocity().y,this.body.getLinearVelocity().x);
 	}
 	
