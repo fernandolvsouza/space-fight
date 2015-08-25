@@ -2,6 +2,8 @@ package com.haters.games.output;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Set;
 
@@ -35,8 +37,8 @@ public class GameSerializer {
 
 	private JsonWriter serialize(Set<SpaceShip> ships,Set<Bullet> bullets, Set<Garbage> garbages, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
 		jw.beginObject().
-			name("totalbots").value(String.format("%d", totalbots)).
-			name("totalplayers").value(String.format("%d", totalplayers)).
+			name("totalbots").value(totalbots).
+			name("totalplayers").value(totalplayers).
 			name("ships").beginArray();
 			
 			for (SpaceShip p : ships) {
@@ -63,7 +65,7 @@ public class GameSerializer {
 	
 	private JsonWriter garbageToJson(Garbage g, JsonWriter jw) throws IOException{
 		jw.beginObject().
-		name("id").value(String.format("%d", g.getId())).
+		name("id").value(g.getId()).
 		name("x").value(String.format("%.2f", g.getBody().getPosition().x)).
 		name("y").value(String.format("%.2f", g.getBody().getPosition().y)).
 		name("type").value("").
@@ -73,11 +75,11 @@ public class GameSerializer {
 
 	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
 		jw.beginObject().
-		name("id").value(String.format("%d", b.getId())).
-		name("x").value(String.format("%.2f", b.getBody().getPosition().x)).
-		name("y").value(String.format("%.2f", b.getBody().getPosition().y)).
+		name("id").value(b.getId()).
+		name("x").value(new BigDecimal(b.getBody().getPosition().x).setScale(2,RoundingMode.HALF_DOWN)).
+		name("y").value(new BigDecimal(b.getBody().getPosition().y).setScale(2,RoundingMode.HALF_DOWN)).
 		name("type").value("bullet").
-		name("angle").value(String.format("%.2f", b.getVelocityAngle())).
+		name("angle").value(new BigDecimal(b.getVelocityAngle()).setScale(2,RoundingMode.HALF_DOWN)).
 		endObject();
 		return jw;
 	}
@@ -86,14 +88,21 @@ public class GameSerializer {
 		jw.beginObject().
 			name("id").value(ship.getId()).
 			name("type").value(ship.getType()).
-			name("angle").value(String.format("%.2f", ship.getAngle())).
-			name("x").value(String.format("%.2f", ship.getBody().getPosition().x)).
-			name("y").value(String.format("%.2f", ship.getBody().getPosition().y)).
-			name("energy").value(String.format("%d", ship.getCurrentEnergy()*100/ship.getTotalEnergy())).
-			name("isbot").value(ship.isbot()).
-			name("isdamaged").value(ship.isDamaged());
+			name("angle").value(new BigDecimal(ship.getAngle())).
+			name("x").value(positionToJson(ship.getBody().getPosition().x)).
+			name("y").value(positionToJson(ship.getBody().getPosition().y)).
+			name("energy").value(new BigDecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy()).setScale(0,RoundingMode.DOWN)).
+			name("isbot").value(booleanToJson(ship.isbot())).
+			name("isdamaged").value(booleanToJson(ship.isDamaged()));
 		
 		return jw.endObject();
+	}
+	
+	private int booleanToJson(boolean b){
+		return b ? 1 : 0;
+	}
+	private BigDecimal positionToJson(float p){
+		return new BigDecimal(p).setScale(2,RoundingMode.HALF_DOWN);
 	}
 
 }

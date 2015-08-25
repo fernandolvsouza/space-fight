@@ -67,7 +67,7 @@ public class Garbage implements GameEntity{
 		return true;
 	}
 
-	public Object getId() {
+	public int getId() {
 		return id;
 	}
 
