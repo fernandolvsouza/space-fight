@@ -23,8 +23,6 @@ public class GameSerializer {
 		try {
 			JsonWriter jw = new JsonWriter(out) ;
 			serialize(player, player.getShipsInRange(),player.getBulletsInRange(),player.getGarbagesInRange(),bots.size(),players.size(),jw);
-
-			out.append("\n");
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,28 +69,28 @@ public class GameSerializer {
 	}
 
 	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
-		jw.beginArray().
+		jw.
 		value(b.getId()).
 		value(1).
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
-		value(tobigdecimal(b.getAngle())).
-		endArray();
+		value(tobigdecimal(b.getAngle()));
+		
 		return jw;
 	}
 	
-	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{
-		jw.beginArray().
-			value(ship.getId()).
-			value(0).
-			value(tobigdecimal(ship.getBody().getPosition().x)).
-			value(tobigdecimal(ship.getBody().getPosition().y)).
-			value(tobigdecimal(ship.getAngle())).
-			value(tobigdecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy(),0,RoundingMode.DOWN)).
-			value(booleanToJson(ship.isbot())).
-			value(booleanToJson(ship.isDamaged()));
+	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{ //8 attributes
+		jw.
+		value(ship.getId()).
+		value(0).
+		value(tobigdecimal(ship.getBody().getPosition().x)).
+		value(tobigdecimal(ship.getBody().getPosition().y)).
+		value(tobigdecimal(ship.getAngle())).
+		value(tobigdecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy(),0,RoundingMode.DOWN)).
+		value(booleanToJson(ship.isbot())).
+		value(booleanToJson(ship.isDamaged()));
 		
-		return jw.endArray();
+		return jw;
 	}
 	
 	private int booleanToJson(boolean b){
