@@ -8,6 +8,8 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
+import com.haters.games.output.SERIALIZER_TYPE;
+
 public class DeadShip implements SpaceShip{
 
 	private SpaceShip deadplayer; 
@@ -33,8 +35,8 @@ public class DeadShip implements SpaceShip{
 	}
 
 	@Override
-	public String getType() {
-		return "dead";
+	public SERIALIZER_TYPE getType() {
+		return SERIALIZER_TYPE.DEAD;
 	}
 
 	@Override

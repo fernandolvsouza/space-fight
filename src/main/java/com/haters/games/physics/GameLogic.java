@@ -18,7 +18,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 30;
+	private static final int numberOfBots = 20;
 	private static final int numberOfGarbage = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
@@ -86,9 +86,9 @@ public class GameLogic {
 				}
 			}
 			
-			if(bot.shouldFire(alivePlayers)){	
+			//if(bot.shouldFire(alivePlayers)){	
 				bot.fire();
-			}
+			//}
 
 			bot.up();
 		}

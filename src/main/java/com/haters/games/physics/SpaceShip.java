@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by flvs on 8/9/15.
  */
-public interface SpaceShip  extends GameEntity{
+public interface SpaceShip  extends GameEntity,GameSerializable{
 
 	//getters
 	
@@ -21,9 +21,7 @@ public interface SpaceShip  extends GameEntity{
     World getWorld();
     
     SpaceWorld getSpaceWorld();
-    
-    String getType();
-    
+        
     float getAngle();
 
 	Vec2 getMousePosition();

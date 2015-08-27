@@ -12,10 +12,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.haters.games.physics.Bullet;
 import com.haters.games.physics.Garbage;
-import com.haters.games.physics.PolygonSpaceShip;
 import com.haters.games.physics.SpaceShip;
 
 public class GameSerializer {
+	
 	
 	private static Gson g = new GsonBuilder().create() ;
 
@@ -23,6 +23,7 @@ public class GameSerializer {
 		try {
 			JsonWriter jw = new JsonWriter(out) ;
 			serialize(player, player.getShipsInRange(),player.getBulletsInRange(),player.getGarbagesInRange(),bots.size(),players.size(),jw);
+			out.write('\n');
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -32,57 +33,59 @@ public class GameSerializer {
 	private JsonWriter serialize(SpaceShip player,Set<SpaceShip> ships,Set<Bullet> bullets, Set<Garbage> garbages, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
 		jw.beginArray();
 			
+			jw.
+			value(totalbots).
+			value(totalplayers);
+
+		
 			shipToJson(player,jw);
 			
-			jw.value(totalbots).
-			value(totalplayers).
-			beginArray();
 			
 			for (SpaceShip p : ships) {
-				shipToJson(p,jw);
+				shipToJson(p,jw); // 8 multiple alements
 			}
-			jw.endArray().			
-			
-			beginArray();
+				
+
 			for (Bullet b : bullets) {
-				bulletToJson(b,jw);
+				bulletToJson(b,jw); // 5 multiple alements
 			}
-			jw.endArray().
 			
-			beginArray();
+
 			for (Garbage g : garbages) {
-				garbageToJson(g,jw);
+				garbageToJson(g,jw); // 4 multiple alements
 			}
-			jw.endArray().
-		endArray();
+
+		jw.endArray();
 		return jw;
 	}
 	
-	private JsonWriter garbageToJson(Garbage g, JsonWriter jw) throws IOException{
-		jw.beginArray().
+	private JsonWriter garbageToJson(Garbage g, JsonWriter jw) throws IOException{ //4 attributes
+		jw.
+		value(g.getType().ordinal()).
 		value(g.getId()).
-		value(2).
 		value(tobigdecimal(g.getBody().getPosition().x)).
-		value(tobigdecimal(g.getBody().getPosition().y)).
-		endArray();
+		value(tobigdecimal(g.getBody().getPosition().y));
+
+		
 		return jw;
 	}
 
-	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
+	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{ //5 attributes
 		jw.
+		value(b.getType().ordinal()).
 		value(b.getId()).
-		value(1).
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
 		value(tobigdecimal(b.getAngle()));
+
 		
 		return jw;
 	}
 	
 	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{ //8 attributes
 		jw.
+		value(ship.getType().ordinal()).
 		value(ship.getId()).
-		value(0).
 		value(tobigdecimal(ship.getBody().getPosition().x)).
 		value(tobigdecimal(ship.getBody().getPosition().y)).
 		value(tobigdecimal(ship.getAngle())).

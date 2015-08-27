@@ -8,9 +8,11 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
+import com.haters.games.output.SERIALIZER_TYPE;
+
 import java.util.Date;
 
-public class Bullet implements Destroyable, GameEntity{
+public class Bullet implements Destroyable, GameEntity, GameSerializable{
 
 	public static final long FireFrequency = 300;
 	private static final int damage = 10;
@@ -149,5 +151,9 @@ public class Bullet implements Destroyable, GameEntity{
 	
 	public boolean readyToDestroy(){
 		return readyToDestroy ;
+	}
+	
+	public SERIALIZER_TYPE getType(){
+		return SERIALIZER_TYPE.BULLET;
 	}
 }

@@ -6,7 +6,9 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Garbage implements GameEntity{
+import com.haters.games.output.SERIALIZER_TYPE;
+
+public class Garbage implements GameEntity, GameSerializable{
 	
 	private int id;
 	private SpaceWorld world;
@@ -88,5 +90,9 @@ public class Garbage implements GameEntity{
 	@Override
 	public void destroy() {
 
+	}
+	
+	public SERIALIZER_TYPE getType(){
+		return SERIALIZER_TYPE.GARBAGE;
 	}
 }

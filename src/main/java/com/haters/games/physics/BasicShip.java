@@ -16,6 +16,8 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
 
+import com.haters.games.output.SERIALIZER_TYPE;
+
 /**
  * Created by flvs on 8/9/15.
  */
@@ -233,7 +235,7 @@ public abstract class BasicShip {
     	Set<SpaceShip> players = getShipsInRange();
     	Set<SpaceShip> alive = new LinkedHashSet<SpaceShip>();
 		for (SpaceShip spaceShip : players) {
-			if(!spaceShip.getType().equals("dead") && !spaceShip.isbot()){
+			if(spaceShip.getType() != SERIALIZER_TYPE.DEAD && !spaceShip.isbot()){
 				alive.add(spaceShip);
 			}
 		}

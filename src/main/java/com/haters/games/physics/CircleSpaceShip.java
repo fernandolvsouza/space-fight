@@ -8,6 +8,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import com.haters.games.output.SERIALIZER_TYPE;
+
 import java.util.List;
 import java.util.Set;
 
@@ -68,7 +70,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
     @Override
     public int getTotalEnergy() {
-        return isbot ? 10 : 100;
+        return isbot ? 1000000 : 100;
     }
 
     @Override
@@ -83,8 +85,8 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     }
 
     @Override
-    public String getType() {
-        return "circle";
+    public SERIALIZER_TYPE getType() {
+        return SERIALIZER_TYPE.CIRCLE;
     }
     
 	@Override

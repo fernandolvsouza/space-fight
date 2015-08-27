@@ -7,6 +7,8 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
+import com.haters.games.output.SERIALIZER_TYPE;
+
 
 public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
 
@@ -124,8 +126,8 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 	
 	
 	@Override
-	public String getType() {
-		return "polygon";
+	public SERIALIZER_TYPE getType() {
+		return SERIALIZER_TYPE.POLYGON;
 	}
 
 
