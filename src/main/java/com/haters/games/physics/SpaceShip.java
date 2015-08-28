@@ -44,6 +44,10 @@ public interface SpaceShip  extends GameEntity,GameSerializable{
     
     boolean isDamaged();
     
+    String getName();
+    
+    void setName(String name);
+    
     //setter
     
     void setMousePosition(Vec2 to);

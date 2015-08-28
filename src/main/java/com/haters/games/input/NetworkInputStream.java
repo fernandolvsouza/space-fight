@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class NetworkInputStream implements GameInputStream {
 	private Map<Integer,Object[]> inputStateByPlayers = new HashMap<Integer, Object[]>();
 	private List<Integer> newPlayers = new ArrayList<Integer>();
 	private List<Integer> removePlayers = new ArrayList<Integer>();
-	private List<Integer> bebornPlayers = new ArrayList<Integer>();
+	private List<Object[]> bebornPlayers = new ArrayList<Object[]>();
 	private SocketChannel channel;
 	private StringBuilder eventbuffer = new StringBuilder();
 
@@ -72,8 +73,14 @@ public class NetworkInputStream implements GameInputStream {
 	}
 	
 	@Override
-	public boolean hasBeBornEvent(SpaceShip player) {
-		return bebornPlayers.contains(player.getId());
+	public Object[] getBeBornEvent(SpaceShip player) {
+		for (Object[] born : bebornPlayers) {
+			Integer id = (Integer) born[0];
+			if(player.getId() == id ){
+				return born;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -107,6 +114,7 @@ public class NetworkInputStream implements GameInputStream {
 				String event = json.getAsJsonObject().get("event").getAsString();
 				JsonElement payload = json.getAsJsonObject().get("payload");
 				Integer userId = payload.getAsJsonObject().get("user").getAsJsonObject().get("id").getAsInt();
+				
 				if (EventType.valueOf(event) == EventType.NEW_PLAYER) {
 					newPlayers.add(userId);
 					Object[] bitmap = {false,false,false,false,false,null};
@@ -115,7 +123,8 @@ public class NetworkInputStream implements GameInputStream {
 					removePlayers.add(userId);
 					inputStateByPlayers.remove(userId);
 				}else if (EventType.valueOf(event) == EventType.BE_BORN) {
-					bebornPlayers.add(userId);
+					String name = payload.getAsJsonObject().get("user").getAsJsonObject().get("name").getAsString();
+					bebornPlayers.add(new Object[]{userId,name});
 				}else if (EventType.valueOf(event) == EventType.MOUSE_MOVE){
 					if(inputStateByPlayers.containsKey(userId)) {
 						float x = payload.getAsJsonObject().get("x").getAsFloat();

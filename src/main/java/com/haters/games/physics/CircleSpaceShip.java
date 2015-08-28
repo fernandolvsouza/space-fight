@@ -70,7 +70,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
 
     @Override
     public int getTotalEnergy() {
-        return isbot ? 1000000 : 100;
+        return isbot ? 10 : 100;
     }
 
     @Override

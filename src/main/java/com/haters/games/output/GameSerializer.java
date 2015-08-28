@@ -42,7 +42,7 @@ public class GameSerializer {
 			
 			
 			for (SpaceShip p : ships) {
-				shipToJson(p,jw); // 8 multiple alements
+				shipToJson(p,jw); // 9 multiple alements
 			}
 				
 
@@ -91,7 +91,8 @@ public class GameSerializer {
 		value(tobigdecimal(ship.getAngle())).
 		value(tobigdecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy(),0,RoundingMode.DOWN)).
 		value(booleanToJson(ship.isbot())).
-		value(booleanToJson(ship.isDamaged()));
+		value(booleanToJson(ship.isDamaged())).
+		value(ship.getName());
 		
 		return jw;
 	}

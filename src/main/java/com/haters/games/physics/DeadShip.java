@@ -157,11 +157,12 @@ public class DeadShip implements SpaceShip{
 		return deadplayer.getGarbagesInRange();
 	}
 
-	public SpaceShip reborn() {
+	public SpaceShip reborn(String name) {
 		deadplayer.getBody().setTransform(deadplayer.getSpaceWorld().getRandomPosition(), deadplayer.getBody().getAngle());
 		deadplayer.restoreEnergy();
 		deadplayer.getBody().getFixtureList().setSensor(false);
 		deadplayer.getBody().setUserData(deadplayer);
+		deadplayer.setName(name);
 		return deadplayer;
 	}
 	
@@ -182,5 +183,15 @@ public class DeadShip implements SpaceShip{
 
 	@Override
 	public void restoreEnergy() {
+	}
+
+	@Override
+	public String getName() {
+		return deadplayer.getName();
+	}
+
+	@Override
+	public void setName(String name) {
+		
 	}
 }

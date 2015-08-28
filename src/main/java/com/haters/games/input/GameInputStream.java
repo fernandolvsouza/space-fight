@@ -8,13 +8,14 @@ import com.haters.games.physics.SpaceShip;
 public interface GameInputStream {
 
 	float[] getMouseMoveEvent(SpaceShip player);
-
+	Object[] getBeBornEvent(SpaceShip player);
+	
 	boolean hasLeftEvent(SpaceShip player);
 	boolean hasRightEvent(SpaceShip player);
 	boolean hasUpEvent(SpaceShip player);
 	boolean hasDownEvent(SpaceShip player);
 	boolean hasFireEvent(SpaceShip player);
-	boolean hasBeBornEvent(SpaceShip player);
+	
 	boolean hasRemovePlayerEvent(SpaceShip player);
 	
 	boolean hasNewPlayerEvent();

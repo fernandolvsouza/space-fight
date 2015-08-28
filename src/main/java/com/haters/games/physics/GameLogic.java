@@ -18,7 +18,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 20;
+	private static final int numberOfBots = 30;
 	private static final int numberOfGarbage = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
@@ -86,9 +86,9 @@ public class GameLogic {
 				}
 			}
 			
-			//if(bot.shouldFire(alivePlayers)){	
+			if(bot.shouldFire(alivePlayers)){	
 				bot.fire();
-			//}
+			}
 
 			bot.up();
 		}
@@ -145,10 +145,13 @@ public class GameLogic {
 			
 			player.detectGameEntities();
 			
-			if (istream.hasBeBornEvent(player)) {
+			Object[] event = istream.getBeBornEvent(player);
+			
+			if ( event != null) {
+				String name = (String) event[1];
 				if(player instanceof DeadShip){
 					players.remove(i);
-					players.add(i,((DeadShip)player).reborn());
+					players.add(i,((DeadShip)player).reborn(name));
 					System.out.println("BornShip!!");
 
 				}

@@ -1,6 +1,5 @@
 package com.haters.games.physics;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -44,6 +43,7 @@ public abstract class BasicShip {
 
     protected DetectEntitiesCallback detectionCallback;
 	private boolean readyToDestroy = false;
+	private String name = "";
 
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
@@ -319,6 +319,14 @@ public abstract class BasicShip {
 			return false;
 		return (new Date().getTime() - lastDamageTime < damagePeriod );
 	}
+	
+	public void setName(String name){
+		this.name = name;    	
+    }
+	
+    public String getName(){
+    	return this.name;
+    }
 
 	protected abstract void init(Vec2 vec2);
     protected abstract int getTotalEnergy();
