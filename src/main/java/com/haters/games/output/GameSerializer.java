@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.haters.games.physics.Bullet;
-import com.haters.games.physics.Garbage;
+import com.haters.games.physics.Energy;
 import com.haters.games.physics.SpaceShip;
 
 public class GameSerializer {
@@ -30,7 +30,7 @@ public class GameSerializer {
 		}
 	}
 
-	private JsonWriter serialize(SpaceShip player,Set<SpaceShip> ships,Set<Bullet> bullets, Set<Garbage> garbages, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
+	private JsonWriter serialize(SpaceShip player,Set<SpaceShip> ships,Set<Bullet> bullets, Set<Energy> energies, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
 		jw.beginArray();
 			
 			jw.
@@ -51,7 +51,7 @@ public class GameSerializer {
 			}
 			
 
-			for (Garbage g : garbages) {
+			for (Energy g : energies) {
 				garbageToJson(g,jw); // 4 multiple alements
 			}
 
@@ -59,7 +59,7 @@ public class GameSerializer {
 		return jw;
 	}
 	
-	private JsonWriter garbageToJson(Garbage g, JsonWriter jw) throws IOException{ //4 attributes
+	private JsonWriter garbageToJson(Energy g, JsonWriter jw) throws IOException{ //4 attributes
 		jw.
 		value(g.getType().ordinal()).
 		value(g.getId()).

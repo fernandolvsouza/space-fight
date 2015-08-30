@@ -8,13 +8,13 @@ import org.jbox2d.dynamics.FixtureDef;
 
 import com.haters.games.output.SERIALIZER_TYPE;
 
-public class Garbage implements GameEntity, GameSerializable{
+public class Energy implements GameEntity, GameSerializable{
 	
 	private int id;
 	private SpaceWorld world;
 	private Body body;
 	
-	public Garbage(SpaceWorld world) {
+	public Energy(SpaceWorld world) {
 		this.world = world;
 		this.id = Sequence.getSequence();
 		init();
@@ -29,13 +29,13 @@ public class Garbage implements GameEntity, GameSerializable{
 
         // shape definition
         CircleShape shape = new CircleShape();
-        shape.setRadius(20.0f);
+        shape.setRadius(10.0f);
         shape.m_p.set(0,0);
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
-        fd.density = 1;
+        fd.density = 0.01f;
 
 
         // create dynamic body
@@ -63,7 +63,7 @@ public class Garbage implements GameEntity, GameSerializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Garbage other = (Garbage) obj;
+		Energy other = (Energy) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -93,6 +93,6 @@ public class Garbage implements GameEntity, GameSerializable{
 	}
 	
 	public SERIALIZER_TYPE getType(){
-		return SERIALIZER_TYPE.GARBAGE;
+		return SERIALIZER_TYPE.ENERGY;
 	}
 }

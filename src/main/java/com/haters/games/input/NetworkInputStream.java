@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.haters.games.physics.SpaceShip;
@@ -110,31 +111,32 @@ public class NetworkInputStream implements GameInputStream {
 			String[] inputs = checkInput();
 			for (String input : inputs) {
 				JsonElement json =  new JsonParser().parse(input);
+				JsonArray array = json.getAsJsonArray();
 
-				String event = json.getAsJsonObject().get("event").getAsString();
-				JsonElement payload = json.getAsJsonObject().get("payload");
-				Integer userId = payload.getAsJsonObject().get("user").getAsJsonObject().get("id").getAsInt();
+				Integer userId = array.get(0).getAsInt();
+				Integer event = array.get(1).getAsInt();
+
 				
-				if (EventType.valueOf(event) == EventType.NEW_PLAYER) {
+				if (event == EventType.NEW_PLAYER.ordinal()) {
 					newPlayers.add(userId);
 					Object[] bitmap = {false,false,false,false,false,null};
 					inputStateByPlayers.put(userId, bitmap);
-				}else if (EventType.valueOf(event) == EventType.REMOVE_PLAYER) {
+				}else if (event == EventType.REMOVE_PLAYER.ordinal()) {
 					removePlayers.add(userId);
 					inputStateByPlayers.remove(userId);
-				}else if (EventType.valueOf(event) == EventType.BE_BORN) {
-					String name = payload.getAsJsonObject().get("user").getAsJsonObject().get("name").getAsString();
+				}else if (event == EventType.BE_BORN.ordinal()) {
+					String name = array.get(2).getAsString();
 					bebornPlayers.add(new Object[]{userId,name});
-				}else if (EventType.valueOf(event) == EventType.MOUSE_MOVE){
+				}else if (event == EventType.MOUSE_MOVE.ordinal()){
 					if(inputStateByPlayers.containsKey(userId)) {
-						float x = payload.getAsJsonObject().get("x").getAsFloat();
-						float y = payload.getAsJsonObject().get("y").getAsFloat();
-						inputStateByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = new float[]{x,y};
+						float x = array.get(2).getAsFloat();
+						float y = array.get(3).getAsFloat();
+						inputStateByPlayers.get(userId)[event] = new float[]{x,y};
 					}
 				}else {
 					if(inputStateByPlayers.containsKey(userId)) {
-						Boolean pressed = payload.getAsJsonObject().get("pressed").getAsBoolean();
-						inputStateByPlayers.get(userId)[EventType.valueOf(event).ordinal()] = pressed;
+						Boolean pressed = array.get(2).getAsInt() == 1 ;
+						inputStateByPlayers.get(userId)[event] = pressed;
 					}
 				}
 			}			

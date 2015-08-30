@@ -227,8 +227,8 @@ public abstract class BasicShip {
         return this.detectionCallback.bullets;
     }
     
-    public Set<Garbage> getGarbagesInRange(){
-        return this.detectionCallback.garbages;
+    public Set<Energy> getGarbagesInRange(){
+        return this.detectionCallback.energies;
     }
     
     public Set<SpaceShip> getAlivePlayersInRange(){

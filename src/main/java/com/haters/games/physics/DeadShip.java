@@ -153,7 +153,7 @@ public class DeadShip implements SpaceShip{
 	}
 
 	@Override
-	public Set<Garbage> getGarbagesInRange() {
+	public Set<Energy> getGarbagesInRange() {
 		return deadplayer.getGarbagesInRange();
 	}
 

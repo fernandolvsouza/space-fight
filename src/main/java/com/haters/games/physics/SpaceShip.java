@@ -38,7 +38,7 @@ public interface SpaceShip  extends GameEntity,GameSerializable{
     
     Set<SpaceShip> getAlivePlayersInRange();
     
-    Set<Garbage> getGarbagesInRange();
+    Set<Energy> getGarbagesInRange();
     
     boolean isbot();
     

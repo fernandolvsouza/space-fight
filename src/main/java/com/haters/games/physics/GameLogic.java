@@ -1,9 +1,7 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +24,7 @@ public class GameLogic {
 	
 	private SpaceWorld spaceWorld;
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
-	private List<Garbage> garbages = new ArrayList<Garbage>(numberOfGarbage);
+	private List<Energy> energies = new ArrayList<Energy>(numberOfGarbage);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 	private long spawnbotsfrequency = 60000;
@@ -44,8 +42,8 @@ public class GameLogic {
 
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
-		for(int i=0;i<garbages.size();i++){ 
-			garbages.add(new Garbage(spaceWorld));			
+		for(int i=0;i<numberOfGarbage;i++){
+			energies.add(new Energy(spaceWorld));
 		}
 		
 	}
@@ -58,7 +56,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
+				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setAttackMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
