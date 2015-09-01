@@ -17,7 +17,7 @@ import com.haters.games.output.NetworkOutputStream;
 public class GameLogic {
 
 	private static final int numberOfBots = 30;
-	private static final int numberOfGarbage = 30;
+	private static final int numberOfGarbage = 20;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();

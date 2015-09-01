@@ -32,7 +32,7 @@ public class Energy implements GameEntity, GameSerializable{
         // shape definition
         CircleShape shape = new CircleShape();
 		int min_r = 1;
-		int max_r = 30;
+		int max_r = 10;
 		Random r = new Random();
 		int radius = r.nextInt(max_r-min_r + 1) + min_r;
 
