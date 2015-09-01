@@ -64,7 +64,8 @@ public class GameSerializer {
 		value(g.getType().ordinal()).
 		value(g.getId()).
 		value(tobigdecimal(g.getBody().getPosition().x)).
-		value(tobigdecimal(g.getBody().getPosition().y));
+		value(tobigdecimal(g.getBody().getPosition().y)).
+		value(tobigdecimal(g.getBody().getFixtureList().m_shape.m_radius));
 
 		
 		return jw;

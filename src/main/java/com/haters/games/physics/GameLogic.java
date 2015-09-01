@@ -17,13 +17,13 @@ import com.haters.games.output.NetworkOutputStream;
 public class GameLogic {
 
 	private static final int numberOfBots = 30;
-	private static final int numberOfGarbage = 10;
+	private static final int numberOfGarbage = 30;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();
 	
 	private SpaceWorld spaceWorld;
-	private List<SpaceShip> players = new ArrayList<SpaceShip>(100);
+	private List<SpaceShip> players = new ArrayList<SpaceShip>(1000);
 	private List<Energy> energies = new ArrayList<Energy>(numberOfGarbage);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;

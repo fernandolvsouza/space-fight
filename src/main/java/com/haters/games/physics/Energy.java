@@ -8,6 +8,8 @@ import org.jbox2d.dynamics.FixtureDef;
 
 import com.haters.games.output.SERIALIZER_TYPE;
 
+import java.util.Random;
+
 public class Energy implements GameEntity, GameSerializable{
 	
 	private int id;
@@ -29,13 +31,18 @@ public class Energy implements GameEntity, GameSerializable{
 
         // shape definition
         CircleShape shape = new CircleShape();
-        shape.setRadius(10.0f);
+		int min_r = 1;
+		int max_r = 30;
+		Random r = new Random();
+		int radius = r.nextInt(max_r-min_r + 1) + min_r;
+
+        shape.setRadius(radius);
         shape.m_p.set(0,0);
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
-        fd.density = 0.01f;
+        fd.density = 0.05f;
 
 
         // create dynamic body
