@@ -1,5 +1,5 @@
 package com.haters.games.output;
 
 public enum SERIALIZER_TYPE {
-	CIRCLE, POLYGON, DEAD, BULLET, ENERGY
+	CIRCLE, POLYGON, DEAD, BULLET, ENERGY, EDGE
 }
