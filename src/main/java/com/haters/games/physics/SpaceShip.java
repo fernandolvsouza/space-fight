@@ -81,5 +81,11 @@ public interface SpaceShip  extends GameEntity,GameSerializable{
 
     boolean shouldFire(Set<SpaceShip> enemies);
 
+	void addPoint(int i);
+	
+	void removePoint(int i);
+
+	int getPoints();
+
     	    
 }

@@ -44,6 +44,8 @@ public abstract class BasicShip {
     protected DetectEntitiesCallback detectionCallback;
 	private boolean readyToDestroy = false;
 	private String name = "";
+	
+	private int points = 0;
 
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
@@ -206,7 +208,14 @@ public abstract class BasicShip {
     }
 
     public void damage(Bullet b) {
+
+
         this.currentEnergy -= b.getDamage();
+        if(this.currentEnergy  <= 0 ){
+        	if(b.getShip() != null){
+        		b.getShip().addPoint(10);
+        	}
+        }
         this.lastDamageTime = new Date().getTime();
     }
 
@@ -327,6 +336,20 @@ public abstract class BasicShip {
     public String getName(){
     	return this.name;
     }
+    
+	public void addPoint(int i){
+		this.points += i;
+	}
+	
+	public void removePoint(int i){
+		this.points -= i;
+		if(points < 0 )
+			points= 0;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
 
 	protected abstract void init(Vec2 vec2);
     protected abstract int getTotalEnergy();

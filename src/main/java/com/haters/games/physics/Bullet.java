@@ -26,6 +26,7 @@ public class Bullet implements Destroyable, GameEntity, GameSerializable{
 	
 	private final long timeCreated = new Date().getTime();
 	private boolean readyToDestroy = false;
+	private SpaceShip owner;
 
 	private Bullet(SpaceShip plane,int sequence) {
 		this.plane = plane;
@@ -155,5 +156,9 @@ public class Bullet implements Destroyable, GameEntity, GameSerializable{
 	
 	public SERIALIZER_TYPE getType(){
 		return SERIALIZER_TYPE.BULLET;
+	}
+
+	public SpaceShip getShip() {
+		return this.plane;
 	}
 }

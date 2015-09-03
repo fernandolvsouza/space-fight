@@ -194,4 +194,19 @@ public class DeadShip implements SpaceShip{
 	public void setName(String name) {
 		
 	}
+
+	@Override
+	public void addPoint(int i) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void removePoint(int i) {
+		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public int getPoints() {
+		return deadplayer.getPoints();
+	}
 }

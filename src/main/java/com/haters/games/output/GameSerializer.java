@@ -83,7 +83,7 @@ public class GameSerializer {
 		return jw;
 	}
 	
-	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{ //8 attributes
+	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{ //10 attributes
 		jw.
 		value(ship.getType().ordinal()).
 		value(ship.getId()).
@@ -93,7 +93,8 @@ public class GameSerializer {
 		value(tobigdecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy(),0,RoundingMode.DOWN)).
 		value(booleanToJson(ship.isbot())).
 		value(booleanToJson(ship.isDamaged())).
-		value(ship.getName());
+		value(ship.getName()).
+		value(ship.getPoints());
 		
 		return jw;
 	}
