@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -21,43 +22,51 @@ public class GameSerializer {
 
 	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players, Writer out) {
 		try {
+			
 			JsonWriter jw = new JsonWriter(out) ;
-			serialize(player, player.getShipsInRange(),player.getBulletsInRange(),player.getGarbagesInRange(),bots.size(),players.size(),jw);
+
+			jw.beginArray().			
+			value(bots.size()).
+			value(players.size());
+			
+			shipToJson(player,jw);		
+			
+			for (SpaceShip p : player.getShipsInRange()) {
+				shipToJson(p,jw); // 9 multiple alements
+			}
+				
+			for (Bullet b : player.getBulletsInRange()) {
+				bulletToJson(b,jw); // 5 multiple alements
+			}	
+
+			for (Energy g : player.getGarbagesInRange()) {
+				garbageToJson(g,jw); // 4 multiple alements
+			}
+			
+			int ranking_max =10;
+			jw.value(SERIALIZER_TYPE.RANK.ordinal());
+			
+			for (int i = 0; i <  ranking_max ; i++) {
+				if(i>=players.size()){
+					jw.value(0).
+					value(0).
+					value(0);
+				}else{
+					jw.value(players.get(i).getId()).
+					value(players.get(i).getName()).
+					value(players.get(i).getPoints());
+				}
+			} 
+
+			jw.endArray();
 			out.write('\n');
 			out.flush();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private JsonWriter serialize(SpaceShip player,Set<SpaceShip> ships,Set<Bullet> bullets, Set<Energy> energies, int totalbots, int totalplayers, JsonWriter jw) throws IOException {
-		jw.beginArray();
-			
-			jw.
-			value(totalbots).
-			value(totalplayers);
-
-		
-			shipToJson(player,jw);
-			
-			
-			for (SpaceShip p : ships) {
-				shipToJson(p,jw); // 9 multiple alements
-			}
-				
-
-			for (Bullet b : bullets) {
-				bulletToJson(b,jw); // 5 multiple alements
-			}
-			
-
-			for (Energy g : energies) {
-				garbageToJson(g,jw); // 4 multiple alements
-			}
-
-		jw.endArray();
-		return jw;
-	}
 	
 	private JsonWriter garbageToJson(Energy g, JsonWriter jw) throws IOException{ //4 attributes
 		jw.

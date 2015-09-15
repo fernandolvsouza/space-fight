@@ -1,6 +1,8 @@
 package com.haters.games.physics;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -163,7 +165,21 @@ public class GameLogic {
 
 	}
 	
+	public class RankingComparator implements Comparator<SpaceShip>{
+		
+	    public int compare(SpaceShip object1, SpaceShip object2) {
+	        if(object1.getPoints() > object2.getPoints())
+	        	return 1 ;
+	        else if(object1.getPoints() == object2.getPoints())
+	        	return 0 ;
+	        else
+	        	return -1 ;
+	    }
+	}
+	
 	public void afterStep(){
+		Collections.sort(players, new RankingComparator());
+		
 		ostream.streamGame(spaceWorld,bots,players);
 		destroypool.destroyAll();
 	}
