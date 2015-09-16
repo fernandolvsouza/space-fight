@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,8 @@ import com.haters.games.physics.Energy;
 import com.haters.games.physics.SpaceShip;
 
 public class GameSerializer {
-	
+
+	private final static int ranking_max = 10;
 	
 	private static Gson g = new GsonBuilder().create() ;
 
@@ -29,7 +31,7 @@ public class GameSerializer {
 			value(bots.size()).
 			value(players.size());
 			
-			shipToJson(player,jw);		
+			shipToJson(player, jw);
 			
 			for (SpaceShip p : player.getShipsInRange()) {
 				shipToJson(p,jw); // 9 multiple alements
@@ -40,23 +42,23 @@ public class GameSerializer {
 			}	
 
 			for (Energy g : player.getGarbagesInRange()) {
-				garbageToJson(g,jw); // 4 multiple alements
+				garbageToJson(g, jw); // 4 multiple alements
 			}
-			
-			int ranking_max =10;
+
 			jw.value(SERIALIZER_TYPE.RANK.ordinal());
-			
-			for (int i = 0; i <  ranking_max ; i++) {
-				if(i>=players.size()){
+
+			for (int i = 0; i < ranking_max; i++) {
+				if (i >= players.size()) {
 					jw.value(0).
-					value(0).
-					value(0);
-				}else{
+							value(0).
+							value(0);
+				} else {
 					jw.value(players.get(i).getId()).
-					value(players.get(i).getName()).
-					value(players.get(i).getPoints());
+							value(players.get(i).getName()).
+							value(players.get(i).getPoints());
 				}
-			} 
+			}
+
 
 			jw.endArray();
 			out.write('\n');
