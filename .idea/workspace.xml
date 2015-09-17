@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfafa94d-9046-4d9c-ba51-279689890612" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="space-fight.iws" />
@@ -34,7 +38,7 @@
       <file leaf-file-name="GameEntity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameEntity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="187">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
               <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
               <folding />
             </state>
@@ -44,7 +48,7 @@
       <file leaf-file-name="Boundaries.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Boundaries.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1343">
+            <state vertical-scroll-proportion="0.0" vertical-offset="140" max-vertical-offset="1343">
               <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding />
             </state>
@@ -61,32 +65,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpaceWorld.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SpaceWorld.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="986">
-              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-              <folding>
-                <element signature="e#270#271#0" expanded="false" />
-                <element signature="e#295#296#0" expanded="false" />
-                <element signature="e#323#324#0" expanded="false" />
-                <element signature="e#347#348#0" expanded="false" />
-                <element signature="e#1061#1062#0" expanded="false" />
-                <element signature="e#1089#1090#0" expanded="false" />
-                <element signature="e#1116#1117#0" expanded="false" />
-                <element signature="e#1136#1137#0" expanded="false" />
-                <element signature="e#1174#1175#0" expanded="false" />
-                <element signature="e#1198#1199#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.5201613" vertical-offset="157" max-vertical-offset="1003">
+              <caret line="39" column="128" selection-start-line="39" selection-start-column="128" selection-end-line="39" selection-end-column="128" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameSerializer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameSerializer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47419804" vertical-offset="187" max-vertical-offset="1887">
-              <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1853">
+              <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -95,14 +88,34 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="3111">
-              <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="3451">
+              <caret line="64" column="151" selection-start-line="64" selection-start-column="151" selection-end-line="64" selection-end-column="151" />
               <folding>
-                <element signature="e#532#543#0" expanded="true" />
-                <element signature="e#689#700#0" expanded="true" />
-                <element signature="e#754#762#0" expanded="true" />
-                <marker date="1442362095000" expanded="true" signature="4590:4593" placeholder="{...}" />
+                <element signature="e#572#583#0" expanded="true" />
+                <element signature="e#729#740#0" expanded="true" />
+                <element signature="e#794#802#0" expanded="true" />
+                <marker date="1442457480000" expanded="true" signature="5161:5164" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Energy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1615">
+              <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NetworkOutputStream.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+              <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -112,11 +125,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1445">
               <caret line="65" column="32" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2225#2226#0" expanded="false" />
-                <element signature="e#2249#2250#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -137,7 +146,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/swing/SwingUserInputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/TriangleSpaceShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/GameInputStream.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/render/swing/PanelJ2D.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/render/RenderEngine.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/SpaceFightMain.java" />
@@ -151,13 +159,14 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/DeadShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/input/NetworkInputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Garbage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Boundaries.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
       </list>
     </option>
   </component>
@@ -196,6 +205,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -272,7 +282,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -386,19 +395,6 @@
       </ExternalSystemSettings>
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -425,6 +421,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -536,8 +545,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2652439" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -609,10 +618,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2376">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#532#543#0" expanded="true" />
-            <element signature="e#689#700#0" expanded="true" />
-            <element signature="e#754#762#0" expanded="true" />
-            <marker date="1442362095000" expanded="true" signature="4590:4593" placeholder="{...}" />
+            <element signature="e#572#583#0" expanded="true" />
+            <element signature="e#729#740#0" expanded="true" />
+            <element signature="e#794#802#0" expanded="true" />
+            <marker date="1442457480000" expanded="true" signature="5161:5164" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -673,10 +682,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1060" max-vertical-offset="2232">
           <caret line="26" column="27" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="27" />
           <folding>
-            <element signature="e#532#543#0" expanded="true" />
-            <element signature="e#689#700#0" expanded="true" />
-            <element signature="e#754#762#0" expanded="true" />
-            <marker date="1442362095000" expanded="true" signature="4590:4593" placeholder="{...}" />
+            <element signature="e#572#583#0" expanded="true" />
+            <element signature="e#729#740#0" expanded="true" />
+            <element signature="e#794#802#0" expanded="true" />
+            <marker date="1442457480000" expanded="true" signature="5161:5164" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -809,13 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-          <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/SpaceFightMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
@@ -889,66 +891,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
-          <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1649">
-          <caret line="44" column="25" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
-          <folding>
-            <element signature="e#2004#2005#0" expanded="false" />
-            <element signature="e#2040#2041#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
-          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-          <folding>
-            <element signature="e#270#271#0" expanded="false" />
-            <element signature="e#295#296#0" expanded="false" />
-            <element signature="e#323#324#0" expanded="false" />
-            <element signature="e#347#348#0" expanded="false" />
-            <element signature="e#1061#1062#0" expanded="false" />
-            <element signature="e#1089#1090#0" expanded="false" />
-            <element signature="e#1116#1117#0" expanded="false" />
-            <element signature="e#1136#1137#0" expanded="false" />
-            <element signature="e#1174#1175#0" expanded="false" />
-            <element signature="e#1198#1199#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1445">
           <caret line="65" column="32" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2225#2226#0" expanded="false" />
-            <element signature="e#2249#2250#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="3111">
-          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding>
-            <element signature="e#532#543#0" expanded="true" />
-            <element signature="e#689#700#0" expanded="true" />
-            <element signature="e#754#762#0" expanded="true" />
-            <marker date="1442362095000" expanded="true" signature="4590:4593" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -963,10 +910,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
-          <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+          <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -979,10 +934,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
+          <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47419804" vertical-offset="187" max-vertical-offset="1887">
-          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1853">
+          <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="3451">
+          <caret line="64" column="151" selection-start-line="64" selection-start-column="151" selection-end-line="64" selection-end-column="151" />
+          <folding>
+            <element signature="e#572#583#0" expanded="true" />
+            <element signature="e#729#740#0" expanded="true" />
+            <element signature="e#794#802#0" expanded="true" />
+            <marker date="1442457480000" expanded="true" signature="5161:5164" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/Energy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1615">
+          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5201613" vertical-offset="157" max-vertical-offset="1003">
+          <caret line="39" column="128" selection-start-line="39" selection-start-column="128" selection-end-line="39" selection-end-column="128" />
           <folding />
         </state>
       </provider>

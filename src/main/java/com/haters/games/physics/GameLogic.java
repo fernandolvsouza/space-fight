@@ -19,7 +19,8 @@ import com.haters.games.output.NetworkOutputStream;
 public class GameLogic {
 
 	private static final int numberOfBots = 30;
-	private static final int numberOfGarbage = 20;
+	private static final int numberOfGarbage = 5;
+	private static final int ranksize = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();
@@ -31,6 +32,9 @@ public class GameLogic {
 	private NetworkOutputStream ostream;
 	private long spawnbotsfrequency = 60000;
 	private long lastspawntime = 0;
+	private long rakingfrequency = 2000;
+	private long lastranktime = 0;
+	private long[] 	rankingIds = new long[10];
 	
 
 	
@@ -58,7 +62,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setAttackMode();
+				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
@@ -169,18 +173,34 @@ public class GameLogic {
 		
 	    public int compare(SpaceShip object1, SpaceShip object2) {
 	        if(object1.getPoints() > object2.getPoints())
-	        	return 1 ;
+	        	return -1 ;
 	        else if(object1.getPoints() == object2.getPoints())
 	        	return 0 ;
 	        else
-	        	return -1 ;
+	        	return 1 ;
 	    }
 	}
 	
 	public void afterStep(){
 		Collections.sort(players, new RankingComparator());
-		
-		ostream.streamGame(spaceWorld,bots,players);
+
+		boolean sendRanking = false;
+
+		for(int i=0;i<Math.min(ranksize,players.size());i++){
+			if(players.get(i).getId() != rankingIds[i]){
+				System.out.println(rankingIds[i]);
+				rankingIds[i] = players.get(i).getId();
+				sendRanking = true;
+			}
+		}
+		long now = new Date().getTime();
+		if(sendRanking || now - lastranktime > rakingfrequency){
+			lastranktime = now;
+			sendRanking = true;
+		}
+
+		ostream.streamGame(spaceWorld,bots,players,sendRanking,ranksize);
+
 		destroypool.destroyAll();
 	}
  

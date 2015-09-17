@@ -25,14 +25,14 @@ public class Energy implements GameEntity, GameSerializable{
 	private void init(){
 		 // body definition
         BodyDef bd = new BodyDef();
-        bd.setType(BodyType.DYNAMIC);
+        bd.setType(BodyType.STATIC);
         bd.linearDamping = 1.0f;
         bd.angularDamping = 5.0f;
 
         // shape definition
         CircleShape shape = new CircleShape();
-		int min_r = 1;
-		int max_r = 10;
+		int min_r = 10;
+		int max_r = 15;
 		Random r = new Random();
 		int radius = r.nextInt(max_r-min_r + 1) + min_r;
 
@@ -46,7 +46,7 @@ public class Energy implements GameEntity, GameSerializable{
 
 
         // create dynamic body
-        bd.setPosition(world.getRandomPosition());
+        bd.setPosition(world.getRandomPosition(30));
         this.body = this.world.getWorld().createBody(bd);
         this.body.createFixture(fd);
 

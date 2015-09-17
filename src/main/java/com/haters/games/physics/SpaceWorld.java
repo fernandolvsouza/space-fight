@@ -33,7 +33,11 @@ public class SpaceWorld  {
 	}
 
 	public Vec2 getRandomPosition() {
-		return new Vec2(randomBetween(-getRadius()/4, getRadius()/4), randomBetween(0, getRadius()/2));
+		return new Vec2(randomBetween(-getRadius()/2, getRadius()/2), randomBetween(0, getRadius()));
+	}
+
+	public Vec2 getRandomPosition(int margin) {
+		return new Vec2(randomBetween(-getRadius()/2 + margin, getRadius()/2-margin), randomBetween(0+margin, getRadius()-margin));
 	}
 	
 	private float randomBetween(float x,float y){

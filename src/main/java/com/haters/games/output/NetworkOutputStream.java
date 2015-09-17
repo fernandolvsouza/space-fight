@@ -29,9 +29,9 @@ public class NetworkOutputStream {
 	}
 
 
-	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players) {
+	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players,boolean sendRanking,int ranksize) {
 		for (SpaceShip player : players){
-            serializer.serializeForPlayer(player,bots,players,getWriter());
+            serializer.serializeForPlayer(player,bots,players,sendRanking,ranksize,getWriter());
         }
 	}
 }

@@ -18,11 +18,9 @@ import com.haters.games.physics.SpaceShip;
 
 public class GameSerializer {
 
-	private final static int ranking_max = 10;
-	
 	private static Gson g = new GsonBuilder().create() ;
 
-	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players, Writer out) {
+	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players, boolean sendRanking, int ranksize, Writer out) {
 		try {
 			
 			JsonWriter jw = new JsonWriter(out) ;
@@ -45,20 +43,20 @@ public class GameSerializer {
 				garbageToJson(g, jw); // 4 multiple alements
 			}
 
-			jw.value(SERIALIZER_TYPE.RANK.ordinal());
 
-			for (int i = 0; i < ranking_max; i++) {
-				if (i >= players.size()) {
-					jw.value(0).
-							value(0).
-							value(0);
-				} else {
-					jw.value(players.get(i).getId()).
-							value(players.get(i).getName()).
-							value(players.get(i).getPoints());
+			if(sendRanking) {
+				jw.value(SERIALIZER_TYPE.RANK.ordinal());
+
+				for (int i = 0; i < ranksize; i++) {
+					if (i >= players.size()) {
+						jw.value(0).value(0).value(0);
+					} else {
+						jw.value(players.get(i).getId()).
+								value(players.get(i).getName()).
+								value(players.get(i).getPoints());
+					}
 				}
 			}
-
 
 			jw.endArray();
 			out.write('\n');
