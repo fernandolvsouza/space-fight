@@ -14,24 +14,29 @@ public class NetworkOutputStream {
 	private GameSerializer serializer = new GameSerializer();
 
 
-	private Writer getWriter() {
+	private Writer getWriter() throws IOException {
 		
-		try {
-			if(out == null){
-				out = new PrintWriter(new Socket("127.0.0.1", 1337).getOutputStream(), false);
-			}	
-			return out;
 
-		} catch ( IOException e) {
-			e.printStackTrace();
+		if(out == null || out.checkError()){
+			System.out.println("reconnecting ...");
+			out = new PrintWriter(new Socket("127.0.0.1", 1337).getOutputStream(), false);
 		}
-		return null;
+
+		return out;
+
+
 	}
 
 
 	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players,boolean sendRanking,int ranksize) {
-		for (SpaceShip player : players){
-            serializer.serializeForPlayer(player,bots,players,sendRanking,ranksize,getWriter());
-        }
+		try {
+			for (SpaceShip player : players){
+				serializer.serializeForPlayer(player,bots,players,sendRanking,ranksize,getWriter());
+			}
+		} catch ( IOException e) {
+			if(out != null)
+				out.close();
+			e.printStackTrace();
+		}
 	}
 }

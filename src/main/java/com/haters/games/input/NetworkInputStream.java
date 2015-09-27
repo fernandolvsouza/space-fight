@@ -149,22 +149,33 @@ public class NetworkInputStream implements GameInputStream {
 
 	}
 
-	private void connect() throws IOException{
-		channel = SocketChannel.open();
-		 
-        // we open this channel in non blocking mode
-        channel.configureBlocking(false);
-        channel.connect(new InetSocketAddress("localhost", 1234));
 
-        while (!channel.finishConnect()) {
-            System.out.println("still connecting");
-        }
+	private void connect() throws IOException{
+
+		try {
+			if(channel != null)
+				channel.write(ByteBuffer.allocate(1));
+		}catch(Exception e){
+			channel.close();
+		}
+
+		if(channel == null || !channel.isConnected()){
+			channel = SocketChannel.open();
+
+			// we open this channel in non blocking mode
+			channel.configureBlocking(false);
+
+			channel.connect(new InetSocketAddress("127.0.0.1", 1234));
+
+			while (!channel.finishConnect()) {
+				System.out.println("still connecting");
+			}
+		}
+
 	}
 	
 	private String[] checkInput() throws IOException {
-		if(channel == null){
-			connect();
-		}
+		connect();
 
 		List<String> events = new ArrayList<String>();
 		ByteBuffer buffer = ByteBuffer.allocate(1024);
