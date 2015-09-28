@@ -34,7 +34,7 @@ public abstract class BasicShip {
     private final static int maximumActiveBullets = 30;
 
     protected boolean isbot = true;
-    private int currentEnergy;
+    private int currentLife;
     protected final long timeCreated = new Date().getTime();
     private long lasthealtime = 0;
     private long lastDamageTime = -1;
@@ -54,7 +54,7 @@ public abstract class BasicShip {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
-        this.currentEnergy = this.getTotalEnergy();
+        this.currentLife = this.getTotalLife();
         init(pos);
     }
 
@@ -63,7 +63,7 @@ public abstract class BasicShip {
         this.world = world;
         this.killthen = killthen;
         this.isbot = isbot;
-        this.currentEnergy = this.getTotalEnergy();
+        this.currentLife = this.getTotalLife();
         init(new Vec2(0,10));
 
     }
@@ -203,15 +203,16 @@ public abstract class BasicShip {
         return "plane : {id: "+id+"}";
     }
 
-    public int getCurrentEnergy(){
-        return this.currentEnergy;
+    public int getCurrentLife(){
+        return this.currentLife;
     }
+
 
     public void damage(Bullet b) {
 
 
-        this.currentEnergy -= b.getDamage();
-        if(this.currentEnergy  <= 0 ){
+        this.currentLife -= b.getDamage();
+        if(this.currentLife <= 0 ){
         	if(b.getShip() != null){
         		b.getShip().addPoint(10);
         	}
@@ -251,9 +252,7 @@ public abstract class BasicShip {
 		return alive;		
     }
 
-    public Boundaries getBoundsInRange() {
-        return this.detectionCallback.boundaries;
-    }
+    public Set<Base> getBasesInRange(){ return this.detectionCallback.bases;}
 
     public void detectGameEntities() {
         detectionCallback.reset();
@@ -298,16 +297,16 @@ public abstract class BasicShip {
     public void autoheal(){
     	long now = new Date().getTime();
     	if(now-lasthealtime > getHealFrequency()){
-    		int plus = getTotalEnergy()/10;
-    		this.currentEnergy = this.currentEnergy + plus;
-    		if(this.currentEnergy > this.getTotalEnergy()) 
-    			this.currentEnergy =  this.getTotalEnergy();
+    		int plus = getTotalLife()/10;
+    		this.currentLife = this.currentLife + plus;
+    		if(this.currentLife > this.getTotalLife())
+    			this.currentLife =  this.getTotalLife();
     		lasthealtime = now;
     	}
     }
     
     public void restoreEnergy(){
-    	currentEnergy = getTotalEnergy();
+    	currentLife = getTotalLife();
 	}
     
     
@@ -352,7 +351,7 @@ public abstract class BasicShip {
 	}
 
 	protected abstract void init(Vec2 vec2);
-    protected abstract int getTotalEnergy();
+    protected abstract int getTotalLife();
     protected abstract float getEnemyDetectRange();
 
 }

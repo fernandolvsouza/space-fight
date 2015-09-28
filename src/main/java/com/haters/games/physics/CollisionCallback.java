@@ -21,19 +21,13 @@ public class CollisionCallback implements ContactListener {
 		Object dataA = contact.getFixtureA().getBody().getUserData();
 		Object dataB = contact.getFixtureB().getBody().getUserData();
 	
-		if(contactType(dataA,dataB,Bullet.class,CircleSpaceShip.class)){
-			CircleSpaceShip plane = (dataA instanceof CircleSpaceShip ? (CircleSpaceShip)dataA : (CircleSpaceShip)dataB);
+		if(isDamageContact(dataA,dataB)){
+			LifePointsEntity entity = (dataA instanceof LifePointsEntity ? (LifePointsEntity)dataA : (LifePointsEntity)dataB);
 			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
 			destroyPool.add(bullet);
-			plane.damage(bullet);
+			entity.damage(bullet);
 			
-		}else if(contactType(dataA,dataB,Bullet.class,PolygonSpaceShip.class)){
-			PolygonSpaceShip plane = (dataA instanceof PolygonSpaceShip ? (PolygonSpaceShip)dataA : (PolygonSpaceShip)dataB);
-			Bullet bullet = (dataA instanceof Bullet ? (Bullet)dataA : (Bullet)dataB);
-			destroyPool.add(bullet);
-			plane.damage(bullet);
-			
-		}else if(contactType(dataA,dataB,Bullet.class,Bullet.class)){
+		} else if(contactType(dataA,dataB,Bullet.class,Bullet.class)){
 			destroyPool.add((Bullet)dataA);
 			destroyPool.add((Bullet)dataB);
 		} else {
@@ -46,6 +40,15 @@ public class CollisionCallback implements ContactListener {
 		}
 	}
 
+	private boolean isDamageContact(Object dataA, Object dataB){
+		if(dataA == null || dataB == null){
+			return false;
+		}
+
+		return (dataA instanceof Bullet && dataB instanceof LifePointsEntity)
+				|| (dataA instanceof LifePointsEntity  && dataB instanceof Bullet);
+	}
+
 	private boolean contactType(Object dataA, Object dataB, Class<?>_class1 , Class<?> _class2) {
 		//System.out.println("dataA:"+ dataA);
 		//System.out.println("dataB:"+ dataB);
@@ -54,7 +57,9 @@ public class CollisionCallback implements ContactListener {
 		if(dataA == null || dataB == null){
 			return false;
 		}
-		return (dataA.getClass().equals(_class1) && dataB.getClass().equals(_class2)) 
+
+
+		return (dataA.getClass().equals(_class1) && dataB.getClass().equals(_class2))
 					|| (dataA.getClass().equals(_class2) && dataB.getClass().equals(_class1))  ;
 	}
 

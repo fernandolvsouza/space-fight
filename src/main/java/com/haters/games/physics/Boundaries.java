@@ -8,7 +8,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Boundaries implements Destroyable,GameEntity, GameSerializable{
+public class Boundaries implements GameEntity, GameSerializable{
 	Body body;
 	private Vec2[] vertices;
 
@@ -62,7 +62,7 @@ public class Boundaries implements Destroyable,GameEntity, GameSerializable{
 		this.vertices = new Vec2[]{v1,v2,v3,v4};
 	}
 
-	@Override
+	/*@Override
 	public void destroy() {
 		this.spaceWorld.getWorld().destroyBody(this.body);
 		
@@ -76,7 +76,7 @@ public class Boundaries implements Destroyable,GameEntity, GameSerializable{
 	@Override
 	public boolean readyToDestroy() {
 		return false;
-	}
+	}*/
 
 	@Override
 	public SERIALIZER_TYPE getType() {

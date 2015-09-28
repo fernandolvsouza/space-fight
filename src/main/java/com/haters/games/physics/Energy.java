@@ -84,20 +84,6 @@ public class Energy implements GameEntity, GameSerializable{
 		return body;
 	}
 
-	@Override
-	public void setReadyToDestroy(boolean b) {
-
-	}
-
-	@Override
-	public boolean readyToDestroy() {
-		return false;
-	}
-
-	@Override
-	public void destroy() {
-
-	}
 	
 	public SERIALIZER_TYPE getType(){
 		return SERIALIZER_TYPE.ENERGY;

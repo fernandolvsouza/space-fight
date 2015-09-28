@@ -19,7 +19,8 @@ import com.haters.games.output.NetworkOutputStream;
 public class GameLogic {
 
 	private static final int numberOfBots = 30;
-	private static final int numberOfGarbage = 5;
+	private static final int numberOfEnergies = 5;
+	private static final int numberOfBases = 1;
 	private static final int ranksize = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
@@ -27,7 +28,8 @@ public class GameLogic {
 	
 	private SpaceWorld spaceWorld;
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(1000);
-	private List<Energy> energies = new ArrayList<Energy>(numberOfGarbage);
+	private List<Energy> energies = new ArrayList<Energy>(numberOfEnergies);
+	private List<Base> bases = new ArrayList<Base>(numberOfBases);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 	private long spawnbotsfrequency = 60000;
@@ -48,8 +50,12 @@ public class GameLogic {
 
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
-		for(int i=0;i<numberOfGarbage;i++){
+		for(int i=0;i< numberOfEnergies;i++){
 			energies.add(new Energy(spaceWorld));
+		}
+
+		for(int i=0;i<numberOfBases;i++){
+			bases.add(new Base(spaceWorld));
 		}
 		
 	}
@@ -71,7 +77,7 @@ public class GameLogic {
 		for (int i = 0; i < bots.size(); i++) {
 			SpaceShip bot = bots.get(i);			
 			
-			if(bot.getCurrentEnergy() <= 0){
+			if(bot.getCurrentLife() <= 0){
 				destroypool.add((Destroyable)bot);
 				bots.remove(bot);
 				i--;
@@ -122,7 +128,7 @@ public class GameLogic {
 				player.setMousePosition(new Vec2(x,y));
 			}
 			
-			if (player.getCurrentEnergy() <= 0 && !(player instanceof DeadShip)) {
+			if (player.getCurrentLife() <= 0 && !(player instanceof DeadShip)) {
 				System.out.println("DeadShip!!");
 				players.remove(player);
 				players.add(i,new DeadShip(player));

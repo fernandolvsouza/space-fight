@@ -10,7 +10,7 @@ import org.jbox2d.dynamics.World;
 
 import com.haters.games.output.SERIALIZER_TYPE;
 
-public class DeadShip implements SpaceShip{
+public class DeadShip implements SpaceShip,Destroyable{
 
 	private SpaceShip deadplayer; 
 	public DeadShip(SpaceShip player){
@@ -50,14 +50,15 @@ public class DeadShip implements SpaceShip{
 	}
 
 	@Override
-	public int getCurrentEnergy() {
+	public int getCurrentLife() {
 		return 0;
 	}
 
 	@Override
-	public int getTotalEnergy() {
-		return deadplayer.getTotalEnergy();
+	public int getTotalLife() {
+		return deadplayer.getTotalLife();
 	}
+
 
 	@Override
 	public Set<SpaceShip> getShipsInRange() {
@@ -82,6 +83,11 @@ public class DeadShip implements SpaceShip{
 	@Override
 	public boolean isDamaged() {
 		return false;
+	}
+
+	@Override
+	public void damage(Bullet b) {
+		// do nothing
 	}
 
 	@Override
@@ -148,13 +154,17 @@ public class DeadShip implements SpaceShip{
 
 	@Override
 	public Set<SpaceShip> getAlivePlayersInRange() {
-
 		return deadplayer.getAlivePlayersInRange();
 	}
 
 	@Override
 	public Set<Energy> getGarbagesInRange() {
 		return deadplayer.getGarbagesInRange();
+	}
+
+	@Override
+	public Set<Base> getBasesInRange() {
+		return deadplayer.getBasesInRange();
 	}
 
 	public SpaceShip reborn(String name) {

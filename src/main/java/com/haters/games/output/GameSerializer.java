@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
+import com.haters.games.physics.Base;
 import com.haters.games.physics.Bullet;
 import com.haters.games.physics.Energy;
 import com.haters.games.physics.SpaceShip;
@@ -40,7 +38,11 @@ public class GameSerializer {
 			}	
 
 			for (Energy g : player.getGarbagesInRange()) {
-				garbageToJson(g, jw); // 4 multiple alements
+				energyToJson(g, jw); // 4 multiple alements
+			}
+
+			for (Base b : player.getBasesInRange()) {
+				baseToJson(b, jw); // 4 multiple alements
 			}
 
 
@@ -67,8 +69,19 @@ public class GameSerializer {
 		}
 	}
 
-	
-	private JsonWriter garbageToJson(Energy g, JsonWriter jw) throws IOException{ //4 attributes
+	private JsonWriter baseToJson(Base b, JsonWriter jw) throws IOException {
+		jw.
+		value(b.getType().ordinal()).
+		value(b.getId()).
+		value(tobigdecimal(b.getBody().getPosition().x)).
+		value(tobigdecimal(b.getBody().getPosition().y)).
+		value(tobigdecimal(b.getBody().getFixtureList().m_shape.m_radius));
+
+		return jw;
+	}
+
+
+	private JsonWriter energyToJson(Energy g, JsonWriter jw) throws IOException{ //4 attributes
 		jw.
 		value(g.getType().ordinal()).
 		value(g.getId()).
@@ -76,7 +89,6 @@ public class GameSerializer {
 		value(tobigdecimal(g.getBody().getPosition().y)).
 		value(tobigdecimal(g.getBody().getFixtureList().m_shape.m_radius));
 
-		
 		return jw;
 	}
 
@@ -88,7 +100,6 @@ public class GameSerializer {
 		value(tobigdecimal(b.getBody().getPosition().y)).
 		value(tobigdecimal(b.getAngle()));
 
-		
 		return jw;
 	}
 	
@@ -99,7 +110,7 @@ public class GameSerializer {
 		value(tobigdecimal(ship.getBody().getPosition().x)).
 		value(tobigdecimal(ship.getBody().getPosition().y)).
 		value(tobigdecimal(ship.getAngle())).
-		value(tobigdecimal(ship.getCurrentEnergy()*100/ship.getTotalEnergy(),0,RoundingMode.DOWN)).
+		value(tobigdecimal(ship.getCurrentLife()*100/ship.getTotalLife(),0,RoundingMode.DOWN)).
 		value(booleanToJson(ship.isbot())).
 		value(booleanToJson(ship.isDamaged())).
 		value(ship.getName()).

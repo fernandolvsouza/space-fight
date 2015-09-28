@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by flvs on 8/9/15.
  */
-public interface SpaceShip  extends GameEntity,GameSerializable{
+public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,GameSerializable{
 
 	//getters
 	
@@ -26,9 +26,9 @@ public interface SpaceShip  extends GameEntity,GameSerializable{
 
 	Vec2 getMousePosition();
 
-    int getCurrentEnergy();
+    int getCurrentLife();
     
-    int getTotalEnergy();
+    int getTotalLife();
     
     Set<SpaceShip> getShipsInRange();
     
@@ -39,6 +39,8 @@ public interface SpaceShip  extends GameEntity,GameSerializable{
     Set<SpaceShip> getAlivePlayersInRange();
     
     Set<Energy> getGarbagesInRange();
+
+    Set<Base> getBasesInRange();
     
     boolean isbot();
     

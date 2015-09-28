@@ -93,7 +93,8 @@ public class Bullet implements Destroyable, GameEntity, GameSerializable{
 		destroyCascade();
 		this.plane.getBullets().remove(this);
 	}
-	
+
+
 	public void destroyCascade(){
 		this.plane.getWorld().destroyBody(this.body);
 	}

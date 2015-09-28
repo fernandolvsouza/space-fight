@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Created by flvs on 8/10/15.
  */
-public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable, GameEntity{
+public class CircleSpaceShip extends BasicShip implements SpaceShip{
 
     static public CircleSpaceShip create(SpaceWorld world,int id, DestroyPool killthen, boolean isbot){
         return new CircleSpaceShip(world,id,killthen,isbot);
@@ -69,7 +69,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip,Destroyable,
     }
 
     @Override
-    public int getTotalEnergy() {
+    public int getTotalLife() {
         return isbot ? 10 : 100;
     }
 
