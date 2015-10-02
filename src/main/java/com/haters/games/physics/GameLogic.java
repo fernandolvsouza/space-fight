@@ -18,9 +18,9 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 30;
+	private static final int numberOfBots = 0;
 	private static final int numberOfEnergies = 5;
-	private static final int numberOfBases = 1;
+	private static final int numberOfBases = 30;
 	private static final int ranksize = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
@@ -62,7 +62,16 @@ public class GameLogic {
 	
 	public void step(float f, int velocityIterations, int positionIterations) {
 		spaceWorld.step(f, velocityIterations, positionIterations);
-		
+
+		for (int i = 0; i < bases.size(); i++) {
+			if (bases.get(i).getCurrentLife() <= 0) {
+				System.out.println("DeadBase!!");
+				destroypool.add(bases.get(i));
+				bases.remove(i);
+				i--;
+			}
+		}
+
 		
 		long now = new Date().getTime();
 		if(now - lastspawntime > spawnbotsfrequency){
@@ -78,7 +87,7 @@ public class GameLogic {
 			SpaceShip bot = bots.get(i);			
 			
 			if(bot.getCurrentLife() <= 0){
-				destroypool.add((Destroyable)bot);
+				destroypool.add(bot);
 				bots.remove(bot);
 				i--;
 				continue;

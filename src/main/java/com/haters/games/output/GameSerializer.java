@@ -75,7 +75,8 @@ public class GameSerializer {
 		value(b.getId()).
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
-		value(tobigdecimal(b.getBody().getFixtureList().m_shape.m_radius));
+		value(tobigdecimal(b.getBody().getFixtureList().m_shape.m_radius)).
+		value(tobigdecimal(b.getCurrentLife()*100/b.getTotalLife(),0,RoundingMode.DOWN));
 
 		return jw;
 	}

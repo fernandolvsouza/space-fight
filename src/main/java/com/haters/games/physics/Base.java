@@ -18,7 +18,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
     private SpaceWorld world;
     private Body body;
     private boolean readyToDestroy;
-    private int totalLife = 1000;
+    private int totalLife = 100;
     private int currentLife;
     private int energyLife;
     private long lastDamageTime = -1;
@@ -46,7 +46,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
-        fd.setSensor(true);
+
         fd.shape = shape;
         fd.density = 0.05f;
 
@@ -57,6 +57,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         this.body.createFixture(fd);
 
         this.body.setUserData(this);
+        this.body.getFixtureList().setSensor(true);
 
     }
 
