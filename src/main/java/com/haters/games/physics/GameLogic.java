@@ -1,12 +1,10 @@
 package com.haters.games.physics;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
+import com.haters.games.Group;
 import org.jbox2d.common.Vec2;
 
 import com.haters.games.input.GameInputStream;
@@ -19,16 +17,20 @@ import com.haters.games.output.NetworkOutputStream;
 public class GameLogic {
 
 	private static final int numberOfBots = 0;
-	private static final int numberOfEnergies = 5;
-	private static final int numberOfBases = 30;
+	private static final int numberOfStars = 20;
+	private static final int numberOfBases = 0;
+	private static final int numberOfGroups = 3;
+
 	private static final int ranksize = 10;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();
 	
 	private SpaceWorld spaceWorld;
+	private List<Group> groups = new ArrayList<Group>(numberOfGroups);
+
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(1000);
-	private List<Energy> energies = new ArrayList<Energy>(numberOfEnergies);
+	private List<Star> energies = new ArrayList<Star>(numberOfStars);
 	private List<Base> bases = new ArrayList<Base>(numberOfBases);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
@@ -37,6 +39,7 @@ public class GameLogic {
 	private long rakingfrequency = 2000;
 	private long lastranktime = 0;
 	private long[] 	rankingIds = new long[10];
+	private Random rand = new Random();
 	
 
 	
@@ -50,16 +53,38 @@ public class GameLogic {
 
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
-		for(int i=0;i< numberOfEnergies;i++){
-			energies.add(new Energy(spaceWorld));
+		for(int i=0;i< numberOfStars;i++){
+			energies.add(new Star(spaceWorld));
 		}
 
 		for(int i=0;i<numberOfBases;i++){
 			bases.add(new Base(spaceWorld));
 		}
+
+		for(int i=0;i<numberOfGroups;i++){
+			groups.add(new Group(randomColor()));
+		}
 		
 	}
-	
+
+	private Color randomColor(){
+		// Will produce only bright / light colours:
+		float r = rand.nextFloat() / 2f + 0.5f;
+		float g = rand.nextFloat() / 2f + 0.5f;
+		float b = rand.nextFloat() / 2f + 0.5f;
+		return new Color(r,g,b);
+	}
+
+	private Group smallerGroup(){
+		Group min = null;
+		for(Group group : groups){
+			if(min== null || group.getMembers().size() < min.getMembers().size())
+				min = group;
+		}
+
+		return min;
+	}
+
 	public void step(float f, int velocityIterations, int positionIterations) {
 		spaceWorld.step(f, velocityIterations, positionIterations);
 
@@ -77,7 +102,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.create(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
+				SpaceShip bot = CircleSpaceShip.createBot(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
@@ -106,7 +131,7 @@ public class GameLogic {
 			}
 			
 			if(bot.shouldFire(alivePlayers)){	
-				bot.fire();
+				bot.fire(WeaponType.FAST_BULLET);
 			}
 
 			bot.up();
@@ -114,7 +139,7 @@ public class GameLogic {
 
 		if (istream.hasNewPlayerEvent()) {
 			for(Integer id : istream.getNewPlayers()) {
-				players.add(new DeadShip(CircleSpaceShip.create(spaceWorld, id, destroypool, false).setAttackMode()));
+				players.add(new DeadShip(CircleSpaceShip.createPlayer(spaceWorld, spaceWorld.getRandomPosition(), id, destroypool).group(smallerGroup()).setAttackMode()));
 			}
 		}
 
@@ -159,9 +184,14 @@ public class GameLogic {
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				player.fire();
+				player.fire(WeaponType.FAST_BULLET);
 			}
-			
+
+			if (istream.hasTryCaptureStarEvent(player)) { //'s'
+				player.fire(WeaponType.STAR_CAPTURE_BULLET);
+			}
+
+
 			player.detectGameEntities();
 			
 			Object[] event = istream.getBeBornEvent(player);
@@ -216,7 +246,7 @@ public class GameLogic {
 
 		ostream.streamGame(spaceWorld,bots,players,sendRanking,ranksize);
 
-		destroypool.destroyAll();
+ 		destroypool.destroyAll();
 	}
  
 }

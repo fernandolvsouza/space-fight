@@ -1,5 +1,6 @@
 package com.haters.games.physics;
 
+import com.haters.games.Group;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -10,13 +11,17 @@ import com.haters.games.output.SERIALIZER_TYPE;
 
 import java.util.Random;
 
-public class Energy implements GameEntity, GameSerializable{
+public class Star implements GameEntity, GameSerializable{
 	
 	private int id;
 	private SpaceWorld world;
 	private Body body;
-	
-	public Energy(SpaceWorld world) {
+	private int radius;
+	private int range;
+	private Group group;
+
+
+	public Star(SpaceWorld world) {
 		this.world = world;
 		this.id = Sequence.getSequence();
 		init();
@@ -26,16 +31,16 @@ public class Energy implements GameEntity, GameSerializable{
 		 // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.STATIC);
-        bd.linearDamping = 1.0f;
-        bd.angularDamping = 5.0f;
 
         // shape definition
-        CircleShape shape = new CircleShape();
-		int min_r = 10;
-		int max_r = 15;
-		Random r = new Random();
-		int radius = r.nextInt(max_r-min_r + 1) + min_r;
 
+		int min_r = 5;
+		int max_r = 10;
+		Random r = new Random();
+		this.radius = r.nextInt(max_r-min_r + 1) + min_r;
+
+		//Star
+		CircleShape shape = new CircleShape();
         shape.setRadius(radius);
         shape.m_p.set(0,0);
 
@@ -45,10 +50,23 @@ public class Energy implements GameEntity, GameSerializable{
         fd.density = 0.05f;
 
 
+		//range sensor
+		range = radius * 7;
+
+		CircleShape sensorShape = new CircleShape();
+		sensorShape.setRadius(range);
+		sensorShape.m_p.set(0,0);
+
+		// fixture definition
+		FixtureDef rangeSensorFix = new FixtureDef();
+		rangeSensorFix.shape = sensorShape;
+		rangeSensorFix.setSensor(true);
+
         // create dynamic body
         bd.setPosition(world.getRandomPosition(30));
         this.body = this.world.getWorld().createBody(bd);
         this.body.createFixture(fd);
+		this.body.createFixture(rangeSensorFix);
 
         this.body.setUserData(this);
 		
@@ -70,7 +88,7 @@ public class Energy implements GameEntity, GameSerializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Energy other = (Energy) obj;
+		Star other = (Star) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -87,5 +105,21 @@ public class Energy implements GameEntity, GameSerializable{
 	
 	public SERIALIZER_TYPE getType(){
 		return SERIALIZER_TYPE.ENERGY;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 }

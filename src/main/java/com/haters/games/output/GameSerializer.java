@@ -9,10 +9,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
-import com.haters.games.physics.Base;
-import com.haters.games.physics.Bullet;
-import com.haters.games.physics.Energy;
-import com.haters.games.physics.SpaceShip;
+import com.haters.games.physics.*;
 
 public class GameSerializer {
 
@@ -37,7 +34,7 @@ public class GameSerializer {
 				bulletToJson(b,jw); // 5 multiple alements
 			}	
 
-			for (Energy g : player.getGarbagesInRange()) {
+			for (Star g : player.getGarbagesInRange()) {
 				energyToJson(g, jw); // 4 multiple alements
 			}
 
@@ -82,13 +79,15 @@ public class GameSerializer {
 	}
 
 
-	private JsonWriter energyToJson(Energy g, JsonWriter jw) throws IOException{ //4 attributes
+	private JsonWriter energyToJson(Star g, JsonWriter jw) throws IOException{ //4 attributes
 		jw.
 		value(g.getType().ordinal()).
 		value(g.getId()).
 		value(tobigdecimal(g.getBody().getPosition().x)).
 		value(tobigdecimal(g.getBody().getPosition().y)).
-		value(tobigdecimal(g.getBody().getFixtureList().m_shape.m_radius));
+		value(tobigdecimal(g.getRadius())).
+		value(g.getRange()).
+		value(g.getGroup() != null ? g.getGroup().getColorHex() : "0xffd900");
 
 		return jw;
 	}
@@ -99,7 +98,8 @@ public class GameSerializer {
 		value(b.getId()).
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
-		value(tobigdecimal(b.getAngle()));
+		value(tobigdecimal(b.getAngle())).
+		value(b.getShip().getGroup() != null ? b.getShip().getGroup().getColorHex() : "");
 
 		return jw;
 	}
@@ -115,8 +115,8 @@ public class GameSerializer {
 		value(booleanToJson(ship.isbot())).
 		value(booleanToJson(ship.isDamaged())).
 		value(ship.getName()).
-		value(ship.getPoints());
-		
+		value(ship.getPoints()).value(ship.getGroup() != null ? ship.getGroup().getColorHex() : "");
+
 		return jw;
 	}
 	

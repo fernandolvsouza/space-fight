@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 import com.haters.games.physics.SpaceShip;
 
 enum EventType {
-	LEFT, RIGHT, UP, DOWN, FIRE, MOUSE_MOVE, NEW_PLAYER, REMOVE_PLAYER, BE_BORN, DIE
+	LEFT, RIGHT, UP, DOWN, FIRE,TRY_CAPTURE_STAR, MOUSE_MOVE, NEW_PLAYER, REMOVE_PLAYER, BE_BORN
 }
 
 public class NetworkInputStream implements GameInputStream {
@@ -72,7 +72,12 @@ public class NetworkInputStream implements GameInputStream {
 	public boolean hasRemovePlayerEvent(SpaceShip player) {
 		return removePlayers.contains(player.getId());
 	}
-	
+
+	@Override
+	public boolean hasTryCaptureStarEvent(SpaceShip player) {
+		return (Boolean)inputStateByPlayers.get(player.getId())[EventType.TRY_CAPTURE_STAR.ordinal()];
+	}
+
 	@Override
 	public Object[] getBeBornEvent(SpaceShip player) {
 		for (Object[] born : bebornPlayers) {
@@ -115,11 +120,10 @@ public class NetworkInputStream implements GameInputStream {
 
 				Integer userId = array.get(0).getAsInt();
 				Integer event = array.get(1).getAsInt();
-
 				
 				if (event == EventType.NEW_PLAYER.ordinal()) {
 					newPlayers.add(userId);
-					Object[] bitmap = {false,false,false,false,false,null};
+					Object[] bitmap = {false,false,false,false,false,false,null};
 					inputStateByPlayers.put(userId, bitmap);
 				}else if (event == EventType.REMOVE_PLAYER.ordinal()) {
 					removePlayers.add(userId);

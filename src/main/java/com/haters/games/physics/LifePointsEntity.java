@@ -8,5 +8,5 @@ public interface LifePointsEntity {
     public int getCurrentLife();
     public int getTotalLife();
     boolean isDamaged();
-    public void damage(Bullet b);
+    public void damage(SimpleBullet b);
 }

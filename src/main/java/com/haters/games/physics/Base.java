@@ -34,7 +34,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
     private void init(){
         // body definition
         BodyDef bd = new BodyDef();
-        bd.setType(BodyType.STATIC);
+        bd.setType(BodyType.DYNAMIC);
 
 
         // shape definition
@@ -48,7 +48,8 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         FixtureDef fd = new FixtureDef();
 
         fd.shape = shape;
-        fd.density = 0.05f;
+        fd.density = 0.5f;
+
 
 
         // create dynamic body
@@ -57,7 +58,8 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         this.body.createFixture(fd);
 
         this.body.setUserData(this);
-        this.body.getFixtureList().setSensor(true);
+        this.body.getFixtureList().setSensor(false);
+        this.body.m_linearDamping = 3.0f;
 
     }
 
@@ -122,7 +124,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
     }
 
     @Override
-    public void damage(Bullet b) {
+    public void damage(SimpleBullet b) {
         this.currentLife -= b.getDamage();
         this.lastDamageTime = new Date().getTime();
     }

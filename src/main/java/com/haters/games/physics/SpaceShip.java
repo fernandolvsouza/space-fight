@@ -1,5 +1,6 @@
 package com.haters.games.physics;
 
+import com.haters.games.Group;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
@@ -21,7 +22,9 @@ public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,Game
     World getWorld();
     
     SpaceWorld getSpaceWorld();
-        
+
+    Group getGroup();
+
     float getAngle();
 
 	Vec2 getMousePosition();
@@ -38,7 +41,7 @@ public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,Game
     
     Set<SpaceShip> getAlivePlayersInRange();
     
-    Set<Energy> getGarbagesInRange();
+    Set<Star> getGarbagesInRange();
 
     Set<Base> getBasesInRange();
     
@@ -56,13 +59,15 @@ public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,Game
     
     
     //generic actions
-    void fire();
+    void fire(WeaponType type);
     
     void autoheal();
     
 	void restoreEnergy();
 
     void detectGameEntities();
+
+    SpaceShip setAttackMode();
    
     
     //moving methods

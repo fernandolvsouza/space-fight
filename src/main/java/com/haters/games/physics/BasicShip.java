@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import com.haters.games.Group;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
 import org.jbox2d.collision.RayCastOutput;
@@ -29,8 +30,10 @@ public abstract class BasicShip {
     protected SpaceWorld world;
     protected DestroyPool killthen;
 
+    protected Group group;
+
     private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-    private long lastFireTime = 0;
+    private long[] lastFireTime =  new long[]{0,0};
     private final static int maximumActiveBullets = 30;
 
     protected boolean isbot = true;
@@ -39,6 +42,7 @@ public abstract class BasicShip {
     private long lasthealtime = 0;
     private long lastDamageTime = -1;
 	private long damagePeriod = 100;
+
     
 
     protected DetectEntitiesCallback detectionCallback;
@@ -50,23 +54,15 @@ public abstract class BasicShip {
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
 
-    protected BasicShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
+    protected BasicShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen, boolean isbot) {
         this.id = id;
         this.world = world;
         this.killthen = killthen;
         this.currentLife = this.getTotalLife();
+        this.isbot = isbot;
         init(pos);
     }
 
-    protected BasicShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
-        this.id = id;
-        this.world = world;
-        this.killthen = killthen;
-        this.isbot = isbot;
-        this.currentLife = this.getTotalLife();
-        init(new Vec2(0,10));
-
-    }
 
     public int getId() {
         return id;
@@ -87,7 +83,13 @@ public abstract class BasicShip {
     public List<Bullet> getBullets() {
         return this.bullets;
     }
-    
+
+    public SpaceShip group(Group group) {
+        group.addMember((SpaceShip)this);
+        this.group = group;
+        return (SpaceShip)this;
+    }
+
 
 	public boolean avoidColision() {
 		float rayLength = 10;
@@ -168,15 +170,14 @@ public abstract class BasicShip {
 		this.body.applyAngularImpulse(impulse);
 	}
 
-
-    public void fire() {
+    public void fire(WeaponType type) {
 
         long now = new Date().getTime();
-        if( now - lastFireTime > Bullet.FireFrequency) {
-            Bullet bullet = Bullet.create((SpaceShip)this,Sequence.getSequence());
+        if( now - lastFireTime[type.ordinal()] > type.fireFrequency()) {
+            Bullet bullet = BulletFactory.create(type,(SpaceShip) this);
             this.bullets.add(bullet);
             bullet.fire();
-            lastFireTime = now;
+            lastFireTime[type.ordinal()] = now;
         }
         removeExcessBullets();
     }
@@ -208,7 +209,7 @@ public abstract class BasicShip {
     }
 
 
-    public void damage(Bullet b) {
+    public void damage(SimpleBullet b) {
 
 
         this.currentLife -= b.getDamage();
@@ -237,8 +238,8 @@ public abstract class BasicShip {
         return this.detectionCallback.bullets;
     }
     
-    public Set<Energy> getGarbagesInRange(){
-        return this.detectionCallback.energies;
+    public Set<Star> getGarbagesInRange(){
+        return this.detectionCallback.stars;
     }
     
     public Set<SpaceShip> getAlivePlayersInRange(){

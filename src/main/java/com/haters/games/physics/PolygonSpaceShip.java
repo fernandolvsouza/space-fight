@@ -1,5 +1,6 @@
 package com.haters.games.physics;
 
+import com.haters.games.Group;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
@@ -22,19 +23,15 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 
 
 
-	static public PolygonSpaceShip create(SpaceWorld world,int id, DestroyPool killthen, boolean isbot){
-		return new PolygonSpaceShip(world,id,killthen,isbot);
+	static public PolygonSpaceShip createPlayer(SpaceWorld world,Vec2 pos,int id, DestroyPool killthen, Group group){
+		return new PolygonSpaceShip(world,pos,id,killthen, group,false);
 	}
-	static public PolygonSpaceShip create(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
-		return new PolygonSpaceShip(world,pos,id,killthen);
-	}
-
-	private PolygonSpaceShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
-		super(world,pos, id, killthen);
+	static public PolygonSpaceShip createBot(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen, Group group){
+		return new PolygonSpaceShip(world,pos,id,killthen, group,true);
 	}
 
-	private PolygonSpaceShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
-		super(world,id,killthen,isbot);
+	private PolygonSpaceShip(SpaceWorld world, Vec2 pos,int id, DestroyPool killthen, Group group, boolean isbot) {
+		super(world,pos,id,killthen, isbot);
 	}
 
 	protected void init(Vec2 pos) {
@@ -130,6 +127,11 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 		return SERIALIZER_TYPE.POLYGON;
 	}
 
+
+	@Override
+	public Group getGroup() {
+		return group;
+	}
 
 	@Override
 	public float getAngle() {

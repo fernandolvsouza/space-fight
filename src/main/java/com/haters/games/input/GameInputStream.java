@@ -15,19 +15,18 @@ public interface GameInputStream {
 	boolean hasUpEvent(SpaceShip player);
 	boolean hasDownEvent(SpaceShip player);
 	boolean hasFireEvent(SpaceShip player);
-	
 	boolean hasRemovePlayerEvent(SpaceShip player);
+	boolean hasTryCaptureStarEvent(SpaceShip player);
 	
 	boolean hasNewPlayerEvent();
 
-	public List<Integer> getNewPlayers();
-	public void eraseNewPlayersEvents();
-	public void eraseRemovePlayersEvents();
+	List<Integer> getNewPlayers();
+	void eraseNewPlayersEvents();
+	void eraseRemovePlayersEvents();
 	void eraseBeBornPlayersEvents();
 	
 	void processEvents();
 
 
 
-	
 }

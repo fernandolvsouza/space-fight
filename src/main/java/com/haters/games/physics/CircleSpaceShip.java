@@ -1,36 +1,28 @@
 package com.haters.games.physics;
 
+import com.haters.games.Group;
 import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 
 import com.haters.games.output.SERIALIZER_TYPE;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by flvs on 8/10/15.
  */
 public class CircleSpaceShip extends BasicShip implements SpaceShip{
 
-    static public CircleSpaceShip create(SpaceWorld world,int id, DestroyPool killthen, boolean isbot){
-        return new CircleSpaceShip(world,id,killthen,isbot);
+    static public CircleSpaceShip createPlayer(SpaceWorld world,Vec2 pos,int id, DestroyPool killthen){
+        return new CircleSpaceShip(world,pos,id,killthen,false);
     }
-    static public CircleSpaceShip create(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
-        return new CircleSpaceShip(world,pos,id,killthen);
-    }
-
-    protected CircleSpaceShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
-        super(world, pos, id, killthen);
+    static public CircleSpaceShip createBot(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
+        return new CircleSpaceShip(world,pos,id,killthen,true);
     }
 
-    protected CircleSpaceShip(SpaceWorld world, int id, DestroyPool killthen, boolean isbot) {
-        super(world, id, killthen, isbot);
+    protected CircleSpaceShip(SpaceWorld world, Vec2 pos,int id, DestroyPool killthen, boolean isbot) {
+        super(world, pos,id, killthen,  isbot);
     }
 
     @Override
@@ -88,8 +80,13 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
     public SERIALIZER_TYPE getType() {
         return SERIALIZER_TYPE.CIRCLE;
     }
-    
-	@Override
+
+    @Override
+    public Group getGroup() {
+        return group;
+    }
+
+    @Override
 	public float getAngle() {
 		return body.getAngle();
 	}

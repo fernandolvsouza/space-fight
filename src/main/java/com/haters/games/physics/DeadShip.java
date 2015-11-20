@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.haters.games.Group;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
@@ -86,7 +87,7 @@ public class DeadShip implements SpaceShip,Destroyable{
 	}
 
 	@Override
-	public void damage(Bullet b) {
+	public void damage(SimpleBullet b) {
 		// do nothing
 	}
 
@@ -95,7 +96,7 @@ public class DeadShip implements SpaceShip,Destroyable{
 	}
 
 	@Override
-	public void fire() {		
+	public void fire(WeaponType type) {
 	}
 
 	@Override
@@ -105,6 +106,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public void detectGameEntities() {
 		deadplayer.detectGameEntities();
+	}
+
+	@Override
+	public SpaceShip setAttackMode() {
+		return deadplayer.setAttackMode();
 	}
 
 	@Override
@@ -158,7 +164,7 @@ public class DeadShip implements SpaceShip,Destroyable{
 	}
 
 	@Override
-	public Set<Energy> getGarbagesInRange() {
+	public Set<Star> getGarbagesInRange() {
 		return deadplayer.getGarbagesInRange();
 	}
 
@@ -189,6 +195,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public SpaceWorld getSpaceWorld() {
 		return deadplayer.getSpaceWorld();
+	}
+
+	@Override
+	public Group getGroup() {
+		return deadplayer.getGroup();
 	}
 
 	@Override
