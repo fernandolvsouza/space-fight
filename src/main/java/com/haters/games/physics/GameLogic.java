@@ -16,7 +16,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 0;
+	private static final int numberOfBots = 100;
 	private static final int numberOfStars = 20;
 	private static final int numberOfBases = 0;
 	private static final int numberOfGroups = 3;
@@ -40,6 +40,7 @@ public class GameLogic {
 	private long lastranktime = 0;
 	private long[] 	rankingIds = new long[10];
 	private Random rand = new Random();
+	private Color[] baseColors= new Color[]{Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.YELLOW,Color.WHITE,Color.PINK,Color.ORANGE};
 	
 
 	
@@ -62,7 +63,7 @@ public class GameLogic {
 		}
 
 		for(int i=0;i<numberOfGroups;i++){
-			groups.add(new Group(randomColor()));
+			groups.add(new Group((i < baseColors.length  ? baseColors[i] : randomColor())));
 		}
 		
 	}

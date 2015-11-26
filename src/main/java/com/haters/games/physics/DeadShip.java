@@ -18,6 +18,7 @@ public class DeadShip implements SpaceShip,Destroyable{
 		deadplayer = player;
 		deadplayer.getBody().getFixtureList().setSensor(true);
 		deadplayer.getBody().setUserData(this);
+		deadplayer.powerClear();
 	}
 			
 	@Override
@@ -229,5 +230,25 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public int getPoints() {
 		return deadplayer.getPoints();
+	}
+
+	@Override
+	public void powerUp() {
+
+	}
+
+	@Override
+	public void powerDown() {
+
+	}
+
+	@Override
+	public int getPower() {
+		return 0;
+	}
+
+	@Override
+	public void powerClear() {
+
 	}
 }

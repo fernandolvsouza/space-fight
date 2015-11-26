@@ -9,6 +9,8 @@ import org.jbox2d.dynamics.FixtureDef;
 
 import com.haters.games.output.SERIALIZER_TYPE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Star implements GameEntity, GameSerializable{
@@ -19,6 +21,7 @@ public class Star implements GameEntity, GameSerializable{
 	private int radius;
 	private int range;
 	private Group group;
+	private List<SpaceShip> shipsInRange = new ArrayList<SpaceShip>();
 
 
 	public Star(SpaceWorld world) {
@@ -51,7 +54,7 @@ public class Star implements GameEntity, GameSerializable{
 
 
 		//range sensor
-		range = radius * 7;
+		range = radius * 5;
 
 		CircleShape sensorShape = new CircleShape();
 		sensorShape.setRadius(range);
@@ -121,5 +124,17 @@ public class Star implements GameEntity, GameSerializable{
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public void addShipInRange(SpaceShip ship) {
+		this.shipsInRange.add(ship);
+	}
+
+	public void removeShipInRange(SpaceShip ship) {
+		this.shipsInRange.remove(ship);
+	}
+
+	public List<SpaceShip> getShipInRange() {
+		return this.shipsInRange;
 	}
 }

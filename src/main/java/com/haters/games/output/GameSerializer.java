@@ -27,19 +27,19 @@ public class GameSerializer {
 			shipToJson(player, jw);
 			
 			for (SpaceShip p : player.getShipsInRange()) {
-				shipToJson(p,jw); // 9 multiple alements
+				shipToJson(p,jw);
 			}
 				
 			for (Bullet b : player.getBulletsInRange()) {
-				bulletToJson(b,jw); // 5 multiple alements
+				bulletToJson(b,jw);
 			}	
 
 			for (Star g : player.getGarbagesInRange()) {
-				energyToJson(g, jw); // 4 multiple alements
+				energyToJson(g, jw);
 			}
 
 			for (Base b : player.getBasesInRange()) {
-				baseToJson(b, jw); // 4 multiple alements
+				baseToJson(b, jw);
 			}
 
 
@@ -79,7 +79,7 @@ public class GameSerializer {
 	}
 
 
-	private JsonWriter energyToJson(Star g, JsonWriter jw) throws IOException{ //4 attributes
+	private JsonWriter energyToJson(Star g, JsonWriter jw) throws IOException{ //7 attributes
 		jw.
 		value(g.getType().ordinal()).
 		value(g.getId()).
@@ -87,19 +87,19 @@ public class GameSerializer {
 		value(tobigdecimal(g.getBody().getPosition().y)).
 		value(tobigdecimal(g.getRadius())).
 		value(g.getRange()).
-		value(g.getGroup() != null ? g.getGroup().getColorHex() : "0xffd900");
+		value(g.getGroup() != null ? g.getGroup().getColorHex() : "0xffd100");
 
 		return jw;
 	}
 
-	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{ //5 attributes
+	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{ //6 attributes
 		jw.
 		value(b.getType().ordinal()).
 		value(b.getId()).
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
 		value(tobigdecimal(b.getAngle())).
-		value(b.getShip().getGroup() != null ? b.getShip().getGroup().getColorHex() : "");
+		value(b.getShip().getGroup() != null ? b.getShip().getGroup().getColorHex() : "0xffd100");
 
 		return jw;
 	}
@@ -115,8 +115,8 @@ public class GameSerializer {
 		value(booleanToJson(ship.isbot())).
 		value(booleanToJson(ship.isDamaged())).
 		value(ship.getName()).
-		value(ship.getPoints()).value(ship.getGroup() != null ? ship.getGroup().getColorHex() : "");
-
+		value(ship.getPoints()).value(ship.getGroup() != null ? ship.getGroup().getColorHex() : "0xffd100").
+		value(ship.getPower());
 		return jw;
 	}
 	

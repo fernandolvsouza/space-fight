@@ -94,5 +94,12 @@ public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,Game
 
 	int getPoints();
 
-    	    
+
+    void powerUp();
+
+    void powerDown();
+
+    int getPower();
+
+    void powerClear();
 }

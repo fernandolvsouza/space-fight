@@ -53,6 +53,7 @@ public abstract class BasicShip {
 
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
+    private int power = 1;
 
     protected BasicShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen, boolean isbot) {
         this.id = id;
@@ -99,26 +100,28 @@ public abstract class BasicShip {
 		}	
 		Vec2 sum = null;
 		for(Fixture fix  : detectionCallback.othersFixtures){
-			for(int i=0; i<angles.length;i++){
-			
-				float angle =  angles[i] * MathUtils.DEG2RAD;
-				RayCastOutput output = new RayCastOutput();
-				RayCastInput input = new RayCastInput();
-				input.p1.x = this.getBody().getPosition().x;
-				input.p1.y = this.getBody().getPosition().y;
-				input.maxFraction = 1;
-				
-				Vec2 p2 = this.body.getWorldPoint( new Vec2(MathUtils.sin(angle),MathUtils.cos(angle)).mul(rayLength));
-				input.p2.x = p2.x;
-				input.p2.y = p2.y;
-				if(fix.raycast(output, input, 1)){
-					Vec2  normal = output.normal.mul(rayLength);
-					if(sum == null){
-						sum = new Vec2();
-					}
-					sum = sum.add(normal);
-				}
-			}
+            //if(!fix.isSensor()) {
+                for (int i = 0; i < angles.length; i++) {
+
+                    float angle = angles[i] * MathUtils.DEG2RAD;
+                    RayCastOutput output = new RayCastOutput();
+                    RayCastInput input = new RayCastInput();
+                    input.p1.x = this.getBody().getPosition().x;
+                    input.p1.y = this.getBody().getPosition().y;
+                    input.maxFraction = 1;
+
+                    Vec2 p2 = this.body.getWorldPoint(new Vec2(MathUtils.sin(angle), MathUtils.cos(angle)).mul(rayLength));
+                    input.p2.x = p2.x;
+                    input.p2.y = p2.y;
+                    if (fix.raycast(output, input, 1)) {
+                        Vec2 normal = output.normal.mul(rayLength);
+                        if (sum == null) {
+                            sum = new Vec2();
+                        }
+                        sum = sum.add(normal);
+                    }
+                }
+            //}
 		}
 		if(sum != null){
 			sum.normalize();
@@ -215,7 +218,7 @@ public abstract class BasicShip {
         this.currentLife -= b.getDamage();
         if(this.currentLife <= 0 ){
         	if(b.getShip() != null){
-        		b.getShip().addPoint(10);
+        		b.getShip().addPoint(10/power);
         	}
         }
         this.lastDamageTime = new Date().getTime();
@@ -297,7 +300,7 @@ public abstract class BasicShip {
 
     public void autoheal(){
     	long now = new Date().getTime();
-    	if(now-lasthealtime > getHealFrequency()){
+    	if(now-lasthealtime > getHealFrequency()/power){
     		int plus = getTotalLife()/10;
     		this.currentLife = this.currentLife + plus;
     		if(this.currentLife > this.getTotalLife())
@@ -350,6 +353,24 @@ public abstract class BasicShip {
 	public int getPoints() {
 		return points;
 	}
+
+    public void powerUp() {
+        this.power++;
+    }
+
+    public void powerDown() {
+        if(power == 1 )
+            return;
+        this.power--;
+    }
+
+    public int getPower() {
+        return this.power;
+    }
+
+    public void powerClear() {
+        this.power = 1;
+    }
 
 	protected abstract void init(Vec2 vec2);
     protected abstract int getTotalLife();

@@ -18,6 +18,7 @@ public class DetectEntitiesCallback implements QueryCallback {
 	public Set<Base> bases;
 	public Boundaries boundaries;
 	public List<Fixture> othersFixtures;
+
 	
 	public SpaceShip plane;
 

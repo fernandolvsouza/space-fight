@@ -32,10 +32,22 @@ public class Group {
     }
 
     public void takeStar(Star star){
+        Group oldGroup = star.getGroup();
+
         if(star.getGroup() != null)
             star.getGroup().looseStar(star);
         taken_stars.add(star);
         star.setGroup(this);
+
+        for (SpaceShip ship : star.getShipInRange()){
+            if(ship.getGroup() != null) {
+                if(ship.getGroup().equals(oldGroup)){
+                    ship.powerDown();
+                }else if(ship.getGroup().equals(this)){
+                    ship.powerUp();
+                }
+            }
+        }
     }
 
     private void looseStar(Star star){
@@ -58,5 +70,11 @@ public class Group {
         return String.format("0x%06x", color.getRGB() & 0x00FFFFFF);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        return id == ((Group)obj).getId();
+    }
 
 }

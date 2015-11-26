@@ -119,4 +119,6 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 	public void down() {
 		goToDirection(body.getWorldVector(new Vec2(-1, 0)));
 	}
+
+
 }

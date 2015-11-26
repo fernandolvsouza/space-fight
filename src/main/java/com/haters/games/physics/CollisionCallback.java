@@ -17,18 +17,15 @@ public class CollisionCallback implements ContactListener {
 	@Override
 	public void beginContact(Contact contact) {
 
-		boolean sensorA = contact.getFixtureA().isSensor();
-		boolean sensorB = contact.getFixtureB().isSensor();
+		boolean isSensorA = contact.getFixtureA().isSensor();
+		boolean isSensorB = contact.getFixtureB().isSensor();
 
 		Object dataA = contact.getFixtureA().getBody().getUserData();
 		Object dataB = contact.getFixtureB().getBody().getUserData();
 
 		//collision with star sensor, nothing happens
-		if(dataA instanceof Star && sensorA)
-			return;
-
-		if(dataB instanceof Star && sensorB)
-			return;
+		if(checkStarTerritory(dataA, isSensorA,dataB,true)) return;
+		if(checkStarTerritory(dataB, isSensorB,dataA,true)) return;
 
 
 		//any other collision bullet must be destroyed
@@ -48,6 +45,32 @@ public class CollisionCallback implements ContactListener {
 			Star star = (dataA instanceof Star ? (Star)dataA : (Star)dataB);
 			starCaptureBullet.getShip().getGroup().takeStar(star);
 		}
+	}
+
+	private boolean checkStarTerritory(Object dataA, boolean sensorA,Object dataB,boolean startContact) {
+
+		if(dataA instanceof Star && sensorA){
+			if(dataB instanceof  SpaceShip){
+				Star star = ((Star) dataA);
+				SpaceShip ship = ((SpaceShip) dataB);
+
+				if(startContact)
+					star.addShipInRange(ship);
+				else
+					star.removeShipInRange(ship);
+
+				if(ship.getGroup() != null &&  ship.getGroup().equals(star.getGroup())) {
+
+					if(startContact)
+						ship.powerUp();
+					else
+						ship.powerDown();
+				}
+
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isDamageContact(Object dataA, Object dataB){
@@ -74,6 +97,13 @@ public class CollisionCallback implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
+		boolean isSensorA = contact.getFixtureA().isSensor();
+		boolean isSensorB = contact.getFixtureB().isSensor();
+
+		Object dataA = contact.getFixtureA().getBody().getUserData();
+		Object dataB = contact.getFixtureB().getBody().getUserData();
+		if(checkStarTerritory(dataA, isSensorA,dataB,false)) return;
+		if(checkStarTerritory(dataB, isSensorB,dataA,false)) return;
 		// TODO Auto-generated method stub
 	}
 
