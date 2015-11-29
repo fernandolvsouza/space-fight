@@ -18,7 +18,7 @@ import com.haters.games.physics.SpaceWorld;
 public class GameController implements Runnable {
 
 
-	private  static final int DEFAULT_FPS = 70;
+	private  static final int DEFAULT_FPS = 40;
 	private static final int PositionIterations = 3;
 	private static final int VelocityIterations = 8;
 
