@@ -1,7 +1,6 @@
 package com.haters.games;
 
 
-import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.IViewportTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -18,13 +17,14 @@ import com.haters.games.physics.SpaceWorld;
 public class GameController implements Runnable {
 
 
-	private  static final int DEFAULT_FPS = 40;
+	private  static final int DEFAULT_FPS = 50;
 	private static final int PositionIterations = 3;
 	private static final int VelocityIterations = 8;
 
 	private IViewportTransform transform = null;
 	private final Vec2 initPosition = new Vec2(0,0);
 	private final float initScale = 7;
+	private float frameRate;
 
 	private Thread animation;
 
@@ -33,26 +33,29 @@ public class GameController implements Runnable {
 		this.animation = new Thread(this, "thread-1");
 	}
 
+	public float getFps(){
+		return  frameRate;
+	}
+
 	@Override
 	public void run() {
 		
-		final SpaceWorld spaceWorld = new SpaceWorld(new World(new Vec2(0.0f, 0.0f)));
+		final SpaceWorld spaceWorld = new SpaceWorld(this,new World(new Vec2(0.0f, 0.0f)));
 		final GameInputStream istream = new NetworkInputStream();
 		
 		GameLogic logic = new GameLogic(spaceWorld, istream, new NetworkOutputStream());
 		logic.init();
 				
 		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
-		float frameRate;
 		int targetFrameRate;
 		frameRate = targetFrameRate = DEFAULT_FPS;
 	    float timeInSecs;
 
 		beforeTime = updateTime = System.nanoTime();
 	    sleepTime = 0;
-	    
+
 		while (true) {
-			//engine.grabFocus();
+
 			timeSpent = beforeTime - updateTime;
 			if (timeSpent > 0) {
 				timeInSecs = timeSpent * 1.0f / 1000000000.0f;

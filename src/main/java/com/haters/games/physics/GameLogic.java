@@ -22,6 +22,11 @@ public class GameLogic {
 	private static final int numberOfGroups = 3;
 
 	private static final int ranksize = 10;
+	private static final long spawnbotsfrequency = 60000;
+
+	private static final long rakingfrequency = 2000;
+	private long lastspawntime = 0;
+	private long lastranktime = 0;
 	
 	private final List<SpaceShip> bots = new ArrayList<SpaceShip>();
 	private final DestroyPool destroypool = new DestroyPool();
@@ -34,13 +39,10 @@ public class GameLogic {
 	private List<Base> bases = new ArrayList<Base>(numberOfBases);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
-	private long spawnbotsfrequency = 60000;
-	private long lastspawntime = 0;
-	private long rakingfrequency = 2000;
-	private long lastranktime = 0;
-	private long[] 	rankingIds = new long[10];
+
+	private long[] 	rankingIds = new long[ranksize];
 	private Random rand = new Random();
-	private Color[] baseColors= new Color[]{Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.YELLOW,Color.WHITE,Color.PINK,Color.ORANGE};
+	private  static final Color[] baseColors= new Color[]{Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.YELLOW,Color.WHITE,Color.PINK,Color.ORANGE};
 	
 
 	

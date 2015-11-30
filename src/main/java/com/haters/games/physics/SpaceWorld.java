@@ -1,5 +1,6 @@
 package com.haters.games.physics;
 
+import com.haters.games.GameController;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -11,9 +12,11 @@ public class SpaceWorld  {
 	private World world;
 	private int radius = 500;
 	private Boundaries boundaries;
+	private GameController controller;
 
-	public SpaceWorld(World world) {
+	public SpaceWorld(GameController gameController, World world) {
 		this.world = world;
+		this.controller = gameController;
 	}
 	
 	public World getWorld(){
@@ -63,4 +66,7 @@ public class SpaceWorld  {
 	}
 
 
+	public float getFps() {
+		return controller.getFps();
+	}
 }

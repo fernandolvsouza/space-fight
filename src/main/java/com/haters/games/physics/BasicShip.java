@@ -158,12 +158,12 @@ public abstract class BasicShip {
 		float desiredAngle = angle;
 		//System.out.println("desiredAngle: " + desiredAngle * MathUtils.RAD2DEG + ":: angle:" + this.body.getAngle());
 		
-		float nextAngle = this.body.getAngle() + this.body.getAngularVelocity() / 60.0f;
+		float nextAngle = this.body.getAngle() + this.body.getAngularVelocity() / world.getFps();
 		
 		float totalRotation = desiredAngle - nextAngle;
 		while ( totalRotation < -180 * MathUtils.DEG2RAD ) totalRotation += 360 * MathUtils.DEG2RAD;
 		while ( totalRotation >  180 * MathUtils.DEG2RAD ) totalRotation -= 360 * MathUtils.DEG2RAD;
-		float desiredAngularVelocity = totalRotation * 60;
+		float desiredAngularVelocity = totalRotation * world.getFps();
 		if(isbot){
 			float change = 10 * MathUtils.DEG2RAD; //allow 10 degree rotation per time step
 			desiredAngularVelocity = MathUtils.min( change, MathUtils.max(-change, desiredAngularVelocity));

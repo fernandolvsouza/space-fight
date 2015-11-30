@@ -93,7 +93,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 	@Override
 	public void setMousePosition(Vec2 mouse_pos) {
 		this.mouse_pos = mouse_pos;
-		rotateTo(mouse_pos);
+            rotateTo(mouse_pos);
 	}
 	@Override
 	public Vec2 getMousePosition() {
