@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bfafa94d-9046-4d9c-ba51-279689890612" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/CircleSpaceShip.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/CircleSpaceShip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="space-fight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +31,8 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.6296296">
-              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+            <state vertical-scroll-proportion="-1.8888888">
+              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -65,10 +61,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33612272">
+            <state vertical-scroll-proportion="11.333333">
               <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -89,13 +85,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BasicShip.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BasicShip.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="165" column="69" selection-start-line="165" selection-start-column="69" selection-end-line="165" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.33333334">
+              <caret line="302" column="51" selection-start-line="302" selection-start-column="51" selection-end-line="302" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#9413#9414#0" expanded="true" />
+                <element signature="e#9431#9432#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,10 +178,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/CircleSpaceShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceShip.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/SpaceWorld.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java" />
       </list>
     </option>
   </component>
@@ -1027,32 +1025,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="165" column="69" selection-start-line="165" selection-start-column="69" selection-end-line="165" selection-end-column="69" />
+        <state vertical-scroll-proportion="11.333333">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#877#878#0" expanded="true" />
+            <element signature="e#901#902#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6296296">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+        <state vertical-scroll-proportion="-1.8888888">
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/GameController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33612272">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="302" column="51" selection-start-line="302" selection-start-column="51" selection-end-line="302" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#877#878#0" expanded="true" />
-            <element signature="e#901#902#0" expanded="true" />
+            <element signature="e#9413#9414#0" expanded="true" />
+            <element signature="e#9431#9432#0" expanded="true" />
           </folding>
         </state>
       </provider>

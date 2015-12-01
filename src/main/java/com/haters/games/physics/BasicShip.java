@@ -215,10 +215,10 @@ public abstract class BasicShip {
     public void damage(SimpleBullet b) {
 
 
-        this.currentLife -= b.getDamage();
+        this.currentLife -= b.getDamage()/power;
         if(this.currentLife <= 0 ){
         	if(b.getShip() != null){
-        		b.getShip().addPoint(10/power);
+        		b.getShip().addPoint(10);
         	}
         }
         this.lastDamageTime = new Date().getTime();
@@ -300,7 +300,7 @@ public abstract class BasicShip {
 
     public void autoheal(){
     	long now = new Date().getTime();
-    	if(now-lasthealtime > getHealFrequency()/power){
+    	if(now-lasthealtime > getHealFrequency()/(2 * power)){
     		int plus = getTotalLife()/10;
     		this.currentLife = this.currentLife + plus;
     		if(this.currentLife > this.getTotalLife())

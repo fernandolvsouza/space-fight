@@ -16,7 +16,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 20;
+	private static final int numberOfBots = 50;
 	private static final int numberOfStars = 20;
 	private static final int numberOfBases = 0;
 	private static final int numberOfGroups = 3;
