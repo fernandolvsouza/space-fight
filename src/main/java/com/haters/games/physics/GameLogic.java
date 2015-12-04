@@ -16,13 +16,13 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 50;
+	private static final int numberOfBots = 30;
 	private static final int numberOfStars = 20;
 	private static final int numberOfBases = 0;
 	private static final int numberOfGroups = 3;
 
 	private static final int ranksize = 10;
-	private static final long spawnbotsfrequency = 60000;
+	private static final long spawnbotsfrequency = 120000;
 
 	private static final long rakingfrequency = 2000;
 	private long lastspawntime = 0;

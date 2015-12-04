@@ -18,7 +18,7 @@ import java.util.Date;
 public class GameController implements Runnable {
 
 
-	private  static final int DEFAULT_FPS = 65;
+	private  static final int DEFAULT_FPS = 60;
 	private static final int PositionIterations = 3;
 	private static final int VelocityIterations = 8;
 
