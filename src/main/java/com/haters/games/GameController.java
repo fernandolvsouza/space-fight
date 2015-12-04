@@ -12,12 +12,13 @@ import com.haters.games.output.NetworkOutputStream;
 import com.haters.games.physics.GameLogic;
 import com.haters.games.physics.SpaceWorld;
 
+import java.util.Date;
 
 
 public class GameController implements Runnable {
 
 
-	private  static final int DEFAULT_FPS = 50;
+	private  static final int DEFAULT_FPS = 65;
 	private static final int PositionIterations = 3;
 	private static final int VelocityIterations = 8;
 
@@ -39,6 +40,7 @@ public class GameController implements Runnable {
 
 	@Override
 	public void run() {
+		long lastprinttime = 0;
 		
 		final SpaceWorld spaceWorld = new SpaceWorld(this,new World(new Vec2(0.0f, 0.0f)));
 		final GameInputStream istream = new NetworkInputStream();
@@ -82,7 +84,11 @@ public class GameController implements Runnable {
 			}
 
 			beforeTime = System.nanoTime();
-			//System.out.println("frame rate: " + frameRate);
+
+			if(new Date().getTime() - lastprinttime > 3000){
+				System.out.println("frame rate: " + frameRate);
+				lastprinttime = new Date().getTime();
+			}
 			
 		}
 	}

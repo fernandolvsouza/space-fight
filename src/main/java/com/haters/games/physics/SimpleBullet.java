@@ -106,9 +106,9 @@ public class SimpleBullet implements Bullet{
 		float impulse = body.getMass() * bulletspeed;
 
 		this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
-		System.out.println("plane speed : " + planeSpeed);
-		System.out.println("bullet desired speed : " + bulletspeed);
-		System.out.println(" impulse = " +  impulse);
+		//System.out.println("plane speed : " + planeSpeed);
+		//System.out.println("bullet desired speed : " + bulletspeed);
+		//System.out.println(" impulse = " +  impulse);
 	}
 
 	@Override
