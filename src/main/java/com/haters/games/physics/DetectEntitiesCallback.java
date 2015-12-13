@@ -20,21 +20,21 @@ public class DetectEntitiesCallback implements QueryCallback {
 	public List<Fixture> othersFixtures;
 
 	
-	public SpaceShip plane;
+	public GameEntity entity;
 
-	public DetectEntitiesCallback(SpaceShip plane) {
+	public DetectEntitiesCallback(GameEntity entity) {
 		entities = new HashSet<GameEntity>();
 		planes = new HashSet<SpaceShip>();
 		bullets = new HashSet<Bullet>();
 		stars = new HashSet<Star>();
 		bases = new HashSet<Base>();
 		othersFixtures = new ArrayList<Fixture>();
-		this.plane = plane;
+		this.entity = entity;
 	}
 	public boolean reportFixture(Fixture fix) {
 		Object userdata = fix.getBody().getUserData();
 		
-		if (userdata.equals(plane)) {
+		if (userdata.equals(entity)) {
 			return true;
 		}
 		

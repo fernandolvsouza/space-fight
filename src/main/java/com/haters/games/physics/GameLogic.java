@@ -16,7 +16,7 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 30;
+	private static final int numberOfBots = 50;
 	private static final int numberOfStars = 20;
 	private static final int numberOfBases = 0;
 	private static final int numberOfGroups = 3;
@@ -43,6 +43,8 @@ public class GameLogic {
 	private long[] 	rankingIds = new long[ranksize];
 	private Random rand = new Random();
 	private  static final Color[] baseColors= new Color[]{Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.YELLOW,Color.WHITE,Color.PINK,Color.ORANGE};
+	private final Group botGroup = new Group(Color.YELLOW);
+
 	
 
 	
@@ -105,7 +107,7 @@ public class GameLogic {
 		if(now - lastspawntime > spawnbotsfrequency){
 			int createbots = numberOfBots-bots.size();
 			for(int i=0;i<createbots;i++){
-				SpaceShip bot = CircleSpaceShip.createBot(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).setCruiseMode();
+				SpaceShip bot = CircleSpaceShip.createBot(spaceWorld, spaceWorld.getRandomPosition(), Sequence.getSequence(), destroypool).group(botGroup).setCruiseMode();
 				bots.add(bot);			
 			}
 			lastspawntime = now;
@@ -187,7 +189,7 @@ public class GameLogic {
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				player.fire(WeaponType.FAST_BULLET);
+				player.fire(WeaponType.CHASE_BULLET);
 			}
 
 			if (istream.hasTryCaptureStarEvent(player)) { //'s'
@@ -196,6 +198,7 @@ public class GameLogic {
 
 
 			player.detectGameEntities();
+
 			
 			Object[] event = istream.getBeBornEvent(player);
 			

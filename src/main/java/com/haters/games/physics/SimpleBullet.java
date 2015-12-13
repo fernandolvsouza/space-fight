@@ -15,7 +15,6 @@ import java.util.Date;
 
 public class SimpleBullet implements Bullet{
 
-	public static final long FireFrequency = 300;
 	private final int damage = 10;
 	private float bulletspeed = 100.0f;
 	private float radius = 0.2f;
@@ -71,6 +70,10 @@ public class SimpleBullet implements Bullet{
 		return this;
 	}
 
+	@Override
+	public boolean isOlderThan(long miliseconds) {
+		return new Date().getTime() - timeCreated > miliseconds;
+	}
 
 
 	@Override

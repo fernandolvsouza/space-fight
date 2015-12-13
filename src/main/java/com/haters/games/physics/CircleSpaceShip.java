@@ -53,6 +53,8 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
         //this.body.setTransform(this.body.getPosition(),90 * MathUtils.DEG2RAD);
         this.body.setUserData(this);
         this.detectionCallback = new DetectEntitiesCallback(this);
+        this.entityDetector = new EntityDetector(this,detectionCallback);
+
 
     }
 
@@ -62,11 +64,11 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 
     @Override
     public int getTotalLife() {
-        return isbot ? 10 : 100;
+        return 100;
     }
 
     @Override
-    protected float getEnemyDetectRange() {
+    public float getEnemyDetectRange() {
     	return isbot ? 50 : 100;
     }
 
@@ -95,7 +97,8 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 		this.mouse_pos = mouse_pos;
             rotateTo(mouse_pos);
 	}
-	@Override
+
+    @Override
 	public Vec2 getMousePosition() {
 		return mouse_pos;
 	}

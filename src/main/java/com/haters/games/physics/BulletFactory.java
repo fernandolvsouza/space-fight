@@ -9,6 +9,8 @@ public class BulletFactory {
             return new SimpleBullet(spaceShip).ready();
         else if(type.equals(type.STAR_CAPTURE_BULLET))
             return new StarCaptureBullet(spaceShip).withSpeed(45.0f).withRadius(0.2f).withDensity(0.2f).ready();
+        else if(type.equals(type.CHASE_BULLET))
+            return new ChaseBullet(spaceShip).withSpeed(45.0f).withRadius(0.2f).withDensity(0.2f).ready();
         else
             return null;
     }

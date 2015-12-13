@@ -27,6 +27,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	}
 
 	@Override
+	public DetectEntitiesCallback getDetectionCallback() {
+		return deadplayer.getDetectionCallback();
+	}
+
+	@Override
 	public Body getBody() {
 		return deadplayer.getBody();
 	}
@@ -34,6 +39,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public World getWorld() {
 		return deadplayer.getWorld();
+	}
+
+	@Override
+	public float getEnemyDetectRange() {
+		return 0;
 	}
 
 	@Override
@@ -112,6 +122,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public SpaceShip setAttackMode() {
 		return deadplayer.setAttackMode();
+	}
+
+	@Override
+	public SpaceShip setCruiseMode() {
+		return deadplayer.setCruiseMode();
 	}
 
 	@Override

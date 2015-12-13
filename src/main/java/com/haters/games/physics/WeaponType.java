@@ -9,6 +9,8 @@ public enum WeaponType {
     public long fireFrequency(){
         if(this == FAST_BULLET) {
             return 300;
+        }if(this == CHASE_BULLET) {
+            return 500;
         }else if(this == STAR_CAPTURE_BULLET) {
             return 10000;
         }

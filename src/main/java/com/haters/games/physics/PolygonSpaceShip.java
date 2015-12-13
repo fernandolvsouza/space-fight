@@ -89,7 +89,7 @@ public class PolygonSpaceShip extends BasicShip implements SpaceShip,Destroyable
 	}
 
 	@Override
-	protected float getEnemyDetectRange() {
+	public float getEnemyDetectRange() {
 		return enemyDetectRange;
 	}
 

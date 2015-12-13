@@ -28,4 +28,6 @@ public interface Bullet extends Destroyable, GameEntity, GameSerializable {
     Bullet withDensity(float d);
 
     Bullet ready();
+
+    boolean isOlderThan(long i);
 }

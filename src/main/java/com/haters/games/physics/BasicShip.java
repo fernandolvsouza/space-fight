@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.haters.games.Group;
-import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
 import org.jbox2d.collision.RayCastOutput;
 import org.jbox2d.common.MathUtils;
@@ -33,7 +32,7 @@ public abstract class BasicShip {
     protected Group group;
 
     private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-    private long[] lastFireTime =  new long[]{0,0};
+    private long[] lastFireTime =  new long[]{0,0,0,0,0,0,0};
     private final static int maximumActiveBullets = 30;
 
     protected boolean isbot = true;
@@ -43,9 +42,11 @@ public abstract class BasicShip {
     private long lastDamageTime = -1;
 	private long damagePeriod = 100;
 
-    
+
 
     protected DetectEntitiesCallback detectionCallback;
+    protected EntityDetector entityDetector;
+
 	private boolean readyToDestroy = false;
 	private String name = "";
 	
@@ -83,6 +84,19 @@ public abstract class BasicShip {
 
     public List<Bullet> getBullets() {
         return this.bullets;
+    }
+
+    public DetectEntitiesCallback getDetectionCallback() {
+        return detectionCallback;
+    }
+
+    public void detectGameEntities(){
+
+        this.entityDetector.detectGameEntities();
+        for (Bullet b : this.getBullets()){
+            if(b instanceof EntityWithDetector) ((EntityWithDetector) b).detectGameEntities();
+            if(b instanceof ChaseBullet) ((ChaseBullet) b).chase();
+        }
     }
 
     public SpaceShip group(Group group) {
@@ -213,7 +227,11 @@ public abstract class BasicShip {
 
 
     public void damage(SimpleBullet b) {
+        if(this.equals(b.plane))
+            return;
 
+        if(b.plane.getGroup() != null && ((SpaceShip)this).getGroup() != null && b.plane.getGroup().equals(((SpaceShip)this).getGroup()))
+            return;
 
         this.currentLife -= b.getDamage()/power;
         if(this.currentLife <= 0 ){
@@ -230,6 +248,7 @@ public abstract class BasicShip {
             bullet = null;
         }
         bullets.clear();
+        ((SpaceShip) this).getGroup().removeMember((SpaceShip)this);
         this.world.getWorld().destroyBody(this.body);
     }
 
@@ -258,14 +277,6 @@ public abstract class BasicShip {
 
     public Set<Base> getBasesInRange(){ return this.detectionCallback.bases;}
 
-    public void detectGameEntities() {
-        detectionCallback.reset();
-        AABB aabb = new AABB();
-        aabb.lowerBound.set(new Vec2(this.body.getPosition().x - getEnemyDetectRange(),this.body.getPosition().y - getEnemyDetectRange()));
-        aabb.upperBound.set(new Vec2(this.body.getPosition().x + getEnemyDetectRange(),this.body.getPosition().y + getEnemyDetectRange()));
-        this.world.getWorld().queryAABB(detectionCallback, aabb);
-    }
-
 
     public boolean isbot(){
         return isbot;
@@ -292,6 +303,9 @@ public abstract class BasicShip {
     
     @Override
     public boolean equals(Object obj) {
+        if(!(obj instanceof  SpaceShip))
+            return false;
+
     	SpaceShip other = (SpaceShip) obj;
         if (id != other.getId())
             return false;
@@ -375,5 +389,6 @@ public abstract class BasicShip {
 	protected abstract void init(Vec2 vec2);
     protected abstract int getTotalLife();
     protected abstract float getEnemyDetectRange();
+
 
 }

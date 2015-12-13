@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Created by flvs on 8/9/15.
  */
-public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,GameSerializable{
+public interface SpaceShip  extends EntityWithDetector,LifePointsEntity,Destroyable,GameEntity,GameSerializable{
 
 	//getters
 	
@@ -65,9 +65,9 @@ public interface SpaceShip  extends LifePointsEntity,Destroyable,GameEntity,Game
     
 	void restoreEnergy();
 
-    void detectGameEntities();
 
     SpaceShip setAttackMode();
+    SpaceShip setCruiseMode();
    
     
     //moving methods

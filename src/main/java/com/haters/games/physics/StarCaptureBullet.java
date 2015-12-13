@@ -10,7 +10,6 @@ import org.jbox2d.dynamics.Body;
  */
 public class StarCaptureBullet extends SimpleBullet implements Bullet {
 
-
     public StarCaptureBullet(SpaceShip ship){
         super(ship);
     }
