@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bfafa94d-9046-4d9c-ba51-279689890612" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/Group.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/Group.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java" afterPath="$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="space-fight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.74074">
-              <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.23709902">
+              <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -52,10 +47,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameSerializer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameSerializer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33612272">
+            <state vertical-scroll-proportion="-20.25926">
               <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
               <folding />
             </state>
@@ -195,8 +190,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/NetworkOutputStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/SERIALIZER_TYPE.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/Group.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java" />
       </list>
     </option>
   </component>
@@ -1121,14 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.74074">
-          <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/BasicShip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1157,8 +1144,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/output/GameSerializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33612272">
+        <state vertical-scroll-proportion="-20.25926">
           <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/haters/games/physics/GameLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23709902">
+          <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
           <folding />
         </state>
       </provider>
