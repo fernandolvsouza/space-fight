@@ -1,25 +1,28 @@
 package com.haters.games;
 
+import com.haters.games.physics.GroupColor;
 import com.haters.games.physics.Star;
 import com.haters.games.physics.Sequence;
 import com.haters.games.physics.SpaceShip;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by flvs on 11/2/15.
  */
+
 public class Group {
 
     private List<SpaceShip> members = new ArrayList<SpaceShip>();
     private List<Star> taken_stars = new ArrayList<Star>();
     private int id;
-    private Color color;
+    private GroupColor groupColor;
 
-    public Group(Color color){
-        this.color = color;
+    public Group(GroupColor color){
+        this.groupColor = color;
         id = Sequence.getSequence();
     }
 
@@ -57,17 +60,20 @@ public class Group {
     public List<SpaceShip> getMembers() {
         return members;
     }
+    public List<Star> getStars() {
+        return taken_stars;
+    }
 
     public int getId() {
         return id;
     }
 
-    public Color getColor() {
-        return color;
+    public GroupColor getColor() {
+        return groupColor;
     }
 
     public String getColorHex() {
-        return String.format("0x%06x", color.getRGB() & 0x00FFFFFF);
+        return String.format("0x%06x", groupColor.getColor().getRGB() & 0x00FFFFFF);
     }
 
     @Override

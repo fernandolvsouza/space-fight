@@ -9,13 +9,14 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
+import com.haters.games.Group;
 import com.haters.games.physics.*;
 
 public class GameSerializer {
 
 	private static Gson g = new GsonBuilder().create() ;
 
-	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players, boolean sendRanking, int ranksize, Writer out) {
+	public void serializeForPlayer(SpaceShip player, List<SpaceShip> bots, List<SpaceShip> players,List<Group> groups, List<Star> stars, boolean sendRank, int ranksize, Writer out) {
 		try {
 			
 			JsonWriter jw = new JsonWriter(out) ;
@@ -42,8 +43,14 @@ public class GameSerializer {
 				baseToJson(b, jw);
 			}
 
+			jw.value(SERIALIZER_TYPE.GROUPS.ordinal()).value(stars.size());
 
-			if(sendRanking) {
+			for (Group group : groups) {
+				jw.value(group.getColor().ordinal()).
+						value(group.getStars().size());
+			}
+
+			if(sendRank) {
 				jw.value(SERIALIZER_TYPE.RANK.ordinal());
 
 				for (int i = 0; i < ranksize; i++) {
@@ -87,7 +94,7 @@ public class GameSerializer {
 		value(tobigdecimal(g.getBody().getPosition().y)).
 		value(tobigdecimal(g.getRadius())).
 		value(g.getRange()).
-		value(g.getGroup() != null ? g.getGroup().getColorHex() : "0xffd100");
+		value(g.getGroup() != null ? g.getGroup().getColor().ordinal() : -1);
 
 		return jw;
 	}
@@ -99,7 +106,7 @@ public class GameSerializer {
 		value(tobigdecimal(b.getBody().getPosition().x)).
 		value(tobigdecimal(b.getBody().getPosition().y)).
 		value(tobigdecimal(b.getAngle())).
-		value(b.getShip().getGroup() != null ? b.getShip().getGroup().getColorHex() : "0xffd100");
+		value(b.getShip().getGroup().getColor().ordinal());
 
 		return jw;
 	}
@@ -115,8 +122,9 @@ public class GameSerializer {
 		value(booleanToJson(ship.isbot())).
 		value(booleanToJson(ship.isDamaged())).
 		value(ship.getName()).
-		value(ship.getPoints()).value(ship.getGroup() != null ? ship.getGroup().getColorHex() : "0xffd100").
-		value(ship.getPower());
+		value(ship.getPoints()).
+		value(ship.getGroup().getColor().ordinal()).
+				value(ship.getPower());
 		return jw;
 	}
 	

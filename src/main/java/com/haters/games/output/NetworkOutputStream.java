@@ -5,9 +5,12 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 
+import com.haters.games.Group;
 import com.haters.games.physics.SpaceShip;
 import com.haters.games.physics.SpaceWorld;
+import com.haters.games.physics.Star;
 
 public class NetworkOutputStream {
 	private PrintWriter out;
@@ -28,10 +31,10 @@ public class NetworkOutputStream {
 	}
 
 
-	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players,boolean sendRanking,int ranksize) {
+	public void streamGame(SpaceWorld spaceWorld, List<SpaceShip> bots, List<SpaceShip> players,List<Group> groups, List<Star> stars, boolean sendRanking,int ranksize) {
 		try {
 			for (SpaceShip player : players){
-				serializer.serializeForPlayer(player,bots,players,sendRanking,ranksize,getWriter());
+				serializer.serializeForPlayer(player,bots,players,groups, stars, sendRanking,ranksize,getWriter());
 			}
 		} catch ( IOException e) {
 			if(out != null)

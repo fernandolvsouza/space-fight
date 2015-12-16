@@ -16,10 +16,10 @@ import com.haters.games.output.NetworkOutputStream;
 
 public class GameLogic {
 
-	private static final int numberOfBots = 50;
+	private static final int numberOfBots = 200;
 	private static final int numberOfStars = 20;
 	private static final int numberOfBases = 0;
-	private static final int numberOfGroups = 3;
+	private static final int numberOfGroups = 4;
 
 	private static final int ranksize = 10;
 	private static final long spawnbotsfrequency = 120000;
@@ -35,15 +35,15 @@ public class GameLogic {
 	private List<Group> groups = new ArrayList<Group>(numberOfGroups);
 
 	private List<SpaceShip> players = new ArrayList<SpaceShip>(1000);
-	private List<Star> energies = new ArrayList<Star>(numberOfStars);
+	private List<Star> stars = new ArrayList<Star>(numberOfStars);
 	private List<Base> bases = new ArrayList<Base>(numberOfBases);
 	private GameInputStream istream;
 	private NetworkOutputStream ostream;
 
 	private long[] 	rankingIds = new long[ranksize];
 	private Random rand = new Random();
-	private  static final Color[] baseColors= new Color[]{Color.RED,Color.GREEN,Color.BLUE,Color.CYAN,Color.YELLOW,Color.WHITE,Color.PINK,Color.ORANGE};
-	private final Group botGroup = new Group(Color.YELLOW);
+
+	private final Group botGroup = new Group(GroupColor.YELLOW);
 
 	
 
@@ -59,15 +59,19 @@ public class GameLogic {
 		spaceWorld.setup();
 		spaceWorld.getWorld().setContactListener(new CollisionCallback(destroypool));
 		for(int i=0;i< numberOfStars;i++){
-			energies.add(new Star(spaceWorld));
+			stars.add(new Star(spaceWorld));
 		}
 
 		for(int i=0;i<numberOfBases;i++){
 			bases.add(new Base(spaceWorld));
 		}
 
-		for(int i=0;i<numberOfGroups;i++){
-			groups.add(new Group((i < baseColors.length  ? baseColors[i] : randomColor())));
+		groups.add(botGroup);
+
+		for(int i=1;i<numberOfGroups;i++){
+			if(i < GroupColor.values().length){
+				groups.add(new Group(GroupColor.values()[i]));
+			}
 		}
 		
 	}
@@ -250,7 +254,7 @@ public class GameLogic {
 			sendRanking = true;
 		}
 
-		ostream.streamGame(spaceWorld,bots,players,sendRanking,ranksize);
+		ostream.streamGame(spaceWorld,bots,players,groups,stars,sendRanking,ranksize);
 
  		destroypool.destroyAll();
 	}
