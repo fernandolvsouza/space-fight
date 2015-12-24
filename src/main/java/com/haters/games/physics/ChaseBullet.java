@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
  * Created by flvs on 12/8/15.
  */
-public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetector {
+public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetector,TimeLimitedPowers {
 
     private DetectEntitiesCallback detectionCallback;
     private EntityDetector detector;
@@ -26,8 +26,8 @@ public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetect
     }
 
     @Override
-    public int getDamage() {
-        return super.getDamage() * 5;
+    public double getDamage() {
+        return super.getDamage() * 2;
     }
 
     @Override

@@ -70,10 +70,6 @@ public class SimpleBullet implements Bullet{
 		return this;
 	}
 
-	@Override
-	public boolean isOlderThan(long miliseconds) {
-		return new Date().getTime() - timeCreated > miliseconds;
-	}
 
 
 	@Override
@@ -126,7 +122,7 @@ public class SimpleBullet implements Bullet{
 	}
 
 	@Override
-	public int getDamage() {		
+	public double getDamage() {
 		return damage;
 	}
 

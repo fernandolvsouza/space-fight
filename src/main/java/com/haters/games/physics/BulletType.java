@@ -3,11 +3,11 @@ package com.haters.games.physics;
 /**
  * Created by flvs on 11/8/15.
  */
-public enum WeaponType {
-    FAST_BULLET,STAR_CAPTURE_BULLET,CHASE_BULLET, PARALYSIS;
+public enum BulletType {
+    SIMPLE_BULLET,STAR_CAPTURE_BULLET,CHASE_BULLET;
 
     public long fireFrequency(){
-        if(this == FAST_BULLET) {
+        if(this == SIMPLE_BULLET) {
             return 300;
         }if(this == CHASE_BULLET) {
             return 500;
@@ -15,6 +15,6 @@ public enum WeaponType {
             return 10000;
         }
 
-        return 100000000;
+        return 100;
     }
 }

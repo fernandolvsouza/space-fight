@@ -107,7 +107,7 @@ public class DeadShip implements SpaceShip,Destroyable{
 	}
 
 	@Override
-	public void fire(WeaponType type) {
+	public void fire(BulletType type) {
 	}
 
 	@Override
@@ -225,6 +225,11 @@ public class DeadShip implements SpaceShip,Destroyable{
 	@Override
 	public String getName() {
 		return deadplayer.getName();
+	}
+
+	@Override
+	public int getStarCaptureBulletReloadPercentage() {
+		return 0;
 	}
 
 	@Override

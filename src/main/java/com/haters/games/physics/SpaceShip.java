@@ -50,25 +50,28 @@ public interface SpaceShip  extends EntityWithDetector,LifePointsEntity,Destroya
     boolean isDamaged();
     
     String getName();
+
+    int getStarCaptureBulletReloadPercentage();
     
-    void setName(String name);
+
     
     //setter
+    void setName(String name);
     
     void setMousePosition(Vec2 to);
-    
+
+    SpaceShip setAttackMode();
+
+    SpaceShip setCruiseMode();
     
     //generic actions
-    void fire(WeaponType type);
+    void fire(BulletType type);
     
     void autoheal();
     
 	void restoreEnergy();
 
 
-    SpaceShip setAttackMode();
-    SpaceShip setCruiseMode();
-   
     
     //moving methods
 	

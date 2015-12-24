@@ -47,7 +47,7 @@ public class GameLogic {
 
 	
 
-	
+
 	public GameLogic(SpaceWorld spaceWorld, GameInputStream stream, NetworkOutputStream outputStream) {
 		this.spaceWorld = spaceWorld;
 		this.istream = stream;
@@ -140,7 +140,7 @@ public class GameLogic {
 			}
 			
 			if(bot.shouldFire(alivePlayers)){	
-				bot.fire(WeaponType.FAST_BULLET);
+				bot.fire(BulletType.SIMPLE_BULLET);
 			}
 
 			bot.up();
@@ -193,11 +193,11 @@ public class GameLogic {
 			}
 
 			if (istream.hasFireEvent(player)) { //'s'
-				player.fire(WeaponType.CHASE_BULLET);
+				player.fire(BulletType.SIMPLE_BULLET);
 			}
 
 			if (istream.hasTryCaptureStarEvent(player)) { //'s'
-				player.fire(WeaponType.STAR_CAPTURE_BULLET);
+				player.fire(BulletType.STAR_CAPTURE_BULLET);
 			}
 
 
@@ -243,7 +243,6 @@ public class GameLogic {
 
 		for(int i=0;i<Math.min(ranksize,players.size());i++){
 			if(players.get(i).getId() != rankingIds[i]){
-				System.out.println(rankingIds[i]);
 				rankingIds[i] = players.get(i).getId();
 				sendRanking = true;
 			}

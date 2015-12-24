@@ -86,7 +86,7 @@ public class GameSerializer {
 	}
 
 
-	private JsonWriter energyToJson(Star g, JsonWriter jw) throws IOException{ //7 attributes
+	private JsonWriter energyToJson(Star g, JsonWriter jw) throws IOException{
 		jw.
 		value(g.getType().ordinal()).
 		value(g.getId()).
@@ -99,7 +99,7 @@ public class GameSerializer {
 		return jw;
 	}
 
-	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{ //6 attributes
+	private JsonWriter bulletToJson(Bullet b, JsonWriter jw) throws IOException{
 		jw.
 		value(b.getType().ordinal()).
 		value(b.getId()).
@@ -111,7 +111,7 @@ public class GameSerializer {
 		return jw;
 	}
 	
-	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{ //10 attributes
+	private JsonWriter shipToJson(SpaceShip ship, JsonWriter jw) throws IOException{
 		jw.
 		value(ship.getType().ordinal()).
 		value(ship.getId()).
@@ -124,7 +124,8 @@ public class GameSerializer {
 		value(ship.getName()).
 		value(ship.getPoints()).
 		value(ship.getGroup().getColor().ordinal()).
-				value(ship.getPower());
+		value(ship.getPower()).
+		value(ship.getStarCaptureBulletReloadPercentage());
 		return jw;
 	}
 	

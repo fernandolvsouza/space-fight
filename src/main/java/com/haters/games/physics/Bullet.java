@@ -11,7 +11,7 @@ public interface Bullet extends Destroyable, GameEntity, GameSerializable {
 
     void destroyCascade();
 
-    int getDamage();
+    double getDamage();
 
     Body getBody();
 
@@ -29,5 +29,4 @@ public interface Bullet extends Destroyable, GameEntity, GameSerializable {
 
     Bullet ready();
 
-    boolean isOlderThan(long i);
 }

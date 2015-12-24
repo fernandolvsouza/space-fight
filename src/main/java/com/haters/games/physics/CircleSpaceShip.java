@@ -64,7 +64,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 
     @Override
     public int getTotalLife() {
-        return 100;
+        return isbot ? 40 : 100;
     }
 
     @Override

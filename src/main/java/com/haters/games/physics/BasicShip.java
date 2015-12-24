@@ -90,6 +90,15 @@ public abstract class BasicShip {
         return detectionCallback;
     }
 
+    public int getStarCaptureBulletReloadPercentage(){
+        long now = new Date().getTime();
+        long diff = now - lastFireTime[BulletType.STAR_CAPTURE_BULLET.ordinal()];
+        if(diff >= BulletType.STAR_CAPTURE_BULLET.fireFrequency())
+            return 100;
+        else
+            return (int) (diff * 100/BulletType.STAR_CAPTURE_BULLET.fireFrequency());
+    }
+
     public void detectGameEntities(){
 
         this.entityDetector.detectGameEntities();
@@ -187,7 +196,7 @@ public abstract class BasicShip {
 		this.body.applyAngularImpulse(impulse);
 	}
 
-    public void fire(WeaponType type) {
+    public void fire(BulletType type) {
 
         long now = new Date().getTime();
         if( now - lastFireTime[type.ordinal()] > type.fireFrequency()) {
