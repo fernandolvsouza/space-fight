@@ -6,15 +6,15 @@ import java.awt.*;
  * Created by flvs on 12/15/15.
  */
 public enum GroupColor {
-    YELLOW(Color.YELLOW),RED(Color.RED),GREEN(Color.GREEN),BLUE(Color.BLUE),CYAN(Color.CYAN),WHITE(Color.WHITE),PINK(Color.PINK),ORANGE(Color.ORANGE);
+    YELLOW(Color.YELLOW), RED(Color.RED), GREEN(Color.GREEN), BLUE(Color.BLUE), CYAN(Color.CYAN), WHITE(Color.WHITE), PINK(Color.PINK), ORANGE(Color.ORANGE);
 
-    private Color color;
+    private final Color color;
 
     GroupColor(Color color) {
         this.color = color;
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 

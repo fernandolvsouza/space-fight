@@ -11,91 +11,89 @@ import java.util.Set;
 /**
  * Created by flvs on 8/9/15.
  */
-public interface SpaceShip  extends EntityWithDetector,LifePointsEntity,Destroyable,GameEntity,GameSerializable{
+public interface SpaceShip extends EntityWithDetector, LifePointsEntity, Destroyable, GameEntity, GameSerializable {
 
-	//getters
-	
+    //getters
+
     int getId();
 
     Body getBody();
-    
+
     World getWorld();
-    
+
     SpaceWorld getSpaceWorld();
 
     Group getGroup();
 
     float getAngle();
 
-	Vec2 getMousePosition();
+    Vec2 getMousePosition();
 
     int getCurrentLife();
-    
+
     int getTotalLife();
-    
+
     Set<SpaceShip> getShipsInRange();
-    
+
     Set<Bullet> getBulletsInRange();
 
     List<Bullet> getBullets();
-    
+
     Set<SpaceShip> getAlivePlayersInRange();
-    
+
     Set<Star> getGarbagesInRange();
 
     Set<Base> getBasesInRange();
-    
+
     boolean isbot();
-    
+
     boolean isDamaged();
-    
+
     String getName();
 
     int getStarCaptureBulletReloadPercentage();
-    
 
-    
+
     //setter
     void setName(String name);
-    
+
     void setMousePosition(Vec2 to);
 
     SpaceShip setAttackMode();
 
     SpaceShip setCruiseMode();
-    
+
     //generic actions
     void fire(BulletType type);
-    
+
     void autoheal();
-    
-	void restoreEnergy();
+
+    void restoreEnergy();
 
 
-    
     //moving methods
-	
-	void left();
 
-	void right();
+    void left();
 
-	void up();
+    void right();
 
-	void down();
+    void up();
+
+    void down();
 
     void rotateTo(Vec2 position);
-    
+
     //bot methods
-    
+
     boolean avoidColision();
 
     boolean shouldFire(Set<SpaceShip> enemies);
 
-	void addPoint(int i);
-	
-	void removePoint(int i);
+    void addPoint(int i);
 
-	int getPoints();
+    void removePoint(int i);
+
+    int getPoints();
 
 
     void powerUp();

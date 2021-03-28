@@ -11,18 +11,18 @@ import java.util.Iterator;
 /**
  * Created by flvs on 12/8/15.
  */
-public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetector,TimeLimitedPowers {
+public class ChaseBullet extends SimpleBullet implements Bullet, EntityWithDetector, TimeLimitedPowers {
 
-    private DetectEntitiesCallback detectionCallback;
-    private EntityDetector detector;
-    private long detectionFrequency = 500;
+    private final DetectEntitiesCallback detectionCallback;
+    private final EntityDetector detector;
+    private final long detectionFrequency = 500;
     private long lastdetection = 0;
 
 
     public ChaseBullet(SpaceShip ship) {
         super(ship);
         this.detectionCallback = new DetectEntitiesCallback(this);
-        this.detector = new EntityDetector(this,detectionCallback);
+        this.detector = new EntityDetector(this, detectionCallback);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetect
 
     @Override
     public void detectGameEntities() {
-        if(new Date().getTime() - lastdetection < detectionFrequency)
+        if (new Date().getTime() - lastdetection < detectionFrequency)
             return;
 
         this.detector.detectGameEntities();
@@ -64,15 +64,15 @@ public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetect
         SpaceShip target = null;
         Iterator<SpaceShip> it = detectionCallback.planes.iterator();
 
-        while(target == null && it.hasNext()) {
+        while (target == null && it.hasNext()) {
             SpaceShip ship = it.next();
-            if(ship.getGroup().equals(this.getShip().getGroup()))
+            if (ship.getGroup().equals(this.getShip().getGroup()))
                 continue;
             target = ship;
 
         }
 
-        if(target == null)
+        if (target == null)
             return;
 
         Vec2 chasePos = new Vec2(target.getBody().getPosition());
@@ -84,7 +84,7 @@ public class ChaseBullet extends SimpleBullet implements Bullet,EntityWithDetect
         Vec2 sub = chasePos.sub(bodyPos);
         sub.normalize();
         Vec2 mul = sub.mul(strength);
-        getBody().applyForce(mul,bodyPos);
+        getBody().applyForce(mul, bodyPos);
 
     }
 }

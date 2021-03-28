@@ -12,17 +12,18 @@ import com.haters.games.output.SERIALIZER_TYPE;
 /**
  * Created by flvs on 8/10/15.
  */
-public class CircleSpaceShip extends BasicShip implements SpaceShip{
+public class CircleSpaceShip extends BasicShip implements SpaceShip {
 
-    static public CircleSpaceShip createPlayer(SpaceWorld world,Vec2 pos,int id, DestroyPool killthen){
-        return new CircleSpaceShip(world,pos,id,killthen,false);
-    }
-    static public CircleSpaceShip createBot(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen){
-        return new CircleSpaceShip(world,pos,id,killthen,true);
+    static public CircleSpaceShip createPlayer(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
+        return new CircleSpaceShip(world, pos, id, killthen, false);
     }
 
-    protected CircleSpaceShip(SpaceWorld world, Vec2 pos,int id, DestroyPool killthen, boolean isbot) {
-        super(world, pos,id, killthen,  isbot);
+    static public CircleSpaceShip createBot(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen) {
+        return new CircleSpaceShip(world, pos, id, killthen, true);
+    }
+
+    protected CircleSpaceShip(SpaceWorld world, Vec2 pos, int id, DestroyPool killthen, boolean isbot) {
+        super(world, pos, id, killthen, isbot);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
         // shape definition
         CircleShape shape = new CircleShape();
         shape.setRadius(2.0f);
-        shape.m_p.set(0,0);
+        shape.m_p.set(0, 0);
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
@@ -53,12 +54,12 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
         //this.body.setTransform(this.body.getPosition(),90 * MathUtils.DEG2RAD);
         this.body.setUserData(this);
         this.detectionCallback = new DetectEntitiesCallback(this);
-        this.entityDetector = new EntityDetector(this,detectionCallback);
+        this.entityDetector = new EntityDetector(this, detectionCallback);
 
 
     }
 
-    public float getRadius(){
+    public float getRadius() {
         return 2.0f;
     }
 
@@ -69,10 +70,10 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
 
     @Override
     public float getEnemyDetectRange() {
-    	return isbot ? 50 : 100;
+        return isbot ? 50 : 100;
     }
 
-    private void goToDirection(Vec2 direction){
+    private void goToDirection(Vec2 direction) {
         direction.normalize();
         float impulse = 7.5f;
         this.body.applyLinearImpulse(new Vec2(direction.x * impulse, direction.y * impulse), this.body.getPosition(), true);
@@ -89,39 +90,40 @@ public class CircleSpaceShip extends BasicShip implements SpaceShip{
     }
 
     @Override
-	public float getAngle() {
-		return body.getAngle();
-	}
-	@Override
-	public void setMousePosition(Vec2 mouse_pos) {
-		this.mouse_pos = mouse_pos;
-            rotateTo(mouse_pos);
-	}
+    public float getAngle() {
+        return body.getAngle();
+    }
 
     @Override
-	public Vec2 getMousePosition() {
-		return mouse_pos;
-	}
-	
-	@Override
-	public void left() {
-		goToDirection(body.getWorldVector(new Vec2(0, +1)));	
-	}
-	
-	@Override
-	public void right() {
-		goToDirection(body.getWorldVector(new Vec2(0, -1)));
-	}
-	
-	@Override
-	public void up() {
-		goToDirection(body.getWorldVector(new Vec2(1, 0)));
-	}
-	
-	@Override
-	public void down() {
-		goToDirection(body.getWorldVector(new Vec2(-1, 0)));
-	}
+    public void setMousePosition(Vec2 mouse_pos) {
+        this.mouse_pos = mouse_pos;
+        rotateTo(mouse_pos);
+    }
+
+    @Override
+    public Vec2 getMousePosition() {
+        return mouse_pos;
+    }
+
+    @Override
+    public void left() {
+        goToDirection(body.getWorldVector(new Vec2(0, +1)));
+    }
+
+    @Override
+    public void right() {
+        goToDirection(body.getWorldVector(new Vec2(0, -1)));
+    }
+
+    @Override
+    public void up() {
+        goToDirection(body.getWorldVector(new Vec2(1, 0)));
+    }
+
+    @Override
+    public void down() {
+        goToDirection(body.getWorldVector(new Vec2(-1, 0)));
+    }
 
 
 }

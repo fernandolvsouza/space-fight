@@ -7,7 +7,7 @@ public class EntityDetector {
     private final EntityWithDetector entity;
     protected DetectEntitiesCallback detectionCallback;
 
-    public EntityDetector(EntityWithDetector entity,DetectEntitiesCallback detectionCallback) {
+    public EntityDetector(EntityWithDetector entity, DetectEntitiesCallback detectionCallback) {
         this.detectionCallback = detectionCallback;
         this.entity = entity;
     }

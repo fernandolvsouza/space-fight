@@ -12,13 +12,13 @@ import java.util.Date;
 /**
  * Created by flvs on 9/27/15.
  */
-public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerializable {
+public class Base implements LifePointsEntity, Destroyable, GameEntity, GameSerializable {
 
-    private int id;
-    private SpaceWorld world;
+    private final int id;
+    private final SpaceWorld world;
     private Body body;
     private boolean readyToDestroy;
-    private int totalLife = 100;
+    private final int totalLife = 100;
     private int currentLife;
     private int energyLife;
     private long lastDamageTime = -1;
@@ -31,7 +31,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         init();
     }
 
-    private void init(){
+    private void init() {
         // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
@@ -42,14 +42,13 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         int radius = 10;
 
         shape.setRadius(radius);
-        shape.m_p.set(0,0);
+        shape.m_p.set(0, 0);
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
 
         fd.shape = shape;
         fd.density = 0.5f;
-
 
 
         // create dynamic body
@@ -80,9 +79,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         if (getClass() != obj.getClass())
             return false;
         Base other = (Base) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id;
     }
 
     public int getId() {
@@ -93,12 +90,12 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         return body;
     }
 
-    public void setReadyToDestroy(boolean b){
+    public void setReadyToDestroy(boolean b) {
         readyToDestroy = b;
     }
 
-    public boolean readyToDestroy(){
-        return readyToDestroy ;
+    public boolean readyToDestroy() {
+        return readyToDestroy;
     }
 
     @Override
@@ -118,9 +115,9 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
 
     @Override
     public boolean isDamaged() {
-        if(lastDamageTime < 0)
+        if (lastDamageTime < 0)
             return false;
-        return (new Date().getTime() - lastDamageTime < damagePeriod );
+        return (new Date().getTime() - lastDamageTime < damagePeriod);
     }
 
     @Override
@@ -129,7 +126,7 @@ public class Base implements LifePointsEntity,Destroyable,GameEntity, GameSerial
         this.lastDamageTime = new Date().getTime();
     }
 
-    public SERIALIZER_TYPE getType(){
+    public SERIALIZER_TYPE getType() {
         return SERIALIZER_TYPE.BASE;
     }
 }

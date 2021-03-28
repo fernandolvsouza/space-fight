@@ -5,8 +5,11 @@ package com.haters.games.physics;
  */
 public interface LifePointsEntity {
 
-    public int getCurrentLife();
-    public int getTotalLife();
+    int getCurrentLife();
+
+    int getTotalLife();
+
     boolean isDamaged();
-    public void damage(SimpleBullet b);
+
+    void damage(SimpleBullet b);
 }

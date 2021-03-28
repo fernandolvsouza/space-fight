@@ -13,39 +13,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Star implements GameEntity, GameSerializable{
-	
-	private int id;
-	private SpaceWorld world;
-	private Body body;
-	private int radius;
-	private int range;
-	private Group group;
-	private List<SpaceShip> shipsInRange = new ArrayList<SpaceShip>();
+public class Star implements GameEntity, GameSerializable {
+
+    private final int id;
+    private final SpaceWorld world;
+    private Body body;
+    private int radius;
+    private int range;
+    private Group group;
+    private final List<SpaceShip> shipsInRange = new ArrayList<SpaceShip>();
 
 
-	public Star(SpaceWorld world) {
-		this.world = world;
-		this.id = Sequence.getSequence();
-		init();
-	}
-	
-	private void init(){
-		 // body definition
+    public Star(SpaceWorld world) {
+        this.world = world;
+        this.id = Sequence.getSequence();
+        init();
+    }
+
+    private void init() {
+        // body definition
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.STATIC);
 
         // shape definition
 
-		int min_r = 5;
-		int max_r = 10;
-		Random r = new Random();
-		this.radius = r.nextInt(max_r-min_r + 1) + min_r;
+        int min_r = 5;
+        int max_r = 10;
+        Random r = new Random();
+        this.radius = r.nextInt(max_r - min_r + 1) + min_r;
 
-		//Star
-		CircleShape shape = new CircleShape();
+        //Star
+        CircleShape shape = new CircleShape();
         shape.setRadius(radius);
-        shape.m_p.set(0,0);
+        shape.m_p.set(0, 0);
 
         // fixture definition
         FixtureDef fd = new FixtureDef();
@@ -53,88 +53,86 @@ public class Star implements GameEntity, GameSerializable{
         fd.density = 0.05f;
 
 
-		//range sensor
-		range = radius * 5;
+        //range sensor
+        range = radius * 5;
 
-		CircleShape sensorShape = new CircleShape();
-		sensorShape.setRadius(range);
-		sensorShape.m_p.set(0,0);
+        CircleShape sensorShape = new CircleShape();
+        sensorShape.setRadius(range);
+        sensorShape.m_p.set(0, 0);
 
-		// fixture definition
-		FixtureDef rangeSensorFix = new FixtureDef();
-		rangeSensorFix.shape = sensorShape;
-		rangeSensorFix.setSensor(true);
+        // fixture definition
+        FixtureDef rangeSensorFix = new FixtureDef();
+        rangeSensorFix.shape = sensorShape;
+        rangeSensorFix.setSensor(true);
 
         // create dynamic body
         bd.setPosition(world.getRandomPosition(30));
         this.body = this.world.getWorld().createBody(bd);
         this.body.createFixture(fd);
-		this.body.createFixture(rangeSensorFix);
+        this.body.createFixture(rangeSensorFix);
 
         this.body.setUserData(this);
-		
-	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Star other = (Star) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
 
-	public int getId() {
-		return id;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Star other = (Star) obj;
+        return id == other.id;
+    }
 
-	public Body getBody() {
-		return body;
-	}
+    public int getId() {
+        return id;
+    }
 
-	
-	public SERIALIZER_TYPE getType(){
-		return SERIALIZER_TYPE.ENERGY;
-	}
+    public Body getBody() {
+        return body;
+    }
 
-	public int getRadius() {
-		return radius;
-	}
 
-	public int getRange() {
-		return range;
-	}
+    public SERIALIZER_TYPE getType() {
+        return SERIALIZER_TYPE.ENERGY;
+    }
 
-	public Group getGroup() {
-		return group;
-	}
+    public int getRadius() {
+        return radius;
+    }
 
-	public void setGroup(Group group) {
-		this.group = group;
-	}
+    public int getRange() {
+        return range;
+    }
 
-	public void addShipInRange(SpaceShip ship) {
-		this.shipsInRange.add(ship);
-	}
+    public Group getGroup() {
+        return group;
+    }
 
-	public void removeShipInRange(SpaceShip ship) {
-		this.shipsInRange.remove(ship);
-	}
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
-	public List<SpaceShip> getShipInRange() {
-		return this.shipsInRange;
-	}
+    public void addShipInRange(SpaceShip ship) {
+        this.shipsInRange.add(ship);
+    }
+
+    public void removeShipInRange(SpaceShip ship) {
+        this.shipsInRange.remove(ship);
+    }
+
+    public List<SpaceShip> getShipInRange() {
+        return this.shipsInRange;
+    }
 }

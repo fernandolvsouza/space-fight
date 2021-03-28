@@ -18,83 +18,82 @@ import java.util.Date;
 public class GameController implements Runnable {
 
 
-	private  static final int DEFAULT_FPS = 60;
-	private static final int PositionIterations = 3;
-	private static final int VelocityIterations = 8;
+    private static final int DEFAULT_FPS = 60;
+    private static final int PositionIterations = 3;
+    private static final int VelocityIterations = 8;
 
-	private IViewportTransform transform = null;
-	private final Vec2 initPosition = new Vec2(0,0);
-	private final float initScale = 7;
-	private float frameRate;
+    private final IViewportTransform transform = null;
+    private final Vec2 initPosition = new Vec2(0, 0);
+    private final float initScale = 7;
+    private float frameRate;
 
-	private Thread animation;
+    private final Thread animation;
 
-	public GameController() {
-		super();
-		this.animation = new Thread(this, "thread-1");
-	}
+    public GameController() {
+        super();
+        this.animation = new Thread(this, "thread-1");
+    }
 
-	public float getFps(){
-		return  frameRate;
-	}
+    public float getFps() {
+        return frameRate;
+    }
 
-	@Override
-	public void run() {
-		long lastprinttime = 0;
-		
-		final SpaceWorld spaceWorld = new SpaceWorld(this,new World(new Vec2(0.0f, 0.0f)));
-		final GameInputStream istream = new NetworkInputStream();
-		
-		GameLogic logic = new GameLogic(spaceWorld, istream, new NetworkOutputStream());
-		logic.init();
-				
-		long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
-		int targetFrameRate;
-		frameRate = targetFrameRate = DEFAULT_FPS;
-	    float timeInSecs;
+    public void run() {
+        long lastprinttime = 0;
 
-		beforeTime = updateTime = System.nanoTime();
-	    sleepTime = 0;
+        final SpaceWorld spaceWorld = new SpaceWorld(this, new World(new Vec2(0.0f, 0.0f)));
+        final GameInputStream istream = new NetworkInputStream();
 
-		while (true) {
+        GameLogic logic = new GameLogic(spaceWorld, istream, new NetworkOutputStream());
+        logic.init();
 
-			timeSpent = beforeTime - updateTime;
-			if (timeSpent > 0) {
-				timeInSecs = timeSpent * 1.0f / 1000000000.0f;
-				updateTime = System.nanoTime();
-				frameRate = (frameRate * 0.9f) + (1.0f / timeInSecs) * 0.1f;
-			} else {
-				updateTime = System.nanoTime();
-			}
+        long beforeTime, afterTime, updateTime, timeDiff, sleepTime, timeSpent;
+        int targetFrameRate;
+        frameRate = targetFrameRate = DEFAULT_FPS;
+        float timeInSecs;
 
-			istream.processEvents();
-			logic.step(1f / frameRate, VelocityIterations, PositionIterations);
-			logic.afterStep();
+        beforeTime = updateTime = System.nanoTime();
+        sleepTime = 0;
 
-			
-			afterTime = System.nanoTime();
+        while (true) {
 
-			timeDiff = afterTime - beforeTime;
-			sleepTime = (1000000000 / targetFrameRate - timeDiff) / 1000000;
-			if (sleepTime > 0) {
-				try {
-					Thread.sleep(sleepTime);
-				} catch (InterruptedException ex) {
-				}
-			}
+            timeSpent = beforeTime - updateTime;
+            if (timeSpent > 0) {
+                timeInSecs = timeSpent * 1.0f / 1000000000.0f;
+                updateTime = System.nanoTime();
+                frameRate = (frameRate * 0.9f) + (1.0f / timeInSecs) * 0.1f;
+            } else {
+                updateTime = System.nanoTime();
+            }
 
-			beforeTime = System.nanoTime();
+            istream.processEvents();
+            logic.step(1f / frameRate, VelocityIterations, PositionIterations);
+            logic.afterStep();
 
-			if(new Date().getTime() - lastprinttime > 3000){
-				System.out.println("frame rate: " + frameRate);
-				lastprinttime = new Date().getTime();
-			}
-			
-		}
-	}
 
-	public void start() {
-		animation.start();
-	}
+            afterTime = System.nanoTime();
+
+            timeDiff = afterTime - beforeTime;
+            sleepTime = (1000000000 / targetFrameRate - timeDiff) / 1000000;
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException ex) {
+                }
+            }
+
+            beforeTime = System.nanoTime();
+
+            if (new Date().getTime() - lastprinttime > 3000) {
+                System.out.println("frame rate: " + frameRate);
+                lastprinttime = new Date().getTime();
+            }
+
+        }
+    }
+
+    public void start() {
+        animation.start();
+    }
 
 }

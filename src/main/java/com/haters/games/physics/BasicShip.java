@@ -31,8 +31,8 @@ public abstract class BasicShip {
 
     protected Group group;
 
-    private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-    private long[] lastFireTime =  new long[]{0,0,0,0,0,0,0};
+    private final LinkedList<Bullet> bullets = new LinkedList<Bullet>();
+    private final long[] lastFireTime = new long[]{0, 0, 0, 0, 0, 0, 0};
     private final static int maximumActiveBullets = 30;
 
     protected boolean isbot = true;
@@ -40,17 +40,16 @@ public abstract class BasicShip {
     protected final long timeCreated = new Date().getTime();
     private long lasthealtime = 0;
     private long lastDamageTime = -1;
-	private long damagePeriod = 100;
-
+    private final long damagePeriod = 100;
 
 
     protected DetectEntitiesCallback detectionCallback;
     protected EntityDetector entityDetector;
 
-	private boolean readyToDestroy = false;
-	private String name = "";
-	
-	private int points = 0;
+    private boolean readyToDestroy = false;
+    private String name = "";
+
+    private int points = 0;
 
     protected final static float attackModeLinearDamping = 1.0f;
     protected final static float cruiseModeLinearDamping = 3.0f;
@@ -74,11 +73,11 @@ public abstract class BasicShip {
         return body;
     }
 
-    public World getWorld(){
+    public World getWorld() {
         return world.getWorld();
     }
-    
-    public SpaceWorld getSpaceWorld(){
+
+    public SpaceWorld getSpaceWorld() {
         return world;
     }
 
@@ -90,117 +89,117 @@ public abstract class BasicShip {
         return detectionCallback;
     }
 
-    public int getStarCaptureBulletReloadPercentage(){
+    public int getStarCaptureBulletReloadPercentage() {
         long now = new Date().getTime();
         long diff = now - lastFireTime[BulletType.STAR_CAPTURE_BULLET.ordinal()];
-        if(diff >= BulletType.STAR_CAPTURE_BULLET.fireFrequency())
+        if (diff >= BulletType.STAR_CAPTURE_BULLET.fireFrequency())
             return 100;
         else
-            return (int) (diff * 100/BulletType.STAR_CAPTURE_BULLET.fireFrequency());
+            return (int) (diff * 100 / BulletType.STAR_CAPTURE_BULLET.fireFrequency());
     }
 
-    public void detectGameEntities(){
+    public void detectGameEntities() {
 
         this.entityDetector.detectGameEntities();
-        for (Bullet b : this.getBullets()){
-            if(b instanceof EntityWithDetector) ((EntityWithDetector) b).detectGameEntities();
-            if(b instanceof ChaseBullet) ((ChaseBullet) b).chase();
+        for (Bullet b : this.getBullets()) {
+            if (b instanceof EntityWithDetector) ((EntityWithDetector) b).detectGameEntities();
+            if (b instanceof ChaseBullet) ((ChaseBullet) b).chase();
         }
     }
 
     public SpaceShip group(Group group) {
-        group.addMember((SpaceShip)this);
+        group.addMember((SpaceShip) this);
         this.group = group;
-        return (SpaceShip)this;
+        return (SpaceShip) this;
     }
 
 
-	public boolean avoidColision() {
-		float rayLength = 10;
-		int[] angles = new int[10];
-		for (int i=0;i<angles.length; i++) {
-			angles[i] = i*360/angles.length;
-		}	
-		Vec2 sum = null;
-		for(Fixture fix  : detectionCallback.othersFixtures){
+    public boolean avoidColision() {
+        float rayLength = 10;
+        int[] angles = new int[10];
+        for (int i = 0; i < angles.length; i++) {
+            angles[i] = i * 360 / angles.length;
+        }
+        Vec2 sum = null;
+        for (Fixture fix : detectionCallback.othersFixtures) {
             //if(!fix.isSensor()) {
-                for (int i = 0; i < angles.length; i++) {
+            for (int i = 0; i < angles.length; i++) {
 
-                    float angle = angles[i] * MathUtils.DEG2RAD;
-                    RayCastOutput output = new RayCastOutput();
-                    RayCastInput input = new RayCastInput();
-                    input.p1.x = this.getBody().getPosition().x;
-                    input.p1.y = this.getBody().getPosition().y;
-                    input.maxFraction = 1;
+                float angle = angles[i] * MathUtils.DEG2RAD;
+                RayCastOutput output = new RayCastOutput();
+                RayCastInput input = new RayCastInput();
+                input.p1.x = this.getBody().getPosition().x;
+                input.p1.y = this.getBody().getPosition().y;
+                input.maxFraction = 1;
 
-                    Vec2 p2 = this.body.getWorldPoint(new Vec2(MathUtils.sin(angle), MathUtils.cos(angle)).mul(rayLength));
-                    input.p2.x = p2.x;
-                    input.p2.y = p2.y;
-                    if (fix.raycast(output, input, 1)) {
-                        Vec2 normal = output.normal.mul(rayLength);
-                        if (sum == null) {
-                            sum = new Vec2();
-                        }
-                        sum = sum.add(normal);
+                Vec2 p2 = this.body.getWorldPoint(new Vec2(MathUtils.sin(angle), MathUtils.cos(angle)).mul(rayLength));
+                input.p2.x = p2.x;
+                input.p2.y = p2.y;
+                if (fix.raycast(output, input, 1)) {
+                    Vec2 normal = output.normal.mul(rayLength);
+                    if (sum == null) {
+                        sum = new Vec2();
                     }
+                    sum = sum.add(normal);
                 }
+            }
             //}
-		}
-		if(sum != null){
-			sum.normalize();
-			
-			Vec2 pointToGo = this.getBody().getPosition().add(sum.mul(rayLength));
-			rotateTo(pointToGo);
-			return false;
-		}
-		return true;
-	}
+        }
+        if (sum != null) {
+            sum.normalize();
 
-	
-	public boolean shouldFire(Set<SpaceShip> enemies){
-		for (SpaceShip enemy : enemies) {
-			Vec2 vectorToEnemy = new  Vec2(enemy.getBody().getPosition().x-this.body.getPosition().x,enemy.getBody().getPosition().y- this.body.getPosition().y);
-			Vec2 direction = this.body.getWorldVector(new Vec2(1, 0));
-			float angle = angleBetweenToVector(vectorToEnemy,direction);
-			return MathUtils.abs(angle) < 30 *MathUtils.DEG2RAD;
-		}
-		return false;
-	}
-    
-	public void rotateTo(Vec2 point) {
-		
-		Vec2 vectorToPoint = new  Vec2(point.x-this.body.getPosition().x,point.y- this.body.getPosition().y);
-			
-		float angle = MathUtils.atan2(vectorToPoint.y, vectorToPoint.x);
-		rotate(angle);
-	}
-	
-	protected void rotate(float angle) {
-		if (angle < 0) angle += 2 * MathUtils.PI;
-		
-		float desiredAngle = angle;
-		//System.out.println("desiredAngle: " + desiredAngle * MathUtils.RAD2DEG + ":: angle:" + this.body.getAngle());
-		
-		float nextAngle = this.body.getAngle() + this.body.getAngularVelocity() / world.getFps();
-		
-		float totalRotation = desiredAngle - nextAngle;
-		while ( totalRotation < -180 * MathUtils.DEG2RAD ) totalRotation += 360 * MathUtils.DEG2RAD;
-		while ( totalRotation >  180 * MathUtils.DEG2RAD ) totalRotation -= 360 * MathUtils.DEG2RAD;
-		float desiredAngularVelocity = totalRotation * world.getFps();
-		if(isbot){
-			float change = 10 * MathUtils.DEG2RAD; //allow 10 degree rotation per time step
-			desiredAngularVelocity = MathUtils.min( change, MathUtils.max(-change, desiredAngularVelocity));
-		}
-		
-		float impulse = this.body.getInertia() * desiredAngularVelocity;// disregard time factor
-		this.body.applyAngularImpulse(impulse);
-	}
+            Vec2 pointToGo = this.getBody().getPosition().add(sum.mul(rayLength));
+            rotateTo(pointToGo);
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean shouldFire(Set<SpaceShip> enemies) {
+        for (SpaceShip enemy : enemies) {
+            Vec2 vectorToEnemy = new Vec2(enemy.getBody().getPosition().x - this.body.getPosition().x, enemy.getBody().getPosition().y - this.body.getPosition().y);
+            Vec2 direction = this.body.getWorldVector(new Vec2(1, 0));
+            float angle = angleBetweenToVector(vectorToEnemy, direction);
+            return MathUtils.abs(angle) < 30 * MathUtils.DEG2RAD;
+        }
+        return false;
+    }
+
+    public void rotateTo(Vec2 point) {
+
+        Vec2 vectorToPoint = new Vec2(point.x - this.body.getPosition().x, point.y - this.body.getPosition().y);
+
+        float angle = MathUtils.atan2(vectorToPoint.y, vectorToPoint.x);
+        rotate(angle);
+    }
+
+    protected void rotate(float angle) {
+        if (angle < 0) angle += 2 * MathUtils.PI;
+
+        float desiredAngle = angle;
+        //System.out.println("desiredAngle: " + desiredAngle * MathUtils.RAD2DEG + ":: angle:" + this.body.getAngle());
+
+        float nextAngle = this.body.getAngle() + this.body.getAngularVelocity() / world.getFps();
+
+        float totalRotation = desiredAngle - nextAngle;
+        while (totalRotation < -180 * MathUtils.DEG2RAD) totalRotation += 360 * MathUtils.DEG2RAD;
+        while (totalRotation > 180 * MathUtils.DEG2RAD) totalRotation -= 360 * MathUtils.DEG2RAD;
+        float desiredAngularVelocity = totalRotation * world.getFps();
+        if (isbot) {
+            float change = 10 * MathUtils.DEG2RAD; //allow 10 degree rotation per time step
+            desiredAngularVelocity = MathUtils.min(change, MathUtils.max(-change, desiredAngularVelocity));
+        }
+
+        float impulse = this.body.getInertia() * desiredAngularVelocity;// disregard time factor
+        this.body.applyAngularImpulse(impulse);
+    }
 
     public void fire(BulletType type) {
 
         long now = new Date().getTime();
-        if( now - lastFireTime[type.ordinal()] > type.fireFrequency()) {
-            Bullet bullet = BulletFactory.create(type,(SpaceShip) this);
+        if (now - lastFireTime[type.ordinal()] > type.fireFrequency()) {
+            Bullet bullet = BulletFactory.create(type, (SpaceShip) this);
             this.bullets.add(bullet);
             bullet.fire();
             lastFireTime[type.ordinal()] = now;
@@ -208,9 +207,9 @@ public abstract class BasicShip {
         removeExcessBullets();
     }
 
-    protected void removeExcessBullets(){
+    protected void removeExcessBullets() {
         int wastebullets = bullets.size() - maximumActiveBullets;
-        if(wastebullets > 0){
+        if (wastebullets > 0) {
             for (int i = 0; i < wastebullets; i++) {
                 Bullet b = bullets.pop();
                 killthen.add(b);
@@ -218,7 +217,7 @@ public abstract class BasicShip {
         }
     }
 
-    protected float angleBetweenToVector(Vec2 v1, Vec2 v2){
+    protected float angleBetweenToVector(Vec2 v1, Vec2 v2) {
         float angle = MathUtils.atan2(v2.y, v2.x) - MathUtils.atan2(v1.y, v1.x);
         if (angle < 0) angle += 2 * MathUtils.PI;
         return angle;
@@ -227,26 +226,26 @@ public abstract class BasicShip {
 
     @Override
     public String toString() {
-        return "plane : {id: "+id+"}";
+        return "plane : {id: " + id + "}";
     }
 
-    public int getCurrentLife(){
+    public int getCurrentLife() {
         return this.currentLife;
     }
 
 
     public void damage(SimpleBullet b) {
-        if(this.equals(b.plane))
+        if (this.equals(b.plane))
             return;
 
-        if(b.plane.getGroup() != null && ((SpaceShip)this).getGroup() != null && b.plane.getGroup().equals(((SpaceShip)this).getGroup()))
+        if (b.plane.getGroup() != null && ((SpaceShip) this).getGroup() != null && b.plane.getGroup().equals(((SpaceShip) this).getGroup()))
             return;
 
-        this.currentLife -= b.getDamage()/power;
-        if(this.currentLife <= 0 ){
-        	if(b.getShip() != null){
-        		b.getShip().addPoint(10);
-        	}
+        this.currentLife -= b.getDamage() / power;
+        if (this.currentLife <= 0) {
+            if (b.getShip() != null) {
+                b.getShip().addPoint(10);
+            }
         }
         this.lastDamageTime = new Date().getTime();
     }
@@ -257,47 +256,50 @@ public abstract class BasicShip {
             bullet = null;
         }
         bullets.clear();
-        ((SpaceShip) this).getGroup().removeMember((SpaceShip)this);
+        ((SpaceShip) this).getGroup().removeMember((SpaceShip) this);
         this.world.getWorld().destroyBody(this.body);
     }
 
     public Set<SpaceShip> getShipsInRange() {
         return this.detectionCallback.planes;
     }
-    
+
     public Set<Bullet> getBulletsInRange() {
         return this.detectionCallback.bullets;
     }
-    
-    public Set<Star> getGarbagesInRange(){
+
+    public Set<Star> getGarbagesInRange() {
         return this.detectionCallback.stars;
     }
-    
-    public Set<SpaceShip> getAlivePlayersInRange(){
-    	Set<SpaceShip> players = getShipsInRange();
-    	Set<SpaceShip> alive = new LinkedHashSet<SpaceShip>();
-		for (SpaceShip spaceShip : players) {
-			if(spaceShip.getType() != SERIALIZER_TYPE.DEAD && !spaceShip.isbot()){
-				alive.add(spaceShip);
-			}
-		}
-		return alive;		
+
+    public Set<SpaceShip> getAlivePlayersInRange() {
+        Set<SpaceShip> players = getShipsInRange();
+        Set<SpaceShip> alive = new LinkedHashSet<SpaceShip>();
+        for (SpaceShip spaceShip : players) {
+            if (spaceShip.getType() != SERIALIZER_TYPE.DEAD && !spaceShip.isbot()) {
+                alive.add(spaceShip);
+            }
+        }
+        return alive;
     }
 
-    public Set<Base> getBasesInRange(){ return this.detectionCallback.bases;}
+    public Set<Base> getBasesInRange() {
+        return this.detectionCallback.bases;
+    }
 
 
-    public boolean isbot(){
+    public boolean isbot() {
         return isbot;
     }
 
     public SpaceShip setAttackMode() {
         this.body.m_linearDamping = attackModeLinearDamping;
-        return (SpaceShip)this;
+        return (SpaceShip) this;
     }
+
     public SpaceShip setCruiseMode() {
         this.body.m_linearDamping = cruiseModeLinearDamping;
-        return (SpaceShip)this;
+        return (SpaceShip) this;
     }
 
     @Override
@@ -309,80 +311,78 @@ public abstract class BasicShip {
         result = prime * result + (int) (timeCreated ^ (timeCreated >>> 32));
         return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof  SpaceShip))
+        if (!(obj instanceof SpaceShip))
             return false;
 
-    	SpaceShip other = (SpaceShip) obj;
-        if (id != other.getId())
-            return false;
-        return true;
+        SpaceShip other = (SpaceShip) obj;
+        return id == other.getId();
     }
 
-    public void autoheal(){
-    	long now = new Date().getTime();
-    	if(now-lasthealtime > getHealFrequency()/(2 * power)){
-    		int plus = getTotalLife()/10;
-    		this.currentLife = this.currentLife + plus;
-    		if(this.currentLife > this.getTotalLife())
-    			this.currentLife =  this.getTotalLife();
-    		lasthealtime = now;
-    	}
+    public void autoheal() {
+        long now = new Date().getTime();
+        if (now - lasthealtime > getHealFrequency() / (2 * power)) {
+            int plus = getTotalLife() / 10;
+            this.currentLife = this.currentLife + plus;
+            if (this.currentLife > this.getTotalLife())
+                this.currentLife = this.getTotalLife();
+            lasthealtime = now;
+        }
     }
-    
-    public void restoreEnergy(){
-    	currentLife = getTotalLife();
-	}
-    
-    
+
+    public void restoreEnergy() {
+        currentLife = getTotalLife();
+    }
+
+
     private long getHealFrequency() {
-		return 5000;
-	}
-    
-	public void setReadyToDestroy(boolean b){
-		readyToDestroy = b;
-	}
-	
-	public boolean readyToDestroy(){
-		return readyToDestroy ;
-	}
-	
-	public boolean isDamaged(){
-		if(lastDamageTime < 0)
-			return false;
-		return (new Date().getTime() - lastDamageTime < damagePeriod );
-	}
-	
-	public void setName(String name){
-		this.name = name;    	
+        return 5000;
     }
-	
-    public String getName(){
-    	return this.name;
+
+    public void setReadyToDestroy(boolean b) {
+        readyToDestroy = b;
     }
-    
-	public void addPoint(int i){
-		this.points += i;
-	}
-	
-	public void removePoint(int i){
-		this.points -= i;
-		if(points < 0 )
-			points= 0;
-	}
-	
-	public int getPoints() {
-		return points;
-	}
+
+    public boolean readyToDestroy() {
+        return readyToDestroy;
+    }
+
+    public boolean isDamaged() {
+        if (lastDamageTime < 0)
+            return false;
+        return (new Date().getTime() - lastDamageTime < damagePeriod);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void addPoint(int i) {
+        this.points += i;
+    }
+
+    public void removePoint(int i) {
+        this.points -= i;
+        if (points < 0)
+            points = 0;
+    }
+
+    public int getPoints() {
+        return points;
+    }
 
     public void powerUp() {
         this.power++;
     }
 
     public void powerDown() {
-        if(power == 1 )
+        if (power == 1)
             return;
         this.power--;
     }
@@ -395,8 +395,10 @@ public abstract class BasicShip {
         this.power = 1;
     }
 
-	protected abstract void init(Vec2 vec2);
+    protected abstract void init(Vec2 vec2);
+
     protected abstract int getTotalLife();
+
     protected abstract float getEnemyDetectRange();
 
 

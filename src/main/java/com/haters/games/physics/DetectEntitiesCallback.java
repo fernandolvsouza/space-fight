@@ -11,71 +11,72 @@ import java.util.Set;
 
 public class DetectEntitiesCallback implements QueryCallback {
 
-	public Set<GameEntity> entities;
-	public Set<SpaceShip> planes;
-	public Set<Bullet> bullets;
-	public Set<Star> stars;
-	public Set<Base> bases;
-	public Boundaries boundaries;
-	public List<Fixture> othersFixtures;
+    public Set<GameEntity> entities;
+    public Set<SpaceShip> planes;
+    public Set<Bullet> bullets;
+    public Set<Star> stars;
+    public Set<Base> bases;
+    public Boundaries boundaries;
+    public List<Fixture> othersFixtures;
 
-	
-	public GameEntity entity;
 
-	public DetectEntitiesCallback(GameEntity entity) {
-		entities = new HashSet<GameEntity>();
-		planes = new HashSet<SpaceShip>();
-		bullets = new HashSet<Bullet>();
-		stars = new HashSet<Star>();
-		bases = new HashSet<Base>();
-		othersFixtures = new ArrayList<Fixture>();
-		this.entity = entity;
-	}
-	public boolean reportFixture(Fixture fix) {
-		Object userdata = fix.getBody().getUserData();
-		
-		if (userdata.equals(entity)) {
-			return true;
-		}
-		
-		if (userdata instanceof PolygonSpaceShip || userdata instanceof CircleSpaceShip) {
-			planes.add((SpaceShip) userdata);
-		}
-		
-		if (userdata instanceof Star) {
-			stars.add((Star) userdata);
-		}
-		
-		if (userdata instanceof SimpleBullet) {
-			bullets.add((SimpleBullet) userdata);
-		}
+    public GameEntity entity;
 
-		if (userdata instanceof Boundaries) {
-			boundaries = (Boundaries) userdata;
-		}
+    public DetectEntitiesCallback(GameEntity entity) {
+        entities = new HashSet<GameEntity>();
+        planes = new HashSet<SpaceShip>();
+        bullets = new HashSet<Bullet>();
+        stars = new HashSet<Star>();
+        bases = new HashSet<Base>();
+        othersFixtures = new ArrayList<Fixture>();
+        this.entity = entity;
+    }
 
-		if (userdata instanceof GameEntity) {
-			entities.add((GameEntity) userdata);
-		}
+    public boolean reportFixture(Fixture fix) {
+        Object userdata = fix.getBody().getUserData();
 
-		if (userdata instanceof Base) {
-			bases.add((Base) userdata);
-		}
+        if (userdata.equals(entity)) {
+            return true;
+        }
 
-		othersFixtures.add(fix);
+        if (userdata instanceof PolygonSpaceShip || userdata instanceof CircleSpaceShip) {
+            planes.add((SpaceShip) userdata);
+        }
 
-		return true;
-	}
-	
-	public void reset(){
+        if (userdata instanceof Star) {
+            stars.add((Star) userdata);
+        }
 
-		entities.clear();
-		planes.clear();
-		stars.clear();
-		bullets.clear();
-		bases.clear();
-		othersFixtures.clear();
-		boundaries = null;
-	}
+        if (userdata instanceof SimpleBullet) {
+            bullets.add((SimpleBullet) userdata);
+        }
+
+        if (userdata instanceof Boundaries) {
+            boundaries = (Boundaries) userdata;
+        }
+
+        if (userdata instanceof GameEntity) {
+            entities.add((GameEntity) userdata);
+        }
+
+        if (userdata instanceof Base) {
+            bases.add((Base) userdata);
+        }
+
+        othersFixtures.add(fix);
+
+        return true;
+    }
+
+    public void reset() {
+
+        entities.clear();
+        planes.clear();
+        stars.clear();
+        bullets.clear();
+        bases.clear();
+        othersFixtures.clear();
+        boundaries = null;
+    }
 
 }

@@ -5,6 +5,5 @@ package com.haters.games.physics;
  */
 public interface TimeLimitedPowers {
 
-    
 
 }
