@@ -37,7 +37,7 @@ still connecting
 This means the game is running in background, but the is no space-fight-web (nodejs application)
 to connect to.
 
-Now you should get to  it and run space-fight-web
+To fix that, you should and run space-fight-web node project.
 
 ```
 cd [project folder]
@@ -47,9 +47,9 @@ npm install
 node game.js
 ```  
 
-Now, if you go back to SpaceFightMain console output you should see no exceptions, 
+If you go back to SpaceFightMain console output you should see no exceptions, 
 only the frame rate of the game. If too many physics calculations are being processed by the game
- the frame rate will decrease, and the experience might get  worst.
+ the frame rate will decrease, and the experience might get worst.
 ```
 still connecting
 frame rate: 55.840794
